@@ -2,7 +2,7 @@
 ## Contributors
 
 ### 1. Mitanshu Pawan Bhoot  C20 
-11810936\n
+11810936
 mitanshu.bhoot18@vit.edu 
 7891057670
 
