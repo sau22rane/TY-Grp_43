@@ -352,8 +352,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 5
-#define YY_END_OF_BUFFER 6
+#define YY_NUM_RULES 7
+#define YY_END_OF_BUFFER 8
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -361,10 +361,10 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[16] =
+static const flex_int16_t yy_accept[18] =
     {   0,
-        0,    0,    0,    0,    6,    5,    5,    3,    3,    1,
-        0,    2,    0,    4,    0
+        0,    0,    0,    0,    0,    0,    8,    7,    7,    4,
+        4,    6,    5,    2,    1,    3,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -404,30 +404,30 @@ static const YY_CHAR yy_meta[5] =
         1,    1,    1,    2
     } ;
 
-static const flex_int16_t yy_base[19] =
+static const flex_int16_t yy_base[21] =
     {   0,
-       12,   11,    0,    0,   14,   17,    2,   17,    0,   17,
-       11,   17,   10,   17,   17,    6,    9,    8
+       12,   11,    0,    0,   12,   11,   12,   17,    2,   17,
+        0,   17,   17,   17,   17,   17,   17,    6,    8,    9
     } ;
 
-static const flex_int16_t yy_def[19] =
+static const flex_int16_t yy_def[21] =
     {   0,
-       16,   16,   15,    3,   15,   15,   15,   15,   17,   15,
-       18,   15,   18,   15,    0,   15,   15,   15
+       18,   18,   17,    3,   19,   19,   17,   17,   17,   17,
+       20,   17,   17,   17,   17,   17,    0,   17,   17,   17
     } ;
 
 static const flex_int16_t yy_nxt[22] =
     {   0,
-        8,    6,    9,    8,   10,   11,    6,    6,   13,   13,
-       12,   14,   14,   15,    7,    7,    5,   15,   15,   15,
-       15
+       10,    8,   11,   10,   14,   15,    8,    8,   12,   12,
+       16,   17,   13,   13,    9,    9,    7,   17,   17,   17,
+       17
     } ;
 
 static const flex_int16_t yy_chk[22] =
     {   0,
-        3,    3,    3,    3,    7,    7,   16,   16,   18,   18,
-       17,   13,   11,    5,    2,    1,   15,   15,   15,   15,
-       15
+        3,    3,    3,    3,    9,    9,   18,   18,   19,   19,
+       20,    7,    6,    5,    2,    1,   17,   17,   17,   17,
+       17
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -448,12 +448,14 @@ char *yytext;
 #line 2 "comments.l"
     int multiLine = 1;
     int singleLine = 2;
-#line 452 "commt.c"
+    char str[500];
+#line 453 "commt.c"
 
-#line 454 "commt.c"
+#line 455 "commt.c"
 
 #define INITIAL 0
-#define IN_COMMENT 1
+#define IN_MULTI_COMMENT 1
+#define IN_SINGLE_COMMENT 2
 
 #ifndef YY_NO_UNISTD_H
 /* Special case for "unistd.h", since it is non-ANSI. We include it way
@@ -668,9 +670,12 @@ YY_DECL
 		}
 
 	{
-#line 6 "comments.l"
+#line 8 "comments.l"
 
-#line 674 "commt.c"
+
+
+
+#line 679 "commt.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -697,7 +702,7 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 16 )
+				if ( yy_current_state >= 18 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -729,36 +734,49 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "comments.l"
-BEGIN(IN_COMMENT);
+#line 13 "comments.l"
+BEGIN(IN_SINGLE_COMMENT);
 	YY_BREAK
-
-
 case 2:
 YY_RULE_SETUP
-#line 11 "comments.l"
-return multiLine;
-	YY_BREAK
-case 3:
-YY_RULE_SETUP
-#line 12 "comments.l"
-return 4;
+#line 14 "comments.l"
+BEGIN(IN_MULTI_COMMENT);
 	YY_BREAK
 
-case 4:
-/* rule 4 can match eol */
+
+case 3:
 YY_RULE_SETUP
-#line 16 "comments.l"
-return singleLine;
+#line 17 "comments.l"
+strcpy(yytext,str); return multiLine;
 	YY_BREAK
-case 5:
+case 4:
 YY_RULE_SETUP
 #line 18 "comments.l"
+strcat(str,yytext); //printf("%s",str);
+	YY_BREAK
+
+
+case 5:
+/* rule 5 can match eol */
+YY_RULE_SETUP
+#line 21 "comments.l"
+strcpy(yytext,str); return singleLine;
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 22 "comments.l"
+strcat(str,yytext); //printf("%s",str);
+	YY_BREAK
+
+case 7:
+YY_RULE_SETUP
+#line 25 "comments.l"
 ECHO;
 	YY_BREAK
-#line 760 "commt.c"
+#line 777 "commt.c"
 case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(IN_COMMENT):
+case YY_STATE_EOF(IN_MULTI_COMMENT):
+case YY_STATE_EOF(IN_SINGLE_COMMENT):
 	yyterminate();
 
 	case YY_END_OF_BUFFER:
@@ -1054,7 +1072,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 16 )
+			if ( yy_current_state >= 18 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1082,11 +1100,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 16 )
+		if ( yy_current_state >= 18 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 15);
+	yy_is_jam = (yy_current_state == 17);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1762,7 +1780,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 18 "comments.l"
+#line 25 "comments.l"
 
 int yywrap(){
     return 1;

@@ -1,19 +1,26 @@
 %{
     int multiLine = 1;
     int singleLine = 2;
+    char str[500];
 %}
-%x IN_COMMENT
+%x IN_MULTI_COMMENT
+%x IN_SINGLE_COMMENT
 %%
+
+
+
 <INITIAL>{
-"/*"              BEGIN(IN_COMMENT);
+"//"              BEGIN(IN_SINGLE_COMMENT);
+"/*"              BEGIN(IN_MULTI_COMMENT);
 }
-<IN_COMMENT>{
-"*/"        return multiLine;
-.           ;
+<IN_MULTI_COMMENT>{
+"*/"        strcpy(yytext,str); return multiLine;
+.           strcat(str,yytext); //printf("%s",str);
 }
-
-
-"//"[^\n]*\n      return singleLine;
+<IN_SINGLE_COMMENT>{
+"\n"        strcpy(yytext,str); return singleLine;
+.           strcat(str,yytext); //printf("%s",str);
+}
 
 %%
 int yywrap(){

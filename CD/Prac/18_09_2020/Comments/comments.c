@@ -12,7 +12,7 @@ int main(){
     int ntoken = yylex();
     while(ntoken){
         if(ntoken == multiLine){
-            printf("Multiline comment starts\n%s\nMultiline comment ends.\n",yytext);
+            printf("Multiline comment starts\n/*%s*/\nMultiline comment ends.\n",yytext);
         }
         else if(ntoken = singleLine){
             printf("Single-line comment:\n%s",yytext);
