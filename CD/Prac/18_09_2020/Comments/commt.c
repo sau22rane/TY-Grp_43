@@ -735,24 +735,24 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 13 "comments.l"
-BEGIN(IN_SINGLE_COMMENT);
+printf("\n//spotted\n"); strcpy(str,"\0"); BEGIN(IN_SINGLE_COMMENT);
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 14 "comments.l"
-BEGIN(IN_MULTI_COMMENT);
+printf("\n/*spotted\n"); BEGIN(IN_MULTI_COMMENT);
 	YY_BREAK
 
 
 case 3:
 YY_RULE_SETUP
 #line 17 "comments.l"
-strcpy(yytext,str); return multiLine;
+strcpy(yytext,str); BEGIN(INITIAL); return multiLine;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 18 "comments.l"
-strcat(str,yytext); //printf("%s",str);
+strcat(str,yytext);
 	YY_BREAK
 
 
@@ -760,12 +760,12 @@ case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
 #line 21 "comments.l"
-strcpy(yytext,str); return singleLine;
+strcpy(yytext,str); BEGIN(INITIAL); return singleLine;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 22 "comments.l"
-strcat(str,yytext); //printf("%s",str);
+strcat(str,yytext);
 	YY_BREAK
 
 case 7:

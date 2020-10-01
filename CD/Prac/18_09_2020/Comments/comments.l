@@ -10,16 +10,16 @@
 
 
 <INITIAL>{
-"//"              BEGIN(IN_SINGLE_COMMENT);
-"/*"              BEGIN(IN_MULTI_COMMENT);
+"//"              printf("\n//spotted\n"); strcpy(str,"\0"); BEGIN(IN_SINGLE_COMMENT);
+"/*"              printf("\n/*spotted\n"); BEGIN(IN_MULTI_COMMENT);
 }
 <IN_MULTI_COMMENT>{
-"*/"        strcpy(yytext,str); return multiLine;
-.           strcat(str,yytext); //printf("%s",str);
+"*/"        strcpy(yytext,str); BEGIN(INITIAL); return multiLine;
+.           strcat(str,yytext);
 }
 <IN_SINGLE_COMMENT>{
-"\n"        strcpy(yytext,str); return singleLine;
-.           strcat(str,yytext); //printf("%s",str);
+"\n"        strcpy(yytext,str); BEGIN(INITIAL); return singleLine;
+.           strcat(str,yytext);
 }
 
 %%

@@ -15,7 +15,7 @@ int main(){
             printf("Multiline comment starts\n/*%s*/\nMultiline comment ends.\n",yytext);
         }
         else if(ntoken = singleLine){
-            printf("Single-line comment:\n%s",yytext);
+            printf("Single-line comment:\n//%s",yytext);
         }
         ntoken = yylex();
     }
