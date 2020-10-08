@@ -1,9 +1,8 @@
-#define datatype 1
-#define condition 2
-#define func 4
+#define keyword 10
+#define identifier 20
+#define number 30
+#define operator 40
+#define string 50
+
 #define block_start 5
 #define block_end 6
-#define number 7
-#define variable 8
-#define string 9
-#define operator 10
