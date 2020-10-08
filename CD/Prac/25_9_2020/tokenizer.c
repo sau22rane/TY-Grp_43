@@ -22,7 +22,7 @@ int main(){
             printf("%s\nblock end",yytext);
         }
         if(ntoken == number){
-            printf("\nvalue:%s ",yytext);
+            printf("\nnumber:%s ",yytext);
         }
         if(ntoken == identifier){
             printf("\nIdentifier:%s ",yytext);
@@ -32,6 +32,9 @@ int main(){
         }
         if(ntoken == operator){
             printf("\noperator:%s ",yytext);
+        }
+        if(ntoken == EOL){
+            printf("\nEOL:%s ",yytext);
         }
         ntoken = yylex();
     }

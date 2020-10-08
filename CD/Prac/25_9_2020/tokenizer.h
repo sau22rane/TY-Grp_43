@@ -6,3 +6,4 @@
 
 #define block_start 5
 #define block_end 6
+#define EOL 99
