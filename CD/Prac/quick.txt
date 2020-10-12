@@ -1,0 +1,30 @@
+pair of pattern and action
+pattern is regular expression
+action is c code
+
+subroutine call patterns
+
+declaration 
+rules
+subroutine
+
+###Syntax:
+
+FIRST PART
+%%
+pattern action
+...
+%%
+THIRD PART
+
+
+
+yacc
+
+FIRST PART 
+%%
+production action
+...
+%%
+THRID PART
+
