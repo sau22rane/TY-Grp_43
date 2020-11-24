@@ -1,0 +1,3 @@
+class Asanas {
+  Asanas() {}
+}
