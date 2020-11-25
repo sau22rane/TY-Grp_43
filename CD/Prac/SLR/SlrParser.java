@@ -12,6 +12,7 @@ class SLR{
     HashMap<Character, Integer> term = new HashMap<>();
     HashMap<Character, Integer> nonTerm = new HashMap<>();
     HashMap<String, Integer> Rules = new HashMap<>();
+    HashMap<Integer, String> Rules2 = new HashMap<>();
     ArrayList<String> initial = new ArrayList<>();
     Character[] nonTerminals = {'E', 'T', 'F'};
     Character[] terminals = {'n','+','*','(',')','$'};
@@ -29,6 +30,7 @@ class SLR{
                 initial.add(data1);
                 String data2 = data+".";
                 Rules.put(data2, count);
+                Rules2.put(count,data2);
                 count++;
             }
             myReader.close();
@@ -62,7 +64,7 @@ class SLR{
         c.add("F->.n");
 
         first.put('E', a);
-        first.put('T', b);
+        first.put('T', b);  
         first.put('F', c);
     };
 
@@ -89,7 +91,6 @@ class SLR{
         follow.put('F', f);
         follow.put('E', g);
     };
-
 
     public void createState(){
         ArrayList<String> temp;
@@ -164,23 +165,99 @@ class SLR{
         }
     }
 
-    public void getActions(){
-        System.out.println("Action:");
-        for(String[] i: action){
+    public void getTable(){
+        System.out.println("\n\n---------------------------------------------------------------");
+        System.out.println("Table:");
+        System.out.format("%4s", " ");
+        for(Character i: terminals)
+            System.out.format("%4s", i+" ");
+        System.out.print(" | ");
+        for(Character i: nonTerminals)
+            System.out.format("%3s", i+" ");
+        System.out.println();
+        System.out.println("  --------------------------------------");
+        for(int k = 0;k<action.size();k++){
+            String[] i = action.get(k);
+            System.out.format("%4s", k+"| ");
+
             for(int j = 0;j<i.length;j++)
-                System.out.print(i[j]+" ");
+                System.out.format("%4s", i[j]+" ");
+            System.out.print(" | ");
+
+            i = goTo.get(k);
+            for(int j = 0;j<i.length;j++)
+                System.out.format("%3s", i[j]+" ");
             System.out.println();
+        }
+        System.out.println("---------------------------------------------------------------");
+    }
+
+    public void getState(){
+        System.out.println("---------------------------------------------------------------");
+        for(int i = 0;i<productions.size();i++){
+            System.out.println("State: S"+i);
+            ArrayList<String> temp = productions.get(i);
+            for(String j: temp)
+                System.out.println(j);
+            System.out.println("---------------------------------------------------------------");            
         }
     }
 
-    public void getGoTO(){
-        System.out.println("\nGoTo:");
-        for(String[] i: goTo){
-            for(int j = 0;j<i.length;j++)
-                System.out.print(i[j]+" ");
-            System.out.println();
+    public void check(String expression){
+
+        System.out.println("\nParsing expression: "+expression);
+        int i = 0, n = expression.length(), cur;
+        char t,u;
+        String move;
+        HashMap<Character, Integer> Char = new HashMap<>();
+        for(int j = 0;j<terminals.length;j++){
+            Char.put(terminals[j], j);
+        }
+        for(int j = 0;j<nonTerminals.length;j++){
+            Char.put(nonTerminals[j], j);
+        }
+        Stack<String> s = new Stack<String>();
+        s.push("0");
+        while(i<n){
+            cur = Integer.parseInt(s.peek());
+            t = expression.charAt(i);
+            move = action.get(cur)[Char.get(t)];
+            if(move.equals("acc")){
+                System.out.println("Expression accepted");
+                return;
+            }
+            // System.out.println(move+" "+Char.get(t)+" "+s.peek());
+            u = move.charAt(0);
+            if(u == 'S'){
+                s.add(Character.toString(t));
+                s.add(Character.toString(move.charAt(1)));
+                i++;
+            }
+            else{
+
+                // s.pop();
+                // System.out.println(s.pop());
+                String z; 
+                try{
+                    z = Rules2.get(Integer.parseInt(Character.toString(move.charAt(1))));
+                }
+                catch(NumberFormatException e){
+                    System.out.println("Expression Rejected");
+                    return;
+                }
+                t = z.charAt(0);
+                for(int y = 0;y<z.length()-4;y++){
+                    s.pop();
+                    s.pop();
+                }
+
+                int temp = Integer.parseInt(s.peek());
+                s.add(Character.toString(t));
+                s.add(goTo.get(temp)[Char.get(t)]);
+            }
         }
     }
+
 }
 
 public class SlrParser {
@@ -190,7 +267,9 @@ public class SlrParser {
         a.createFirst();
         a.createFollow();
         a.createState();
-        a.getActions();
-        a.getGoTO();
+        a.getState();
+        a.getTable();
+        a.check("n*n+n$");
+        a.check("n**n+n+n$");
     }
 }
