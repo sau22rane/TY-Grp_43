@@ -2,6 +2,7 @@ import 'package:YogaApp/ListOfAsanas.dart';
 import 'package:YogaApp/courseList.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'AsanaPlayer.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +27,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(child: CourseList()),
         // body: ListOfAsanas(dbref, "stress"),
+        // body: AsanaPlayer(),
       ),
     );
   }
