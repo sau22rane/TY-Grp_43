@@ -1,4 +1,4 @@
-import 'package:YogaApp/BlogList.dart';
+import 'package:YogaApp/BlogTypeList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:YogaApp/homepage.dart';
@@ -77,7 +77,7 @@ class AppDrawer extends StatelessWidget {
                 DrawerListItem(
                   icon: Icons.person_outline,
                   title: "Articles",
-                  id: BlogList.id,
+                  id: BlogTypeList.id,
                 ),
                 DrawerListItem(
                   icon: Icons.list,
@@ -132,64 +132,3 @@ class DrawerListItem extends StatelessWidget {
     );
   }
 }
-
-//class DrawerListItem extends StatelessWidget {
-//  final IconData icon;
-//  final String id;
-//  final String title;
-//  DrawerListItem({@required this.icon, @required this.id, @required this.title});
-//  @override
-//  Widget build(BuildContext context) {
-//    return ListTile(
-//      leading: Icon(icon),
-//      title: Text(title),
-//      onTap: (){
-//        Navigator.of(context).pop();
-//        print(id);
-//        if(id == Login.id)
-//        {
-//          setLoginStatus(false);
-//          Navigator.of(context).pushNamedAndRemoveUntil(id, (route) => false);
-//          print("heello");
-//          return;
-//        }
-//        bool currentRouteIsHome = false;
-//        bool currentRouteIsNewRoute = false;
-//
-//        Navigator.popUntil(context, (currentRoute) {
-//          // This is just a way to access currentRoute; the top route in the
-//          // Navigator stack.
-//          if (currentRoute.settings.name ==   HomePage.id ) {
-//            currentRouteIsHome = true;
-//          }
-//          if (currentRoute.settings.name == id ) {
-//            currentRouteIsNewRoute = true;
-//          }
-//
-//          // Return true so popUntil() pops nothing.
-//          return true;
-//        });
-//
-//        // Switch screen
-//        if (!currentRouteIsNewRoute) {
-//          // Only switch screen if new route is different from current route.
-//          if (currentRouteIsHome) {
-//            // Navigate from home to non-home screen.
-//            Navigator.pushNamed(context, id);
-//          } else {
-//            if ( id == HomePage.id) {
-//              // Navigate from non-home screen to home.
-//              Navigator.pop(context);
-//            } else {
-//              // Navigate from non-home screen to non-home screen.
-//              Navigator.popAndPushNamed(context, id);
-//            }
-//          }
-//        }
-//
-//      },
-//    );
-//  }
-//
-//
-//}
