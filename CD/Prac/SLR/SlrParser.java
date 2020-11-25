@@ -62,7 +62,7 @@ class SLR{
         c.add("F->.n");
 
         first.put('E', a);
-        first.put('T', b);
+        first.put('T', b);  
         first.put('F', c);
     };
 
@@ -89,7 +89,6 @@ class SLR{
         follow.put('F', f);
         follow.put('E', g);
     };
-
 
     public void createState(){
         ArrayList<String> temp;
@@ -164,21 +163,41 @@ class SLR{
         }
     }
 
-    public void getActions(){
-        System.out.println("Action:");
-        for(String[] i: action){
+    public void getTable(){
+        System.out.println("\n\n---------------------------------------------------------------");
+        System.out.println("Table:");
+        System.out.format("%4s", " ");
+        for(Character i: terminals)
+            System.out.format("%4s", i+" ");
+        System.out.print(" | ");
+        for(Character i: nonTerminals)
+            System.out.format("%3s", i+" ");
+        System.out.println();
+        System.out.println("  --------------------------------------");
+        for(int k = 0;k<action.size();k++){
+            String[] i = action.get(k);
+            System.out.format("%4s", k+"| ");
+
             for(int j = 0;j<i.length;j++)
-                System.out.print(i[j]+" ");
+                System.out.format("%4s", i[j]+" ");
+            System.out.print(" | ");
+
+            i = goTo.get(k);
+            for(int j = 0;j<i.length;j++)
+                System.out.format("%3s", i[j]+" ");
             System.out.println();
         }
+        System.out.println("---------------------------------------------------------------");
     }
 
-    public void getGoTO(){
-        System.out.println("\nGoTo:");
-        for(String[] i: goTo){
-            for(int j = 0;j<i.length;j++)
-                System.out.print(i[j]+" ");
-            System.out.println();
+    public void getState(){
+        System.out.println("---------------------------------------------------------------");
+        for(int i = 0;i<productions.size();i++){
+            System.out.println("State: S"+i);
+            ArrayList<String> temp = productions.get(i);
+            for(String j: temp)
+                System.out.println(j);
+            System.out.println("---------------------------------------------------------------");            
         }
     }
 }
@@ -190,7 +209,7 @@ public class SlrParser {
         a.createFirst();
         a.createFollow();
         a.createState();
-        a.getActions();
-        a.getGoTO();
+        a.getState();
+        a.getTable();
     }
 }
