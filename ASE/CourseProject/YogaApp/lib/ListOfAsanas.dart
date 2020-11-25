@@ -5,6 +5,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ListOfAsanas extends StatefulWidget {
+  static final String id = 'ListOfAsana';
   Query _ref;
   String courseName;
   Query _tref;

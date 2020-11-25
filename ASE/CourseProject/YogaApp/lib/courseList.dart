@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class CourseList extends StatefulWidget {
   @override
+  static const String id = 'CourseList';
   _CourseListState createState() => _CourseListState();
 }
 
