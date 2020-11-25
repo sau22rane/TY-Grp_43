@@ -1,0 +1,11 @@
+Customer ID,Debt,Income,Marital Status,Risk
+Abel,High,High,Married,Good
+Ben,Low,High,Married,Doubtful
+Candy,Medium,Very low,Unmarried,Poor
+Dale,Very high,Low,Married,Poor
+Ellen,High,Low,Married,Poor
+Fred,High,Very low,Married,Poor
+George,Low,High,Unmarried,Doubtful
+Harry,Low,Medium,Married,Doubtful
+Igor,Very Low,Very High,Married,Good
+Jack,Very High,Medium,Married,Poor
