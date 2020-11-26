@@ -1,107 +1,149 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+import 'package:YogaApp/ViewBlog.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'widgets/CustomAppBar.dart';
 
-class BlogList extends StatelessWidget {
-  static const String id = "Blog";
+class BlogList extends StatefulWidget {
+  static final id = "BlogList";
+  final String type;
+  BlogList({Key key, this.type}) : super(key: key);
+  @override
+  _BlogList createState() => _BlogList();
+}
+
+class _BlogList extends State<BlogList> {
+  List<Modal> itemList = List();
+  final mainReference =
+      FirebaseDatabase.instance.reference().child("BlogSection");
+
+  String get type => widget.type;
   @override
   Widget build(BuildContext context) {
+    print("heya");
+    String type = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
-      backgroundColor: Colors.blue,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 2,
-            child: CustomAppBar(
-                text: 'Articles',
-                align: Alignment.centerLeft,
-                borderWidth: 2.0),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              color: Colors.red,
-              child: Container(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      "Outdoor Exercise \n 128 topics  - 1.3K articles",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        title: Text(type),
+      ),
+      body: itemList.length == 0
+          ? Text("Loading")
+          : ListView.builder(
+              itemCount: itemList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        String passData = itemList[index].link;
+                        Navigator.pushNamed(context, ViewBlog.id,
+                            arguments: passData);
+                      },
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/logo.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Container(
+                              height: 140,
+                              child: Card(
+                                margin: EdgeInsets.all(18),
+                                elevation: 7.0,
+                                child: Center(
+                                  child: Text(itemList[index].name +
+                                      " " +
+                                      (index + 1).toString()),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue, width: 2.0),
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(100)),
-                  color: Colors.blue,
-                ),
-              ),
+                    ));
+              },
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              color: Colors.cyan,
-              child: Container(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      "Yoga Technology \n 110 topics  - 1K articles",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red, width: 2.0),
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(100)),
-                  color: Colors.red,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Container(
-              color: Colors.white,
-              child: Container(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      "Health & Wellness \n 80 topics  - 3K articles",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.cyan, width: 2.0),
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(100)),
-                  color: Colors.cyan,
-                ),
-              ),
-            ),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          getPdfAndUpload();
+          setState(() {});
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.deepPurple,
       ),
     );
   }
+
+  Future getPdfAndUpload() async {
+    var rng = new Random();
+    String randomName = "";
+    for (var i = 0; i < 20; i++) {
+      print(rng.nextInt(100));
+      randomName += rng.nextInt(100).toString();
+    }
+    File file = await FilePicker.getFile(
+        type: FileType.custom, allowedExtensions: ['pdf']);
+    String fileName = '$randomName.pdf';
+    print(' fileName ' + fileName);
+    savePdf(file.readAsBytesSync(), fileName);
+  }
+
+  Future savePdf(List<int> asset, String name) async {
+    StorageReference reference = FirebaseStorage.instance.ref().child(name);
+    StorageUploadTask uploadTask = reference.putData(asset);
+    String url = await (await uploadTask.onComplete).ref.getDownloadURL();
+    print(url);
+    documentFileUpload(url);
+    print("Saved");
+  }
+
+  void documentFileUpload(String str) {
+    var data = {
+      "PDF": str,
+      "FileName": "file",
+    };
+    mainReference.child(createCryptoRandomString()).set(data).then((v) {
+      print("stored sucessful");
+    });
+  }
+
+  String createCryptoRandomString([int length = 32]) {
+    final Random _random = Random.secure();
+    var values = List<int>.generate(length, (index) => _random.nextInt(256));
+    return base64Url.encode(values);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    mainReference.once().then((DataSnapshot snap) {
+      print(snap);
+      var data = snap.value;
+      itemList.clear();
+      data.forEach((key, value) {
+        Modal m = new Modal(value['PDF'], value['FileName']);
+        itemList.add(m);
+        setState(() {});
+      });
+    });
+  }
+}
+
+class Modal {
+  String link, name;
+  Modal(this.link, this.name);
 }

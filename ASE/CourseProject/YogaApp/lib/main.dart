@@ -1,4 +1,6 @@
 import 'package:YogaApp/BlogList.dart';
+import 'package:YogaApp/BlogTypeList.dart';
+import 'package:YogaApp/ViewBlog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:YogaApp/login_screens/login_screen.dart';
@@ -29,7 +31,9 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         CourseList.id: (context) => CourseList(),
+        BlogTypeList.id: (context) => BlogTypeList(),
         BlogList.id: (context) => BlogList(),
+        ViewBlog.id: (context) => ViewBlog(),
       },
       initialRoute: initialRoute,
     );
