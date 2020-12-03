@@ -16,6 +16,6 @@ lex.yy.c : Calc.l
 	@lex Calc.l
 
 Calc : $(SRCS)
-	@gcc y.tab.c -o Calculator
+	@gcc y.tab.c -o Calculator -lm
 	@rm $(SRCS) *.h
 
