@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:YogaApp/choose.dart';
 import 'package:YogaApp/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:YogaApp/homepage.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:YogaApp/login_screens/registration_screen.dart';
 import 'package:YogaApp/widgets/rounded_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -77,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         email: email, password: password);
                     if (user != null) {
                       Navigator.pushNamedAndRemoveUntil(
-                          context, HomePage.id, (route) => false);
+                          context, Choose.id, (context) => false);
                     }
                   } catch (e) {
                     print(e);
@@ -103,6 +104,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                 },
               ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Don't have an account ?"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, RegistrationScreen.id);
+                      },
+                      child: Text("Register Now",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),
