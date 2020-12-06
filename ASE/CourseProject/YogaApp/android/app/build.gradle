@@ -6,8 +6,13 @@ if (localPropertiesFile.exists()) {
     }
 }
 // aaptOptions {
+<<<<<<< HEAD
 //         noCompress 'tflite'
 //         noCompress 'lite'
+=======
+//         //noCompress 'tflite'
+//         //noCompress 'lite'
+>>>>>>> upstream/master
 //     }
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
@@ -46,6 +51,7 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -65,4 +71,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-analytics'
+<<<<<<< HEAD
 }
+=======
+    implementation 'com.android.support:multidex:1.0.3'
+}
+>>>>>>> upstream/master

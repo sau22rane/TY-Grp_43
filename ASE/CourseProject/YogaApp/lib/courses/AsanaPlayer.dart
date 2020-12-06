@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:chewie/chewie.dart';
-// import 'package:video_player/video_player.dart';
-// import 'package:tflite_flutter_plugin_example/classifier.dart';
+import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
+//import 'package:tflite_flutter_plugin_example/classifier.dart';
 
 class AsanaPlayer extends StatefulWidget {
   final String url =
