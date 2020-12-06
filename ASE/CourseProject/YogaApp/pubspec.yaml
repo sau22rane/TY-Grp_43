@@ -39,6 +39,8 @@ dependencies:
   flutter_plugin_pdf_viewer: ^1.0.7
   file_picker: ^1.13.0+1
   http: ^0.12.0+4
+  chewie: ^0.9.7
+  video_player: ^0.10.1
 
 
 dev_dependencies:

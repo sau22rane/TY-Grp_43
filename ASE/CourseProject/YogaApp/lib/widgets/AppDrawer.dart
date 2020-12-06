@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:YogaApp/homepage.dart';
 import 'package:YogaApp/login_screens/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:YogaApp/courseList.dart';
+import 'package:YogaApp/courses/courseList.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
