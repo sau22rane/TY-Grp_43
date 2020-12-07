@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:camera/camera.dart';
 
 /*
 class ListOfAsanas extends StatefulWidget {
@@ -129,6 +130,23 @@ class ListOfAsanas extends StatefulWidget {
 }
 
 class _ListOfAsanasState extends State<ListOfAsanas> {
+  List<CameraDescription> cameras;
+
+  Future<Null> cameraAvailablity() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    try {
+      cameras = await availableCameras();
+      print("================CAMERA AVAILABLE===========");
+    } on CameraException catch (e) {
+      print('Error: $e.code\nError Message: $e.message');
+      print("No camera available in ListOfAsana.dart file");
+    }
+  }
+
+  Future callcameraAvailablity() async {
+    await cameraAvailablity();
+  }
+
   Future readData() async {
     widget._ref.once().then((DataSnapshot snapshot) {
       // print('snapshotData : ${snapshot.value}');
@@ -158,6 +176,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
   @override
   void initState() {
     super.initState();
+    callcameraAvailablity();
     print("ref creates");
     print("witn in readdata");
   }
@@ -166,6 +185,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     func();
+    // callcameraAvailablity();
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -216,7 +236,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
                           //     }));
                           //   },
                           // );
-                          return AsanaCard();
+                          return AsanaCard(cameras);
                         }),
                   )
           ],
