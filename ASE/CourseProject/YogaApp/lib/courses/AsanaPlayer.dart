@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:camera/camera.dart';
+import 'package:tflite/tflite.dart';
+import 'Detection/model.dart';
+import 'package:camera/camera.dart';
+import 'Detection/Camera.dart';
 //import 'package:tflite_flutter_plugin_example/classifier.dart';
 
 class AsanaPlayer extends StatefulWidget {
@@ -16,6 +20,12 @@ class AsanaPlayer extends StatefulWidget {
 class _AsanaPlayerState extends State<AsanaPlayer> {
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
+
+  List<dynamic> _recognitions;
+  int _imageHeight = 0;
+  int _imageWidth = 0;
+  String _model = "";
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +49,30 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
     );
   }
 
+  loadModel() async {
+    String res;
+
+    res = await Tflite.loadModel(
+        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+    print(res);
+    print("MODEL LOADED SUCESSFULLY!!!");
+  }
+
+  onSelect(model) {
+    setState(() {
+      _model = model;
+    });
+    loadModel();
+  }
+
+  setRecognitions(recognitions, imageHeight, imageWidth) {
+    setState(() {
+      _recognitions = recognitions;
+      _imageHeight = imageHeight;
+      _imageWidth = imageWidth;
+    });
+  }
+
   @override
   void dispose() {
     videoPlayerController.dispose();
@@ -53,12 +87,21 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
         appBar: AppBar(
           title: Text("Asana place"),
         ),
-        body: Container(
-            decoration: BoxDecoration(color: Colors.lightBlueAccent),
-            constraints: BoxConstraints.expand(
-              height: MediaQuery.of(context).size.height,
+        body: Column(
+          children: <Widget>[
+            Camera(
+              widget.camera,
+              _model,
+              setRecognitions,
             ),
-            child: Chewie(controller: chewieController)),
+            Container(
+                decoration: BoxDecoration(color: Colors.lightBlueAccent),
+                constraints: BoxConstraints.expand(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                ),
+                child: Chewie(controller: chewieController)),
+          ],
+        ),
       ),
     );
   }
