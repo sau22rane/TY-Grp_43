@@ -18,7 +18,6 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   CameraController controller;
-  // CameraController controller;
   bool isDetecting = false;
   @override
   void initState() {
@@ -51,6 +50,7 @@ class _CameraState extends State<Camera> {
               imageWidth: img.width,
               numResults: 2,
             ).then((recognitions) {
+              // result
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
 

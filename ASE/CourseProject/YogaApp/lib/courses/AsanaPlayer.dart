@@ -6,7 +6,6 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:camera/camera.dart';
 import 'Detection/Camera.dart';
-//import 'package:tflite_flutter_plugin_example/classifier.dart';
 
 class AsanaPlayer extends StatefulWidget {
   final List<CameraDescription> camera;
@@ -55,32 +54,10 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   loadModel() async {
     String res;
-    switch (_model) {
-      case yolo:
-        res = await Tflite.loadModel(
-          model: "assets/yolov2_tiny.tflite",
-          labels: "assets/yolov2_tiny.txt",
-        );
-        break;
 
-      case mobilenet:
-        res = await Tflite.loadModel(
-            model: "assets/mobilenet_v1_1.0_224.tflite",
-            labels: "assets/mobilenet_v1_1.0_224.txt");
-        break;
-
-      case posenet:
-        print("SELECTING POSENET");
-        res = await Tflite.loadModel(
-            model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
-        break;
-
-      default:
-        print("Runing default case");
-        res = await Tflite.loadModel(
-            model: "assets/ssd_mobilenet.tflite",
-            labels: "assets/ssd_mobilenet.txt");
-    }
+    print("SELECTING POSENET");
+    res = await Tflite.loadModel(
+        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
     print(res);
     print("MODEL LOADED SUCESSFULLY!!!");
     setState(() {
@@ -130,9 +107,9 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(color: Colors.lightBlueAccent),
                   height: MediaQuery.of(context).size.height * 0.35,
+                  width: MediaQuery.of(context).size.width,
                   child: wait == 0
                       ? RaisedButton(
-                          // onPressed: () => onSelect(posenet),
                           onPressed: () {
                             onSelect(posenet);
                           },
