@@ -6,6 +6,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+bool pract;
 
 class BlogList extends StatefulWidget {
   static final id = "BlogList";
@@ -17,74 +21,158 @@ class BlogList extends StatefulWidget {
 
 class _BlogList extends State<BlogList> {
   List<Modal> itemList = List();
+  bool spinner = true;
+  String fileNameInput;
   final mainReference =
       FirebaseDatabase.instance.reference().child("BlogSection");
+  getPractioner() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool boolValue = prefs.getBool('Participant/Trainee');
+    if (boolValue != null) {
+      pract = boolValue;
+      print("pract " + pract.toString());
+    } else {
+      pract = true;
+      print("Notfound");
+    }
+  }
 
   String get type => widget.type;
   @override
   Widget build(BuildContext context) {
-    print("heya");
     String type = ModalRoute.of(context).settings.arguments;
+    //print(type);
+    mainReference.once().then((DataSnapshot snap) {
+      //print(snap);
+      var data = snap.value;
+      itemList.clear();
+      data.forEach((key, value) {
+        Modal m = new Modal(value['PDF'], value['FileName']);
+        itemList.add(m);
+        setState(() {
+          spinner = false;
+        });
+      });
+    });
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: Text(type),
       ),
-      body: itemList.length == 0
-          ? Text("Loading")
-          : ListView.builder(
-              itemCount: itemList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        String passData = itemList[index].link;
-                        Navigator.pushNamed(context, ViewBlog.id,
-                            arguments: passData);
-                      },
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/logo.png'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+      body: ModalProgressHUD(
+        inAsyncCall: spinner,
+        child: ListView.builder(
+          itemCount: itemList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: GestureDetector(
+                  onTap: () {
+                    String passData = itemList[index].link;
+                    Navigator.pushNamed(context, ViewBlog.id,
+                        arguments: passData);
+                  },
+                  child: Center(
+                    child: Container(
+                      height: 140,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        margin: EdgeInsets.all(18),
+                        elevation: 7.0,
+                        child: Center(
+                          child: Text(itemList[index].name +
+                              " " +
+                              (index + 1).toString()),
+                        ),
+                      ),
+                    ),
+                  ),
+                ));
+          },
+        ),
+      ),
+      floatingActionButton: pract
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => Container(
+                          height: 500,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
                           ),
-                          Center(
-                            child: Container(
-                              height: 140,
-                              child: Card(
-                                margin: EdgeInsets.all(18),
-                                elevation: 7.0,
-                                child: Center(
-                                  child: Text(itemList[index].name +
-                                      " " +
-                                      (index + 1).toString()),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  child: Center(
+                                      child: Text(
+                                    "File Name ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  )),
                                 ),
                               ),
-                            ),
+                              Expanded(
+                                flex: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    onChanged: (value) {
+                                      fileNameInput = value;
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  width: 300,
+                                  decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: GestureDetector(
+                                    child: Center(
+                                        child: Text(
+                                      "Save",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )),
+                                    onTap: () {
+                                      setState(() {
+                                        Navigator.pop(context);
+                                        getPdfAndUpload();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 5,
+                                child: Container(),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ));
+                        ));
+                setState(() {});
               },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              backgroundColor: Colors.deepPurple,
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          getPdfAndUpload();
-          setState(() {});
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.deepPurple,
-      ),
     );
   }
 
@@ -106,7 +194,7 @@ class _BlogList extends State<BlogList> {
     StorageReference reference = FirebaseStorage.instance.ref().child(name);
     StorageUploadTask uploadTask = reference.putData(asset);
     String url = await (await uploadTask.onComplete).ref.getDownloadURL();
-    print(url);
+    print("url " + url);
     documentFileUpload(url);
     print("Saved");
   }
@@ -114,7 +202,7 @@ class _BlogList extends State<BlogList> {
   void documentFileUpload(String str) {
     var data = {
       "PDF": str,
-      "FileName": "file",
+      "FileName": fileNameInput,
     };
     mainReference.child(createCryptoRandomString()).set(data).then((v) {
       print("stored sucessful");
@@ -130,16 +218,8 @@ class _BlogList extends State<BlogList> {
   @override
   void initState() {
     super.initState();
-    mainReference.once().then((DataSnapshot snap) {
-      print(snap);
-      var data = snap.value;
-      itemList.clear();
-      data.forEach((key, value) {
-        Modal m = new Modal(value['PDF'], value['FileName']);
-        itemList.add(m);
-        setState(() {});
-      });
-    });
+    spinner = true;
+    getPractioner();
   }
 }
 

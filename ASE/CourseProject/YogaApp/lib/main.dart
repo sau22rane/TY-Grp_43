@@ -7,15 +7,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:YogaApp/login_screens/login_screen.dart';
 import 'package:YogaApp/login_screens/welcome_screen.dart';
 import 'package:YogaApp/login_screens/registration_screen.dart';
+import 'package:YogaApp/choose.dart';
+import 'homepage.dart';
 import 'package:YogaApp/homepage.dart';
-import 'courses/courseList.dart';
+import 'package:YogaApp/courses/courseList.dart' as course;
 import 'package:firebase_database/firebase_database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final _auth = FirebaseAuth.instance;
   final user = await _auth.currentUser();
-  final String initialRoute = (user == null) ? WelcomeScreen.id : HomePage.id;
+  final String initialRoute = (user == null) ? WelcomeScreen.id : Choose.id;
   runApp(MyApp(
     initialRoute: initialRoute,
   ));
@@ -26,16 +28,19 @@ class MyApp extends StatelessWidget {
   MyApp({@required this.initialRoute});
   @override
   Widget build(BuildContext context) {
-    Query q;
-    return MaterialApp(routes: {
-      HomePage.id: (context) => HomePage(),
-      LoginScreen.id: (context) => LoginScreen(),
-      WelcomeScreen.id: (context) => WelcomeScreen(),
-      RegistrationScreen.id: (context) => RegistrationScreen(),
-      CourseList.id: (context) => CourseList(),
-      BlogTypeList.id: (context) => BlogTypeList(),
-      BlogList.id: (context) => BlogList(),
-      ViewBlog.id: (context) => ViewBlog(),
-    }, initialRoute: initialRoute);
+    return MaterialApp(
+      routes: {
+        Choose.id: (context) => Choose(),
+        LoginScreen.id: (context) => LoginScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        course.CourseList.id: (context) => course.CourseList(),
+        BlogTypeList.id: (context) => BlogTypeList(),
+        BlogList.id: (context) => BlogList(),
+        ViewBlog.id: (context) => ViewBlog(),
+        HomePage.id: (context) => HomePage(),
+      },
+      initialRoute: initialRoute,
+    );
   }
 }

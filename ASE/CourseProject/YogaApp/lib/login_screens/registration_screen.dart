@@ -1,5 +1,6 @@
+import 'package:YogaApp/login_screens/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:YogaApp/homepage.dart';
+import 'package:YogaApp/choose.dart';
 import 'package:YogaApp/widgets/rounded_button.dart';
 import 'package:YogaApp/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,8 +77,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     final newUser = await _auth.createUserWithEmailAndPassword(
                         email: email, password: password);
                     if (newUser != null) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, HomePage.id, (route) => false);
+                      Navigator.pushNamed(
+                          context, Choose.id);
                     }
                   } catch (e) {
                     print(e);
@@ -103,6 +104,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   });
                 },
               ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Already have an account ?"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(context, LoginScreen.id, (context) => false);
+                      },
+                      child: Text("Login",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)
+                      )
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

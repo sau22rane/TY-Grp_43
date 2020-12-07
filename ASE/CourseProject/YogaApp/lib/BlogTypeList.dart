@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
-import 'widgets/CustomAppBar.dart';
+
 import 'BlogList.dart';
 
 class BlogTypeList extends StatelessWidget {
   static const String id = "BlogTypeList";
-  static const List<String> titles = [
-    "Outdoor Exercise \n 128 topics  - 1.3K articles",
-    "Yoga Technology \n 110 topics  - 1K articles",
-    "Health & Wellness \n 80 topics  - 3K articles"
+  static const List<List<String>> titles = [
+    ["Outdoor Exercise", "\n128 topics 1.3K articles"],
+    ["Yoga Technology", "\n110 topics 1K articles"],
+    ["Health & Wellness", "\n80 topics 3K articles"],
+    ["Health & Wellness", "\n80 topics 3K articles"]
   ];
 
-  static const List<Color> colors = [Colors.blue, Colors.red, Colors.cyan];
+  static const List<Color> colors = [
+    Color(0xFF7400B8),
+    Color(0xFF5E60CE),
+    Color(0xFF74EA8DE),
+    Color(0xFF64DFDF)
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            flex: 2,
-            child: CustomAppBar(
-                text: 'Articles',
-                align: Alignment.centerLeft,
-                borderWidth: 3.0),
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  "Articles",
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ),
           Expanded(
-            flex: 8,
             child: ListView.builder(
                 itemCount: titles.length,
                 itemBuilder: (context, index) {
                   return Container(
+                    height: 250,
                     color: (index == colors.length - 1)
-                        ? Colors.white
+                        ? colors[index]
                         : colors[index + 1],
                     child: Container(
                       child: Align(
@@ -43,10 +53,10 @@ class BlogTypeList extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, BlogList.id,
-                                  arguments: titles[index]);
+                                  arguments: titles[index][0]);
                             },
                             child: Text(
-                              titles[index],
+                              titles[index][0] + titles[index][1],
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,

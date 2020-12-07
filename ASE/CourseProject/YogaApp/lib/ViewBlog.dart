@@ -21,7 +21,7 @@ class _ViewBlogState extends State<ViewBlog> {
     Widget loading() {
       viewNow();
       if (doc == null) {
-        return Text("Loading");
+        return Center(child: Text("Loading"));
       }
       return Container();
     }
