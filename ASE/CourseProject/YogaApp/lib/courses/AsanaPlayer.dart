@@ -3,7 +3,6 @@ import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
-import 'Detection/model.dart';
 import 'package:camera/camera.dart';
 import 'Detection/Camera.dart';
 //import 'package:tflite_flutter_plugin_example/classifier.dart';
@@ -29,6 +28,9 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
   @override
   void initState() {
     super.initState();
+    if (widget.camera == null) {
+      print("Camera null in asanaPlayer.dart file");
+    }
     videoPlayerController = VideoPlayerController.network(this.widget.url);
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
@@ -51,7 +53,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   loadModel() async {
     String res;
-
     res = await Tflite.loadModel(
         model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
     print(res);
@@ -89,17 +90,30 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
         ),
         body: Column(
           children: <Widget>[
-            Camera(
-              widget.camera,
-              _model,
-              setRecognitions,
+            SizedBox(
+              height: 100,
             ),
-            Container(
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(color: Colors.lightBlueAccent),
-                constraints: BoxConstraints.expand(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.35,
+                child: Camera(
+                  widget.camera,
+                  _model,
+                  setRecognitions,
                 ),
-                child: Chewie(controller: chewieController)),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  decoration: BoxDecoration(color: Colors.lightBlueAccent),
+                  padding:
+                      EdgeInsets.only(top: 50, left: 8, right: 8, bottom: 8),
+                  child: Chewie(controller: chewieController)),
+            ),
           ],
         ),
       ),

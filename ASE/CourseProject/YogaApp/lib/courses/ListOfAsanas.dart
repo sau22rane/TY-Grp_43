@@ -139,11 +139,12 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
       print("================CAMERA AVAILABLE===========");
     } on CameraException catch (e) {
       print('Error: $e.code\nError Message: $e.message');
+      print("No camera available in ListOfAsana.dart file");
     }
   }
 
   Future callcameraAvailablity() async {
-    await func();
+    await cameraAvailablity();
   }
 
   Future readData() async {
@@ -184,6 +185,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     func();
+    // callcameraAvailablity();
     return Scaffold(
         appBar: AppBar(
           title: Text(

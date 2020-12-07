@@ -3,8 +3,6 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 
-import 'model.dart';
-
 typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
@@ -27,11 +25,11 @@ class _CameraState extends State<Camera> {
 
     if (widget.cameras == null || widget.cameras.length < 1) {
       print('No camera is found');
+      print(widget.cameras == null);
     } else {
       controller = new CameraController(
-        widget.cameras[0],
-        ResolutionPreset.high,
-      );
+          widget.cameras[0], ResolutionPreset.high,
+          enableAudio: true);
       controller.initialize().then((_) {
         if (!mounted) {
           return;
@@ -86,12 +84,19 @@ class _CameraState extends State<Camera> {
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
 
-    return OverflowBox(
-      // maxHeight: screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
-      maxHeight: 100,
-      // maxWidth: screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
-      maxWidth: 100,
-      child: CameraPreview(controller),
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: OverflowBox(
+        maxHeight: screenRatio > previewRatio
+            ? screenH
+            : screenW / previewW * previewH,
+        // height: tmp.height * 0.5,
+        maxWidth: screenRatio > previewRatio
+            ? screenH / previewH * previewW
+            : screenW,
+        // width: tmp.width * 0.5,
+        child: CameraPreview(controller),
+      ),
     );
   }
 }
