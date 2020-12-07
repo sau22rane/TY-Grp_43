@@ -56,7 +56,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   ),
                 ),
                 TypewriterAnimatedTextKit(
-                  text: ['Virtual Yoga'],
+                  text: ['  My Yoga'],
                   textStyle: TextStyle(
                     fontSize: 40.0,
                     fontWeight: FontWeight.w900,

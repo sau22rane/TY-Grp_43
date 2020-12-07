@@ -10,6 +10,7 @@ void yyerror();
 %left '+' '-'
 %left '*' '/' '%' 
 %left OR AND LAND LOR RIGHTSHIFT LEFTSHIFT XOR NOT
+
 %%
 
 S: expr { 
