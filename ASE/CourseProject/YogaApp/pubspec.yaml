@@ -41,6 +41,8 @@ dependencies:
   http: ^0.12.0+4
   chewie: ^0.9.7
   video_player: ^0.10.1
+  camera: 0.5.7+4
+  tflite: 1.0.4
 
 
 dev_dependencies:

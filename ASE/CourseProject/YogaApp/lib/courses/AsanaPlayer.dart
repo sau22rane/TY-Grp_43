@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
+import 'package:camera/camera.dart';
 //import 'package:tflite_flutter_plugin_example/classifier.dart';
 
 class AsanaPlayer extends StatefulWidget {
+  final List<CameraDescription> camera;
   String url =
       "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/yoga1.mp4?alt=media&token=e9a66061-b452-47d9-9954-f56523d200fa";
   @override
   _AsanaPlayerState createState() => _AsanaPlayerState();
+  AsanaPlayer(this.camera);
 }
 
 class _AsanaPlayerState extends State<AsanaPlayer> {
@@ -60,9 +63,3 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
     );
   }
 }
-// class AsanaPlayer extends StatelessWidget {
-// @override
-// Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
