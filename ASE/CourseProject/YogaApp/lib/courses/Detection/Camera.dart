@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
+import 'package:YogaApp/constants.dart';
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
@@ -17,19 +18,19 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   CameraController controller;
+  // CameraController controller;
   bool isDetecting = false;
-
   @override
   void initState() {
     super.initState();
 
     if (widget.cameras == null || widget.cameras.length < 1) {
       print('No camera is found');
-      print(widget.cameras == null);
     } else {
       controller = new CameraController(
-          widget.cameras[0], ResolutionPreset.high,
-          enableAudio: true);
+        widget.cameras[0],
+        ResolutionPreset.high,
+      );
       controller.initialize().then((_) {
         if (!mounted) {
           return;
@@ -52,6 +53,7 @@ class _CameraState extends State<Camera> {
             ).then((recognitions) {
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
+
               widget.setRecognitions(recognitions, img.height, img.width);
               print(recognitions.toList());
 

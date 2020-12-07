@@ -1,3 +1,4 @@
+import 'package:YogaApp/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
@@ -23,7 +24,8 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
   List<dynamic> _recognitions;
   int _imageHeight = 0;
   int _imageWidth = 0;
-  String _model = "";
+  String _model = posenet;
+  int wait = 0;
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       aspectRatio: 3 / 2,
-      autoPlay: true,
+      // autoPlay: true,
       // looping: true,
       // showControls: false,
       // materialProgressColors: ChewieProgressColors(
@@ -53,17 +55,42 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   loadModel() async {
     String res;
-    res = await Tflite.loadModel(
-        model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+    switch (_model) {
+      case yolo:
+        res = await Tflite.loadModel(
+          model: "assets/yolov2_tiny.tflite",
+          labels: "assets/yolov2_tiny.txt",
+        );
+        break;
+
+      case mobilenet:
+        res = await Tflite.loadModel(
+            model: "assets/mobilenet_v1_1.0_224.tflite",
+            labels: "assets/mobilenet_v1_1.0_224.txt");
+        break;
+
+      case posenet:
+        print("SELECTING POSENET");
+        res = await Tflite.loadModel(
+            model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+        break;
+
+      default:
+        print("Runing default case");
+        res = await Tflite.loadModel(
+            model: "assets/ssd_mobilenet.tflite",
+            labels: "assets/ssd_mobilenet.txt");
+    }
     print(res);
     print("MODEL LOADED SUCESSFULLY!!!");
+    setState(() {
+      wait = 1;
+    });
   }
 
   onSelect(model) {
-    setState(() {
-      _model = model;
-    });
     loadModel();
+    print("onselect complete");
   }
 
   setRecognitions(recognitions, imageHeight, imageWidth) {
@@ -83,6 +110,10 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    // onSelect(posenet);
+    if (_model == "") {
+      //onSelect(posenet);
+    }
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -96,15 +127,22 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(color: Colors.lightBlueAccent),
-                height: MediaQuery.of(context).size.height * 0.35,
-                child: Camera(
-                  widget.camera,
-                  _model,
-                  setRecognitions,
-                ),
-              ),
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(color: Colors.lightBlueAccent),
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  child: wait == 0
+                      ? RaisedButton(
+                          // onPressed: () => onSelect(posenet),
+                          onPressed: () {
+                            onSelect(posenet);
+                          },
+                          child: Text("Start"),
+                        )
+                      : Camera(
+                          widget.camera,
+                          _model,
+                          setRecognitions,
+                        )),
             ),
             Align(
               alignment: Alignment.bottomCenter,

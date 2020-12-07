@@ -66,6 +66,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/posenet_mv1_075_float_from_checkpoints.tflite
   fonts:
     - family: Futura
       fonts:
