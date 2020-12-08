@@ -1,4 +1,5 @@
 import 'package:YogaApp/BlogTypeList.dart';
+import 'package:YogaApp/ScoreViewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:YogaApp/homepage.dart';
@@ -79,15 +80,11 @@ class AppDrawer extends StatelessWidget {
                   title: "Articles",
                   id: BlogTypeList.id,
                 ),
-                DrawerListItem(
-                  icon: Icons.list,
-                  title: "My History",
-                  id: null,
-                ),
+                
                 DrawerListItem(
                   icon: Icons.info_outline,
                   title: "About Us",
-                  id: null,
+                  id: ScoreViewer.id,
                 ),
                 DrawerListItem(
                   icon: Icons.exit_to_app,
