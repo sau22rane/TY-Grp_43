@@ -1,3 +1,4 @@
+import 'package:YogaApp/ScoreViewer.dart';
 import 'package:YogaApp/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
@@ -20,6 +21,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
   bool flag = false;
+  var result;
 
   AudioPlayer audioPlayer = AudioPlayer();
   static String url =
@@ -63,34 +65,37 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       autoInitialize: true,
     );
     videoPlayerController.addListener(() {});
-    chewieController.videoPlayerController.addListener(() {
+    chewieController.videoPlayerController.addListener(() async {
       if (chewieController.videoPlayerController.value.position.inSeconds ==
               video.duration.inSeconds &&
           flag == false) {
-        print("got it#################################");
+        //print("got it#################################");
         playAudio(
           first: false,
         );
         flag = true;
-        chewieController.videoPlayerController.removeListener(() {});
-      } else {
-        print("Not now  " +
-            chewieController.videoPlayerController.value.position.inSeconds
-                .toString() +
-            " dur  " +
-            video.duration.inSeconds.toString());
+        result = await getRequest(_recognitions);
+      }
+      if (chewieController.videoPlayerController.value.position ==
+          chewieController.videoPlayerController.value.duration) {
+        {
+          print(result);
+          // (result != null) ?
+          Navigator.pushReplacementNamed(context, ScoreViewer.id,
+              arguments: () => result);
+          // : {};
+        }
       }
     });
   }
 
   loadModel() async {
     String res;
-
-    print("SELECTING POSENET");
+    //print("SELECTING POSENET");
     res = await Tflite.loadModel(
         model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
     print(res);
-    print("MODEL LOADED SUCESSFULLY!!!");
+    //print("MODEL LOADED SUCESSFULLY!!!");
     setState(() {
       wait = 1;
     });
@@ -98,7 +103,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   onSelect(model) {
     loadModel();
-    print("onselect complete");
+    //print("onselect complete");
   }
 
   setRecognitions(
@@ -152,7 +157,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    chewieController.videoPlayerController.value.position;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
