@@ -132,10 +132,7 @@ class _CourseListState extends State<CourseList> {
           ),
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(
-              Icons.list,
-              color: Colors.grey,
-            ),
+            icon: Icon(Icons.list, color: Colors.white),
             onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           elevation: 0,
@@ -161,14 +158,20 @@ class _CourseListState extends State<CourseList> {
             Container(
               height: size.height * 0.8,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    alignment: Alignment.bottomCenter,
-                    image: AssetImage("assets/images/smile.jpeg"),
-                    fit: BoxFit.fitWidth),
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(100)),
-                color: Colors.orange,
-              ),
+                  image: DecorationImage(
+                      alignment: Alignment.bottomCenter,
+                      image: AssetImage("assets/images/smile.jpeg"),
+                      fit: BoxFit.fitWidth),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(100)),
+                  color: Colors.orange,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 15.0,
+                    ),
+                  ]),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 20),
                 child: Align(
@@ -195,6 +198,7 @@ class _CourseListState extends State<CourseList> {
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         "Surf The Waves Of Happiness",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -204,13 +208,19 @@ class _CourseListState extends State<CourseList> {
             Container(
               height: size.height * 0.6,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/logo.jpg"),
-                    fit: BoxFit.cover),
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(100)),
-                color: Colors.yellow,
-              ),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/road.jpeg"),
+                      fit: BoxFit.cover),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(100)),
+                  color: Colors.yellow,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 15.0,
+                    ),
+                  ]),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 20),
                 child: Align(
@@ -237,6 +247,7 @@ class _CourseListState extends State<CourseList> {
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         "Clam Your Busy Mind",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -247,11 +258,18 @@ class _CourseListState extends State<CourseList> {
               height: size.height * 0.4,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/logo.jpg"),
+                    image: AssetImage("assets/images/green.jpeg"),
                     fit: BoxFit.cover),
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),
                 color: Colors.grey,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 2.0,
+                  )
+                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 20),
@@ -279,6 +297,7 @@ class _CourseListState extends State<CourseList> {
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         "Make Your Day Worry Free",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -291,6 +310,13 @@ class _CourseListState extends State<CourseList> {
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),
                 color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 15.0,
+                  ),
+                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 35),

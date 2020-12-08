@@ -27,12 +27,19 @@ Future<String> getRequest(var recognition) async {
     print(d["keypoints"].toString());
     temp = d["keypoints"];
   }
+  // print(temp.runtimeType);
+  // for (var i = 0; i <= 10; i = i + 1) {
+  //   print(temp[i]['x']);
+  //   print(temp[i]['y']);
+  // }
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
       "Asana1" +
       "&course=" +
       "Course1" +
       "&cords=" +
       temp.toString();
+
+  print("temp : " + temp.toString());
   String res = await http.read(url);
   print(res);
 }
