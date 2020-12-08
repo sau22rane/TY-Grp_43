@@ -6,11 +6,11 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'package:camera/camera.dart';
 import 'Detection/Camera.dart';
+import 'package:flutter_exoplayer/audioplayer.dart';
 
 class AsanaPlayer extends StatefulWidget {
   final List<CameraDescription> camera;
-  String url =
-      "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/yoga1.mp4?alt=media&token=e9a66061-b452-47d9-9954-f56523d200fa";
+
   @override
   _AsanaPlayerState createState() => _AsanaPlayerState();
   AsanaPlayer(this.camera);
@@ -19,12 +19,20 @@ class AsanaPlayer extends StatefulWidget {
 class _AsanaPlayerState extends State<AsanaPlayer> {
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
+  bool flag = false;
+
+  AudioPlayer audioPlayer = AudioPlayer();
+  static String url =
+      "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/yoga1.mp4?alt=media&token=e9a66061-b452-47d9-9954-f56523d200fa";
+  static Duration duration = new Duration(minutes: 0, seconds: 10);
+  Video video = new Video(url: url, duration: duration);
 
   List<dynamic> _recognitions;
   int _imageHeight = 0;
   int _imageWidth = 0;
   String _model = posenet;
   int wait = 0;
+  bool reach = false;
 
   @override
   void initState() {
@@ -32,7 +40,10 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
     if (widget.camera == null) {
       print("Camera null in asanaPlayer.dart file");
     }
-    videoPlayerController = VideoPlayerController.network(this.widget.url);
+    videoPlayerController = VideoPlayerController.network(video.url);
+    playAudio(
+      first: true,
+    );
     chewieController = ChewieController(
       videoPlayerController: videoPlayerController,
       aspectRatio: 3 / 2,
@@ -45,11 +56,31 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       //   backgroundColor: Colors.grey,
       //   bufferedColor: Colors.lightGreen,
       // ),
+
       placeholder: Container(
         color: Colors.cyan,
       ),
       autoInitialize: true,
     );
+    videoPlayerController.addListener(() {});
+    chewieController.videoPlayerController.addListener(() {
+      if (chewieController.videoPlayerController.value.position.inSeconds ==
+              video.duration.inSeconds &&
+          flag == false) {
+        print("got it#################################");
+        playAudio(
+          first: false,
+        );
+        flag = true;
+        chewieController.videoPlayerController.removeListener(() {});
+      } else {
+        print("Not now  " +
+            chewieController.videoPlayerController.value.position.inSeconds
+                .toString() +
+            " dur  " +
+            video.duration.inSeconds.toString());
+      }
+    });
   }
 
   loadModel() async {
@@ -80,34 +111,34 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       _imageHeight = imageHeight;
       _imageWidth = imageWidth;
       /*print("=======================" +
-          _recognitions.toString() +
-          "=============================");
-      print("=======================" +
-          _imageHeight.toString() +
-          "=============================");
-      print("=======================" +
-          _imageWidth.toString() +
-          "=============================");
-      print(recognitions.length);
-      if (recognitions.length != 0) {
-        // for (var data in recognitions) {
-        //   for (var d in data) {
-        //     print(d);
-        //   }
-        // }
-        var t;
-        for (var d in recognitions) {
-          print(d["keypoints"].toString());
-          t = d["keypoints"];
-        }
-        print(t.runtimeType);
-        for (var i = 0; i <= 10; i = i + 1) {
-          print(t[i]);
-        }
-        // for (var x in t) {
-        //   print(x.runtimeType);
-        // }
-      }*/
+                  _recognitions.toString() +
+                  "=============================");
+              print("=======================" +
+                  _imageHeight.toString() +
+                  "=============================");
+              print("=======================" +
+                  _imageWidth.toString() +
+                  "=============================");
+              print(recognitions.length);
+              if (recognitions.length != 0) {
+                // for (var data in recognitions) {
+                //   for (var d in data) {
+                //     print(d);
+                //   }
+                // }
+                var t;
+                for (var d in recognitions) {
+                  print(d["keypoints"].toString());
+                  t = d["keypoints"];
+                }
+                print(t.runtimeType);
+                for (var i = 0; i <= 10; i = i + 1) {
+                  print(t[i]);
+                }
+                // for (var x in t) {
+                //   print(x.runtimeType);
+                // }
+              }*/
     });
   }
 
@@ -115,6 +146,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
   void dispose() {
     videoPlayerController.dispose();
     chewieController.dispose();
+    audioPlayer.dispose();
     super.dispose();
   }
 
@@ -154,14 +186,33 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                  decoration: BoxDecoration(color: Colors.lightBlueAccent),
-                  padding:
-                      EdgeInsets.only(top: 50, left: 8, right: 8, bottom: 8),
-                  child: Chewie(controller: chewieController)),
+                decoration: BoxDecoration(color: Colors.lightBlueAccent),
+                padding: EdgeInsets.only(top: 50, left: 8, right: 8, bottom: 8),
+                child: Chewie(controller: chewieController),
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+void playAudio({bool first}) async {
+  print("hii i am audio");
+  String audioUrl2 =
+      "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/hold_pose.mp3?alt=media&token=0928ce36-0128-436a-834f-130df4d33858";
+  String audioUrl =
+      "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/ttsMP3.com_VoiceText_2020-12-9_3_27_7.mp3?alt=media&token=397575ec-3916-4738-8941-481a2cf7e7af";
+  AudioPlayer audioPlayer = new AudioPlayer();
+  await audioPlayer.play(
+    first ? audioUrl : audioUrl2,
+    // playerMode: PlayerMode.BACKGROUND,
+  );
+}
+
+class Video {
+  String url;
+  Duration duration;
+  Video({this.duration, this.url});
 }
