@@ -74,7 +74,7 @@ class _BlogList extends State<BlogList> {
                height: size.height * 0.18,
 
               decoration: BoxDecoration(
-                  color: Colors.deepPurple,
+                  color: Color(0xFF5E60CE),
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(50))),
             ),
@@ -98,9 +98,8 @@ class _BlogList extends State<BlogList> {
                           margin: EdgeInsets.all(18),
                           elevation: 7.0,
                           child: Center(
-                            child: Text(itemList[index].name +
-                                " " +
-                                (index + 1).toString()),
+                            child: Text(itemList[index].name), 
+                               
                           ),
                         ),
                       ),
@@ -187,7 +186,7 @@ class _BlogList extends State<BlogList> {
                 Icons.add,
                 color: Colors.white,
               ),
-              backgroundColor: Colors.blue,
+              backgroundColor: Color(0xFF5E60CE),
             ),
     );
   }

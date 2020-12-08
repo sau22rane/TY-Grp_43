@@ -29,7 +29,7 @@ class _HomePage extends State<HomePage> {
             flex: 1,
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 10),
-              child: Text("Health Inights",style: TextStyle(fontSize: 0,fontWeight: FontWeight.bold),),),
+              child: Text("Health Inights",style: TextStyle(fontSize: 0 ,color: Colors.black , fontWeight: FontWeight.bold),),),
           ),
           Expanded(
             flex: 7,
@@ -181,9 +181,9 @@ class _MyScoreListState extends State<MyScoreList> {
 
   List<FlSpot> data = [];
 dynamic month = [  "Jan",  "Feb", "Mar",  "Apr", "May",  "June",  "Jul",  "Aug",  "Sep",  "Oct",  "Nov",  "Dec" ];
-  dynamic dayData = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+  dynamic dayData = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  List<double> scores = [3,2,5,3.1,4,3,4];
+  List<double> scores = [3.4,4.5,7,8,5.1,5.4,5.6,8,10];
 
   var now = DateTime.parse("20201207");
 
@@ -192,8 +192,7 @@ dynamic month = [  "Jan",  "Feb", "Mar",  "Apr", "May",  "June",  "Jul",  "Aug",
       dates.add(now);
       data.add(FlSpot(now.weekday.toDouble(), scores[i]));
       now = now.add(new Duration(days: 1));
-      print(dates[i]);
-      print(data[i].x);
+      
     }
   }
 

@@ -28,7 +28,7 @@ class BlogTypeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-         backgroundColor:  Color(0xFF7400B8),title: Text("Articles"
+         backgroundColor:  colors[0],title: Text("Articles"
          ,style: TextStyle(color: Colors.white,
          ),
          ),

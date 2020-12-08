@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final _auth = FirebaseAuth.instance;
   final user = await _auth.currentUser();
-  final String initialRoute = (user == null) ? WelcomeScreen.id : Choose.id;
+  final String initialRoute = (user == null) ? WelcomeScreen.id : HomePage.id;
   runApp(MyApp(
     initialRoute: initialRoute,
   ));
