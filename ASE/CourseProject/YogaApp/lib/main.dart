@@ -1,5 +1,6 @@
 import 'package:YogaApp/BlogList.dart';
 import 'package:YogaApp/BlogTypeList.dart';
+import 'package:YogaApp/ScoreViewer.dart';
 import 'package:YogaApp/ViewBlog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final _auth = FirebaseAuth.instance;
   final user = await _auth.currentUser();
-  final String initialRoute = (user == null) ? WelcomeScreen.id : Choose.id;
+  final String initialRoute = (user == null) ? WelcomeScreen.id : HomePage.id;
   runApp(MyApp(
     initialRoute: initialRoute,
   ));
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         BlogList.id: (context) => BlogList(),
         ViewBlog.id: (context) => ViewBlog(),
         HomePage.id: (context) => HomePage(),
+        ScoreViewer.id : (context) => ScoreViewer(),
       },
       initialRoute: initialRoute,
     );

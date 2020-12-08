@@ -53,8 +53,9 @@ class Choose extends StatelessWidget {
                   child: Center(
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, HomePage.id);
                         setPractioner(true);
+                  
+                        Navigator.pushNamedAndRemoveUntil(context, HomePage.id,(context) =>false);
                       },
                       child: Text(
                         "PARTICIPANT",
@@ -77,9 +78,10 @@ class Choose extends StatelessWidget {
                   child: Center(
                     child: GestureDetector(
                       onTap: () {
-                        
-                        Navigator.pushNamed(context, HomePage.id);
-                        setPractioner(false);
+                         setPractioner(false);
+                        Navigator.pushNamedAndRemoveUntil(context, HomePage.id,(context) =>false);
+                        //Navigator.pushNamed(context, HomePage.id);
+                       
                       },
                       child: Text(
                         "TRAINEE",
