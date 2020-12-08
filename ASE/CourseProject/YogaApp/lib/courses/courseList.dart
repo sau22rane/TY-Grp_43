@@ -179,11 +179,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "Anxiety");
+                          return ListOfAsanas(_refpass, "everyday");
                         }));
                       },
                       child: Text(
-                        "Happiness",
+                        "Everyday",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -193,16 +193,8 @@ class _CourseListState extends State<CourseList> {
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return ListOfAsanas(_refpass, "Happiness");
-                          }));
-                        },
-                        child: Text(
-                          "Surf The Waves Of Happiness",
-                        ),
+                      child: Text(
+                        "Surf The Waves Of Happiness",
                       ),
                     ),
                   ),
@@ -229,11 +221,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "Anxiety");
+                          return ListOfAsanas(_refpass, "intermediate");
                         }));
                       },
                       child: Text(
-                        "Anxiety",
+                        "Intermediate",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -271,11 +263,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "stress");
+                          return ListOfAsanas(_refpass, "modernstyle");
                         }));
                       },
                       child: Text(
-                        "Stress",
+                        "Modern Style",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -304,19 +296,10 @@ class _CourseListState extends State<CourseList> {
                 padding: const EdgeInsets.only(left: 60, bottom: 35),
                 child: Align(
                   alignment: Alignment.bottomLeft,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return ListOfAsanas(_refpass, "Anxiety");
-                      }));
-                    },
-                    child: Text(
-                      "Courses",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
+                  child: Text(
+                    "Courses",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
                   ),
                 ),
               ),

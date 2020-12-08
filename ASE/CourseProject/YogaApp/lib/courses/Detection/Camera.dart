@@ -21,10 +21,20 @@ Future<ResponseModel> postRequest(String name, String job) async {
 
 Future<String> getRequest(var recognition) async {
   // print(a.toString());
+
+  var temp;
+  for (var d in recognition) {
+    print(d["keypoints"].toString());
+    temp = d["keypoints"];
+  }
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
-      recognition.toString() +
-      "&course=courseName";
-  print(await http.read(url));
+      "Asana1" +
+      "&course=" +
+      "Course1" +
+      "&cords=" +
+      temp.toString();
+  String res = await http.read(url);
+  print(res);
 }
 
 typedef void Callback(List<dynamic> list, int h, int w);

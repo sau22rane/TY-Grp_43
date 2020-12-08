@@ -120,6 +120,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    chewieController.videoPlayerController.value.position;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
