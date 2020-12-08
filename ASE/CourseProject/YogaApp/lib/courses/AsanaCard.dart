@@ -1,4 +1,3 @@
-import 'package:YogaApp/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:YogaApp/courses/AsanaPlayer.dart';
 import 'package:camera/camera.dart';

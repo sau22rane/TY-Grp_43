@@ -40,6 +40,7 @@ class _BlogList extends State<BlogList> {
   String get type => widget.type;
   @override
   Widget build(BuildContext context) {
+        Size size = MediaQuery.of(context).size;
     String type = ModalRoute.of(context).settings.arguments;
     //print(type);
     mainReference.once().then((DataSnapshot snap) {
@@ -55,43 +56,58 @@ class _BlogList extends State<BlogList> {
       });
     });
 
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.blue,
         title: Text(type),
       ),
       body: ModalProgressHUD(
         inAsyncCall: spinner,
-        child: ListView.builder(
-          itemCount: itemList.length,
-          itemBuilder: (context, index) {
-            return Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: GestureDetector(
-                  onTap: () {
-                    String passData = itemList[index].link;
-                    Navigator.pushNamed(context, ViewBlog.id,
-                        arguments: passData);
-                  },
-                  child: Center(
-                    child: Container(
-                      height: 140,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        margin: EdgeInsets.all(18),
-                        elevation: 7.0,
-                        child: Center(
-                          child: Text(itemList[index].name +
-                              " " +
-                              (index + 1).toString()),
+        child: Stack(              
+                  children:[ 
+                    Container(
+              decoration: BoxDecoration(color: Colors.lightBlueAccent),
+            ),
+            Container(
+               height: size.height * 0.18,
+
+              decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(50))),
+            ),
+                    ListView.builder(
+            itemCount: itemList.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: GestureDetector(
+                    onTap: () {
+                      String passData = itemList[index].link;
+                      Navigator.pushNamed(context, ViewBlog.id,
+                          arguments: passData);
+                    },
+                    child: Center(
+                      child: Container(
+                        height: 140,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          margin: EdgeInsets.all(18),
+                          elevation: 7.0,
+                          child: Center(
+                            child: Text(itemList[index].name +
+                                " " +
+                                (index + 1).toString()),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ));
-          },
+                  ));
+            },
+          ),],
         ),
       ),
       floatingActionButton: pract
@@ -171,7 +187,7 @@ class _BlogList extends State<BlogList> {
                 Icons.add,
                 color: Colors.white,
               ),
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: Colors.blue,
             ),
     );
   }

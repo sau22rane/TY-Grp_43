@@ -85,6 +85,23 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.3"
+<<<<<<< HEAD
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.5"
+  fake_async:
+    dependency: transitive
+    description:
+      name: fake_async
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
+=======
+>>>>>>> e8d1e002497d014707533c01eb58a25fa17fe043
   ffi:
     dependency: transitive
     description:
@@ -141,6 +158,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1+2"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0"
   flutter:
     dependency: "direct main"
     description: flutter

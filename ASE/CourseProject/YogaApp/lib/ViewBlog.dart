@@ -28,8 +28,7 @@ class _ViewBlogState extends State<ViewBlog> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text("Retrieve Pdf"),
+        backgroundColor: Colors.blue,
       ),
       body: doc == null ? loading() : PDFViewer(document: doc),
     );
