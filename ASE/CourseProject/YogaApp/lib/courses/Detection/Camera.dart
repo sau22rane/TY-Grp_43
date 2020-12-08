@@ -1,8 +1,23 @@
+import 'package:YogaApp/models/ResponseModel.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 import 'package:YogaApp/constants.dart';
+import 'package:http/http.dart' as http;
+
+Future<ResponseModel> postRequest(String name, String job) async {
+  print("======================POST FUNC CALLED================");
+  String url = "http://reqres.in/api/users";
+  final response = await http.post(url, body: {"name": name, "job": job});
+  print("======================GOT RESPONSE================");
+  if (response.statusCode == 201) {
+    String responsestr = response.body;
+    return responseModelFromJson(responsestr);
+  } else {
+    return null;
+  }
+}
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
@@ -88,16 +103,31 @@ class _CameraState extends State<Camera> {
 
     return Padding(
       padding: EdgeInsets.all(8),
-      child: OverflowBox(
-        maxHeight: screenRatio > previewRatio
-            ? screenH
-            : screenW / previewW * previewH,
-        // height: tmp.height * 0.5,
-        maxWidth: screenRatio > previewRatio
-            ? screenH / previewH * previewW
-            : screenW,
-        // width: tmp.width * 0.5,
-        child: CameraPreview(controller),
+      child: Stack(
+        children: <Widget>[
+          OverflowBox(
+            maxHeight: screenRatio > previewRatio
+                ? screenH
+                : screenW / previewW * previewH,
+            // height: tmp.height * 0.5,
+            maxWidth: screenRatio > previewRatio
+                ? screenH / previewH * previewW
+                : screenW,
+            // width: tmp.width * 0.5,
+            child: CameraPreview(controller),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: RaisedButton(
+              onPressed: () async {
+                final ResponseModel model = await postRequest("name", "job");
+                print(model.name + "   lol");
+              },
+              elevation: 10,
+              child: Text("Send Frame"),
+            ),
+          )
+        ],
       ),
     );
   }

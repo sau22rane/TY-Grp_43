@@ -6,9 +6,7 @@ const kSendButtonTextStyle = TextStyle(
   fontSize: 18.0,
 );
 const String posenet = "PoseNet";
-const String mobilenet = "MobileNet";
-const String ssd = "SSD MobileNet";
-const String yolo = "Tiny YOLOv2";
+
 const kMessageTextFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   hintText: 'Type your message here...',

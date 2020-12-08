@@ -128,9 +128,14 @@ class _CourseListState extends State<CourseList> {
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
-          leading: Icon(
-            Icons.assignment_return,
-            color: Colors.grey,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.assignment_return,
+              color: Colors.grey,
+            ),
           ),
           elevation: 0,
           actions: <Widget>[
@@ -156,8 +161,9 @@ class _CourseListState extends State<CourseList> {
               height: size.height * 0.8,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/logo.PNG"),
-                    fit: BoxFit.cover),
+                    alignment: Alignment.bottomCenter,
+                    image: AssetImage("assets/images/smile.jpeg"),
+                    fit: BoxFit.fitWidth),
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),
                 color: Colors.orange,
@@ -176,7 +182,7 @@ class _CourseListState extends State<CourseList> {
                         }));
                       },
                       child: Text(
-                        "Health & Wellness",
+                        "Happiness",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -190,11 +196,11 @@ class _CourseListState extends State<CourseList> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return ListOfAsanas(_refpass, "Anxiety");
+                            return ListOfAsanas(_refpass, "Happiness");
                           }));
                         },
                         child: Text(
-                          "56 topics - 2k articles",
+                          "Surf The Waves Of Happiness",
                         ),
                       ),
                     ),
@@ -226,7 +232,7 @@ class _CourseListState extends State<CourseList> {
                         }));
                       },
                       child: Text(
-                        "Technology",
+                        "Anxiety",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -237,7 +243,7 @@ class _CourseListState extends State<CourseList> {
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        "110 topics - 1k articles",
+                        "Clam Your Busy Mind",
                       ),
                     ),
                   ),
@@ -264,11 +270,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "Anxiety");
+                          return ListOfAsanas(_refpass, "stress");
                         }));
                       },
                       child: Text(
-                        "Outdoor",
+                        "Stress",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -279,7 +285,7 @@ class _CourseListState extends State<CourseList> {
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        "128 topics - 4k articles",
+                        "Make Your Day Worry Free",
                       ),
                     ),
                   ),
@@ -305,7 +311,7 @@ class _CourseListState extends State<CourseList> {
                       }));
                     },
                     child: Text(
-                      "Article",
+                      "Courses",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,

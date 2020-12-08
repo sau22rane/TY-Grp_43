@@ -51,30 +51,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       autoInitialize: true,
     );
   }
-  // VideoPlayerController videoPlayerController;
-  // ChewieController chewieController;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   videoPlayerController = VideoPlayerController.network(this.widget.url);
-  //   chewieController = ChewieController(
-  //     videoPlayerController: videoPlayerController,
-  //     aspectRatio: 3 / 2,
-  //     autoPlay: true,
-  //     // looping: true,
-  //     // showControls: false,
-  //     // materialProgressColors: ChewieProgressColors(
-  //     //   playedColor: Colors.red,
-  //     //   handleColor: Colors.blue,
-  //     //   backgroundColor: Colors.grey,
-  //     //   bufferedColor: Colors.lightGreen,
-  //     // ),
-  //     placeholder: Container(
-  //       color: Colors.cyan,
-  //     ),
-  //     autoInitialize: true,
-  //   );
-  // }
 
   loadModel() async {
     String res;
@@ -99,6 +75,35 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       _recognitions = recognitions;
       _imageHeight = imageHeight;
       _imageWidth = imageWidth;
+      /*print("=======================" +
+          _recognitions.toString() +
+          "=============================");
+      print("=======================" +
+          _imageHeight.toString() +
+          "=============================");
+      print("=======================" +
+          _imageWidth.toString() +
+          "=============================");
+      print(recognitions.length);
+      if (recognitions.length != 0) {
+        // for (var data in recognitions) {
+        //   for (var d in data) {
+        //     print(d);
+        //   }
+        // }
+        var t;
+        for (var d in recognitions) {
+          print(d["keypoints"].toString());
+          t = d["keypoints"];
+        }
+        print(t.runtimeType);
+        for (var i = 0; i <= 10; i = i + 1) {
+          print(t[i]);
+        }
+        // for (var x in t) {
+        //   print(x.runtimeType);
+        // }
+      }*/
     });
   }
 
@@ -111,10 +116,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    // onSelect(posenet);
-    if (_model == "") {
-      //onSelect(posenet);
-    }
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
