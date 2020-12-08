@@ -19,6 +19,31 @@ Future<ResponseModel> postRequest(String name, String job) async {
   }
 }
 
+Future<String> getRequest(var recognition) async {
+  // print(a.toString());
+
+  var temp;
+  for (var d in recognition) {
+    print(d["keypoints"].toString());
+    temp = d["keypoints"];
+  }
+  // print(temp.runtimeType);
+  // for (var i = 0; i <= 10; i = i + 1) {
+  //   print(temp[i]['x']);
+  //   print(temp[i]['y']);
+  // }
+  String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
+      "Asana1" +
+      "&course=" +
+      "Course1" +
+      "&cords=" +
+      temp.toString();
+
+  print("temp : " + temp.toString());
+  String res = await http.read(url);
+  print(res);
+}
+
 typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
@@ -32,6 +57,7 @@ class Camera extends StatefulWidget {
 }
 
 class _CameraState extends State<Camera> {
+  List<dynamic> _recog;
   CameraController controller;
   bool isDetecting = false;
   @override
@@ -70,6 +96,9 @@ class _CameraState extends State<Camera> {
               print("Detection took ${endTime - startTime}");
 
               widget.setRecognitions(recognitions, img.height, img.width);
+              setState(() {
+                _recog = recognitions;
+              });
               print(recognitions.toList());
 
               isDetecting = false;
@@ -120,8 +149,11 @@ class _CameraState extends State<Camera> {
             alignment: Alignment.bottomCenter,
             child: RaisedButton(
               onPressed: () async {
-                final ResponseModel model = await postRequest("name", "job");
-                print(model.name + "   lol");
+                // print(await http.read('http://sau22rane2.pythonanywhere.com/?asana=&course=courseName'));
+                print(
+                    "++++++++++++++++++++GET REQUEST started++++++++++++++++");
+                await print(getRequest(_recog));
+                print("++++++++++++++++++++DONE GET REQUEST++++++++++++++++");
               },
               elevation: 10,
               child: Text("Send Frame"),

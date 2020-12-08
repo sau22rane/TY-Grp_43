@@ -237,7 +237,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
                           //     }));
                           //   },
                           // );
-                          return AsanaCard(cameras);
+                          return AsanaCard(cameras,snaps.value.toString());
                         }),
                   )
           ],

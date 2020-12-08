@@ -1,4 +1,5 @@
 import 'package:YogaApp/courses/ListOfAsanas.dart';
+import 'package:YogaApp/widgets/AppDrawer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -109,7 +110,7 @@ class _CourseListState extends State<CourseList> {
   Query _ref;
   Query _refpass;
   String tempurl = null;
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -122,20 +123,17 @@ class _CourseListState extends State<CourseList> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        key: _scaffoldKey,
+        drawer: AppDrawer(),
         appBar: AppBar(
           title: Text(
             "Course List",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.assignment_return,
-              color: Colors.grey,
-            ),
+          leading: IconButton(
+            icon: Icon(Icons.list, color: Colors.white),
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           elevation: 0,
           actions: <Widget>[
@@ -160,14 +158,20 @@ class _CourseListState extends State<CourseList> {
             Container(
               height: size.height * 0.8,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    alignment: Alignment.bottomCenter,
-                    image: AssetImage("assets/images/smile.jpeg"),
-                    fit: BoxFit.fitWidth),
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(100)),
-                color: Colors.orange,
-              ),
+                  image: DecorationImage(
+                      alignment: Alignment.bottomCenter,
+                      image: AssetImage("assets/images/smile.jpeg"),
+                      fit: BoxFit.fitWidth),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(100)),
+                  color: Colors.orange,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 15.0,
+                    ),
+                  ]),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 20),
                 child: Align(
@@ -178,11 +182,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "Anxiety");
+                          return ListOfAsanas(_refpass, "everyday");
                         }));
                       },
                       child: Text(
-                        "Happiness",
+                        "Everyday",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -192,16 +196,9 @@ class _CourseListState extends State<CourseList> {
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return ListOfAsanas(_refpass, "Happiness");
-                          }));
-                        },
-                        child: Text(
-                          "Surf The Waves Of Happiness",
-                        ),
+                      child: Text(
+                        "Surf The Waves Of Happiness",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -211,13 +208,19 @@ class _CourseListState extends State<CourseList> {
             Container(
               height: size.height * 0.6,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/logo.jpg"),
-                    fit: BoxFit.cover),
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(100)),
-                color: Colors.yellow,
-              ),
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/road.jpeg"),
+                      fit: BoxFit.cover),
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(100)),
+                  color: Colors.yellow,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0.0, 1.0), //(x,y)
+                      blurRadius: 15.0,
+                    ),
+                  ]),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 20),
                 child: Align(
@@ -228,11 +231,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "Anxiety");
+                          return ListOfAsanas(_refpass, "intermediate");
                         }));
                       },
                       child: Text(
-                        "Anxiety",
+                        "Intermediate",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -244,6 +247,7 @@ class _CourseListState extends State<CourseList> {
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         "Clam Your Busy Mind",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -254,11 +258,18 @@ class _CourseListState extends State<CourseList> {
               height: size.height * 0.4,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/logo.jpg"),
+                    image: AssetImage("assets/images/green.jpeg"),
                     fit: BoxFit.cover),
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),
                 color: Colors.grey,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 2.0,
+                  )
+                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 20),
@@ -270,11 +281,11 @@ class _CourseListState extends State<CourseList> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ListOfAsanas(_refpass, "stress");
+                          return ListOfAsanas(_refpass, "modernstyle");
                         }));
                       },
                       child: Text(
-                        "Stress",
+                        "Modern Style",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -286,6 +297,7 @@ class _CourseListState extends State<CourseList> {
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
                         "Make Your Day Worry Free",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
@@ -298,24 +310,22 @@ class _CourseListState extends State<CourseList> {
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),
                 color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.0, 1.0), //(x,y)
+                    blurRadius: 15.0,
+                  ),
+                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 60, bottom: 35),
                 child: Align(
                   alignment: Alignment.bottomLeft,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return ListOfAsanas(_refpass, "intermediate");
-                      }));
-                    },
-                    child: Text(
-                      "Courses",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left,
-                    ),
+                  child: Text(
+                    "Courses",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.left,
                   ),
                 ),
               ),
