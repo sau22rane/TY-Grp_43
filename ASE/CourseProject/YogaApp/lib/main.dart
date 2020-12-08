@@ -1,6 +1,5 @@
 import 'package:YogaApp/BlogList.dart';
 import 'package:YogaApp/BlogTypeList.dart';
-import 'package:YogaApp/courses/ListOfAsanas.dart';
 import 'package:YogaApp/ViewBlog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +10,6 @@ import 'package:YogaApp/choose.dart';
 import 'homepage.dart';
 import 'package:YogaApp/homepage.dart';
 import 'package:YogaApp/courses/courseList.dart' as course;
-import 'package:firebase_database/firebase_database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         Choose.id: (context) => Choose(),
         LoginScreen.id: (context) => LoginScreen(),

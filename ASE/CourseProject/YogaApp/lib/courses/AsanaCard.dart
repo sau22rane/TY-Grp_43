@@ -2,7 +2,6 @@ import 'package:YogaApp/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:YogaApp/courses/AsanaPlayer.dart';
 import 'package:camera/camera.dart';
-import 'package:YogaApp/temp/home.dart';
 
 class AsanaCard extends StatefulWidget {
   final List<CameraDescription> cameras;

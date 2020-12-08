@@ -158,6 +158,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
         v.forEach((key, value) {
           // print("inner : " + value.toString());
           // print("iner skey : " + key);
+          print("Key : " + key);
           if (value["name"] == widget.courseName) {
             print("found");
             widget._tref = FirebaseDatabase.instance
@@ -185,7 +186,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     func();
-    // callcameraAvailablity();
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
