@@ -40,6 +40,9 @@ dependencies:
   http: ^0.12.0+4
   chewie: ^0.9.7
   video_player: ^0.10.1
+  camera: 0.5.7+4
+  tflite: 1.0.4
+
   shared_preferences: ^0.5.12+4
   file_picker: ^1.13.0+1
   fl_chart: ^0.12.0
@@ -66,6 +69,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/posenet_mv1_075_float_from_checkpoints.tflite
   fonts:
     - family: Futura
       fonts:

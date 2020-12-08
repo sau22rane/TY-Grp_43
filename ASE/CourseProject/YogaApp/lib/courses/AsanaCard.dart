@@ -1,9 +1,14 @@
+import 'package:YogaApp/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:YogaApp/courses/AsanaPlayer.dart';
+import 'package:camera/camera.dart';
+import 'package:YogaApp/temp/home.dart';
 
 class AsanaCard extends StatefulWidget {
+  final List<CameraDescription> cameras;
   @override
   _AsanaCardState createState() => _AsanaCardState();
+  AsanaCard(this.cameras);
 }
 
 class _AsanaCardState extends State<AsanaCard> {
@@ -82,7 +87,8 @@ class _AsanaCardState extends State<AsanaCard> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return AsanaPlayer();
+                        return AsanaPlayer(widget.cameras);
+                        // return ganta(widget.cameras);
                       }));
                     },
                     elevation: 10,
