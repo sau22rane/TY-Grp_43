@@ -1,4 +1,5 @@
 import 'package:YogaApp/courses/ListOfAsanas.dart';
+import 'package:YogaApp/widgets/AppDrawer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -109,7 +110,7 @@ class _CourseListState extends State<CourseList> {
   Query _ref;
   Query _refpass;
   String tempurl = null;
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -122,20 +123,20 @@ class _CourseListState extends State<CourseList> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        key: _scaffoldKey,
+        drawer: AppDrawer(),
         appBar: AppBar(
           title: Text(
             "Course List",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.assignment_return,
+          leading: IconButton(
+            icon: Icon(
+              Icons.list,
               color: Colors.grey,
             ),
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           elevation: 0,
           actions: <Widget>[

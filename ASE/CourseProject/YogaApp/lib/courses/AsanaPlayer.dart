@@ -70,7 +70,11 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
     print("onselect complete");
   }
 
-  setRecognitions(recognitions, imageHeight, imageWidth) {
+  setRecognitions(
+    recognitions,
+    imageHeight,
+    imageWidth,
+  ) {
     setState(() {
       _recognitions = recognitions;
       _imageHeight = imageHeight;

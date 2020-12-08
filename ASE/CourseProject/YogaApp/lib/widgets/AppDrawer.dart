@@ -11,6 +11,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 10,
       child: Column(
         children: [
           Expanded(
