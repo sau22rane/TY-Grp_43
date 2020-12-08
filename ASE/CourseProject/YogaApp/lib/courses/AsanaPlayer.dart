@@ -8,12 +8,8 @@ import 'package:camera/camera.dart';
 import 'Detection/Camera.dart';
 
 class AsanaPlayer extends StatefulWidget {
-<<<<<<< HEAD
   final List<CameraDescription> camera;
   String url =
-=======
-  final String url =
->>>>>>> 01361d89944cc61a6924f20dff7c1cbfcaf552eb
       "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/yoga1.mp4?alt=media&token=e9a66061-b452-47d9-9954-f56523d200fa";
   @override
   _AsanaPlayerState createState() => _AsanaPlayerState();
@@ -21,7 +17,6 @@ class AsanaPlayer extends StatefulWidget {
 }
 
 class _AsanaPlayerState extends State<AsanaPlayer> {
-<<<<<<< HEAD
   VideoPlayerController videoPlayerController;
   ChewieController chewieController;
 
@@ -55,12 +50,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       ),
       autoInitialize: true,
     );
-=======
-  @override
-  Widget build(BuildContext context) {
-    
-    throw Container();
->>>>>>> 01361d89944cc61a6924f20dff7c1cbfcaf552eb
   }
   // VideoPlayerController videoPlayerController;
   // ChewieController chewieController;
@@ -87,7 +76,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
   //   );
   // }
 
-<<<<<<< HEAD
   loadModel() async {
     String res;
 
@@ -170,29 +158,4 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       ),
     );
   }
-=======
-  // @override
-  // void dispose() {
-  //   videoPlayerController.dispose();
-  //   chewieController.dispose();
-  //   super.dispose();
-  // }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     home: Scaffold(
-  //       appBar: AppBar(
-  //         title: Text("Asana place"),
-  //       ),
-  //       body: Container(
-  //           decoration: BoxDecoration(color: Colors.lightBlueAccent),
-  //           constraints: BoxConstraints.expand(
-  //             height: MediaQuery.of(context).size.height,
-  //           ),
-  //           child: Chewie(controller: chewieController)),
-  //     ),
-  //   );
-  // }
->>>>>>> 01361d89944cc61a6924f20dff7c1cbfcaf552eb
 }

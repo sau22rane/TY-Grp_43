@@ -18,10 +18,11 @@ class BlogTypeList extends StatelessWidget {
     // Colors.green,
     // Colors.blue,
 
-    Color(0xFF7400B8),
+    
     Color(0xFF5E60CE),
-    Color(0xFF74EA8DE),
-    Color(0xFF64DFDF)
+    Color(0xFF4EA8DE),
+    Color(0xFF56CFE1),
+    Color(0xFF72EFDD),
   ];
   @override
   Widget build(BuildContext context) {
