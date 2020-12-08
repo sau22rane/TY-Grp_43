@@ -155,7 +155,7 @@ class _CourseListState extends State<CourseList> {
               height: size.height * 0.8,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/logo.jpg"),
+                    image: AssetImage("assets/images/logo.PNG"),
                     fit: BoxFit.cover),
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),

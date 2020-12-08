@@ -1,5 +1,6 @@
 import 'package:YogaApp/courses/AsanaCard.dart';
 import 'package:YogaApp/courses/AsanaPlayer.dart';
+import 'package:YogaApp/widgets/AppDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -177,6 +178,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
           elevation: 0,
           backgroundColor: Colors.deepPurple,
         ),
+        
         body: Stack(
           children: <Widget>[
             Container(
