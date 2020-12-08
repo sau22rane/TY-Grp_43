@@ -307,7 +307,7 @@ class _CourseListState extends State<CourseList> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return ListOfAsanas(_refpass, "Anxiety");
+                        return ListOfAsanas(_refpass, "intermediate");
                       }));
                     },
                     child: Text(
