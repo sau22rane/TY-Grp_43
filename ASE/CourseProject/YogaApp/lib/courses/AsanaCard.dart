@@ -4,9 +4,10 @@ import 'package:camera/camera.dart';
 
 class AsanaCard extends StatefulWidget {
   final List<CameraDescription> cameras;
+  String _asana;
   @override
   _AsanaCardState createState() => _AsanaCardState();
-  AsanaCard(this.cameras);
+  AsanaCard(this.cameras, this._asana);
 }
 
 class _AsanaCardState extends State<AsanaCard> {
@@ -24,7 +25,8 @@ class _AsanaCardState extends State<AsanaCard> {
           children: <Widget>[
             CircleAvatar(
               radius: 35,
-              backgroundImage: AssetImage("assets/images/profile.jpg"),
+              backgroundImage:
+                  AssetImage("assets/images/" + widget._asana + ".jpeg"),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +39,7 @@ class _AsanaCardState extends State<AsanaCard> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 15),
                   child: Text(
-                    "Suryanamaskar",
+                    widget._asana,
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 18,

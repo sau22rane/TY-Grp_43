@@ -199,7 +199,6 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
           elevation: 0,
           backgroundColor: Colors.deepPurple,
         ),
-        
         body: Stack(
           children: <Widget>[
             Container(
@@ -239,7 +238,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
                           //     }));
                           //   },
                           // );
-                          return AsanaCard(cameras);
+                          return AsanaCard(cameras, snaps.value.toString());
                         }),
                   )
           ],
