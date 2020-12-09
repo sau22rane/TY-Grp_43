@@ -182,9 +182,9 @@ void Read_matrix(char mat_name,LOCAL_MATRIX_T*  local_A, GRID_INFO_T* grid, int 
     MPI_Status status;
     FILE *fp;
     if(mat_name == 'A')
-        fp = fopen("A_Matrix.txt", "r");
+        fp = fopen("../Data/A_Matrix.txt", "r");
     else{
-        fp = fopen("B_Matrix.txt", "r");
+        fp = fopen("../Data/B_Matrix.txt", "r");
     }
     if (grid->my_rank == 0) {
         temp = (float*) malloc(Order(local_A)*sizeof(float));

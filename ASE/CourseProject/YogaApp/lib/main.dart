@@ -1,7 +1,11 @@
+import 'dart:collection';
+
 import 'package:YogaApp/BlogList.dart';
 import 'package:YogaApp/BlogTypeList.dart';
 import 'package:YogaApp/ScoreViewer.dart';
 import 'package:YogaApp/ViewBlog.dart';
+import 'package:YogaApp/courses/ListOfAsanas.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:YogaApp/login_screens/login_screen.dart';
@@ -39,7 +43,8 @@ class MyApp extends StatelessWidget {
         BlogList.id: (context) => BlogList(),
         ViewBlog.id: (context) => ViewBlog(),
         HomePage.id: (context) => HomePage(),
-        ScoreViewer.id: (context) => ScoreViewer("None"),
+        ScoreViewer.id: (context) => ScoreViewer("1"),
+        // ListOfAsanas.id : (context) => ListOfAsanas(null,"cgg"),
       },
       initialRoute: initialRoute,
     );

@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 
 class ScoreViewer extends StatefulWidget {
   static String id = "Scoreviewer";
-  String _score;
+  String result;
+  ScoreViewer(this.result);
   @override
   _ScoreViewer createState() => _ScoreViewer();
-  ScoreViewer(this._score);
 }
 
 class _ScoreViewer extends State<ScoreViewer> {
   @override
   Widget build(BuildContext context) {
-    String result = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       body: StreamBuilder(
         // This streamBuilder reads the real-time status of SlimyCard.
         initialData: false,
+
         stream: slimyCard.stream, //Stream of SlimyCard
         builder: ((BuildContext context, AsyncSnapshot snapshot) {
           return ListView(
@@ -31,7 +31,7 @@ class _ScoreViewer extends State<ScoreViewer> {
                 // In topCardWidget below, imagePath changes according to the
                 // status of the SlimyCard(snapshot.data).
                 topCardWidget: topCardWidget('assets/images/success.gif'),
-                bottomCardWidget: bottomCardWidget(widget._score),
+                bottomCardWidget: bottomCardWidget(widget.result),
               ),
             ],
           );
@@ -95,7 +95,7 @@ class _ScoreViewer extends State<ScoreViewer> {
       children: [
         Expanded(
           child: Text(
-            result,
+            widget.result,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,

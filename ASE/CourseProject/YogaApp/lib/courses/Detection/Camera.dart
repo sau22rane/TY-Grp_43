@@ -23,7 +23,8 @@ Future<String> getRequest(var recognition) async {
 
   print("temp : " + temp.toString());
   String res = await http.read(url);
-  print(res);
+  print("result @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####" + res);
+  return res;
 }
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -134,7 +135,7 @@ class _CameraState extends State<Camera> {
                 // print(await http.read('http://sau22rane2.pythonanywhere.com/?asana=&course=courseName'));
                 print(
                     "++++++++++++++++++++GET REQUEST started++++++++++++++++");
-                await print(getRequest(_recog));
+                await print(await getRequest(_recog));
                 print("++++++++++++++++++++DONE GET REQUEST++++++++++++++++");
               },
               elevation: 10,
