@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:YogaApp/courses/AsanaPlayer.dart';
 import 'package:camera/camera.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AsanaCard extends StatefulWidget {
   final List<CameraDescription> cameras;
   String _asana;
+  String _url;
+
   @override
   _AsanaCardState createState() => _AsanaCardState();
   AsanaCard(this.cameras, this._asana);
 }
 
 class _AsanaCardState extends State<AsanaCard> {
+  DatabaseReference _ref =
+      FirebaseDatabase.instance.reference().child("Tutorials");
+
+  Future readData() async {
+    _ref.once().then((DataSnapshot snapshot) {
+      print('snapshotData : ${snapshot.value}');
+      Map<dynamic, dynamic> values = snapshot.value;
+
+      print(values.toString());
+      setState(() {
+        widget._url = values[widget._asana];
+        print(
+            "===============set state of read data===============================");
+        print(widget._url);
+      });
+    });
+    print("witn in readdata");
+    // return widget._tref;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -87,7 +116,8 @@ class _AsanaCardState extends State<AsanaCard> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return AsanaPlayer(widget.cameras);
+                        return AsanaPlayer(
+                            widget.cameras, widget._asana, widget._url);
                         // return ganta(widget.cameras);
                       }));
                     },

@@ -4,16 +4,18 @@ import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
-import 'package:camera/camera.dart';
 import 'Detection/Camera.dart';
 import 'package:flutter_exoplayer/audioplayer.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class AsanaPlayer extends StatefulWidget {
   final List<CameraDescription> camera;
-
+  String _asana;
+  String _url;
   @override
   _AsanaPlayerState createState() => _AsanaPlayerState();
-  AsanaPlayer(this.camera);
+  AsanaPlayer(this.camera, this._asana, this._url);
 }
 
 class _AsanaPlayerState extends State<AsanaPlayer> {
@@ -40,7 +42,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
     if (widget.camera == null) {
       print("Camera null in asanaPlayer.dart file");
     }
-    videoPlayerController = VideoPlayerController.network(video.url);
+    videoPlayerController = VideoPlayerController.network(widget._url);
     playAudio(
       first: true,
     );

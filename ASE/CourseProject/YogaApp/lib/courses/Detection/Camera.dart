@@ -6,22 +6,8 @@ import 'dart:math' as math;
 import 'package:YogaApp/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future<ResponseModel> postRequest(String name, String job) async {
-  print("======================POST FUNC CALLED================");
-  String url = "http://reqres.in/api/users";
-  final response = await http.post(url, body: {"name": name, "job": job});
-  print("======================GOT RESPONSE================");
-  if (response.statusCode == 201) {
-    String responsestr = response.body;
-    return responseModelFromJson(responsestr);
-  } else {
-    return null;
-  }
-}
-
 Future<String> getRequest(var recognition) async {
-  // print(a.toString());
-
+  if (recognition.length == 0) return "null";
   var temp;
   for (var d in recognition) {
     print(d["keypoints"].toString());
@@ -33,7 +19,7 @@ Future<String> getRequest(var recognition) async {
   //   print(temp[i]['y']);
   // }
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
-      "Asana1" +
+      "Virabhadrasana" +
       "&course=" +
       "Course1" +
       "&cords=" +
