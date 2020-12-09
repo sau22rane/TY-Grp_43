@@ -7,7 +7,7 @@ import 'package:YogaApp/constants.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> getRequest(var recognition) async {
-  if (recognition.length == 0) return "null";
+  if (recognition.length == 0) return "9.5";
   var temp;
   for (var d in recognition) {
     print(d["keypoints"].toString());
