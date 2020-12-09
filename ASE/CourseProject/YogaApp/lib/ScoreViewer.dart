@@ -1,3 +1,4 @@
+import 'package:YogaApp/courses/ListOfAsanas.dart';
 import 'package:slimy_card/slimy_card.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class ScoreViewer extends StatefulWidget {
 class _ScoreViewer extends State<ScoreViewer> {
   @override
   Widget build(BuildContext context) {
+    String result = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       body: StreamBuilder(
         // This streamBuilder reads the real-time status of SlimyCard.
@@ -27,7 +29,7 @@ class _ScoreViewer extends State<ScoreViewer> {
                 // In topCardWidget below, imagePath changes according to the
                 // status of the SlimyCard(snapshot.data).
                 topCardWidget: topCardWidget('assets/images/success.gif'),
-                bottomCardWidget: bottomCardWidget(),
+                bottomCardWidget: bottomCardWidget(result),
               ),
             ],
           );
@@ -37,7 +39,7 @@ class _ScoreViewer extends State<ScoreViewer> {
   }
 
   // This widget will be passed as Top Card's Widget.
-  Widget topCardWidget(String imagePath) {
+  Widget topCardWidget(String imagePath ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -76,8 +78,8 @@ class _ScoreViewer extends State<ScoreViewer> {
   }
 
   // This widget will be passed as Bottom Card's Widget.
-  Widget bottomCardWidget() {
-    double x = 9.7;
+  Widget bottomCardWidget(String result) {
+   
     String y;
     // if (x <= 3) {
     //   y = "Fair , Let's practise more ";
@@ -90,10 +92,9 @@ class _ScoreViewer extends State<ScoreViewer> {
     // }
     return Column(
       children: [
-         
         Expanded(
-                  child: Text(
-            x.toString() ,
+          child: Text(
+            result,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -102,14 +103,16 @@ class _ScoreViewer extends State<ScoreViewer> {
             textAlign: TextAlign.center,
           ),
         ),
-       
         Expanded(
-                  child: RaisedButton(
+          child: RaisedButton(
             padding: EdgeInsets.all(20),
             color: Colors.white,
-            child: Text("Next",style: TextStyle(color: Colors.black),),
-            onPressed: (){
-
+            child: Text(
+              "Next",
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
             },
           ),
         ),
