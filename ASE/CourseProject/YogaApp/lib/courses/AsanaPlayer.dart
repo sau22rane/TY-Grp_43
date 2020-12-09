@@ -83,8 +83,10 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
         {
           print(result);
           // (result != null) ?
-          Navigator.pushReplacementNamed(context, ScoreViewer.id,
-              arguments: () => result);
+
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+            return ScoreViewer(result);
+          }));
           // : {};
         }
       }
@@ -222,3 +224,4 @@ class Video {
   Duration duration;
   Video({this.duration, this.url});
 }
+
