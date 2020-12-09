@@ -98,7 +98,10 @@ class _BlogList extends State<BlogList> {
                           margin: EdgeInsets.all(18),
                           elevation: 7.0,
                           child: Center(
-                            child: Text(itemList[index].name), 
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 8),
+                              child: Text(itemList[index].name,textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w500),),
+                            ), 
                                
                           ),
                         ),
