@@ -13,11 +13,7 @@ Future<String> getRequest(var recognition) async {
     print(d["keypoints"].toString());
     temp = d["keypoints"];
   }
-  // print(temp.runtimeType);
-  // for (var i = 0; i <= 10; i = i + 1) {
-  //   print(temp[i]['x']);
-  //   print(temp[i]['y']);
-  // }
+
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
       "Virabhadrasana" +
       "&course=" +
@@ -25,12 +21,9 @@ Future<String> getRequest(var recognition) async {
       "&cords=" +
       temp.toString();
 
-  //print("temp : " + temp.toString());
+  print("temp : " + temp.toString());
   String res = await http.read(url);
-  print("result ###############"+res);
-  return res;
-
-
+  print(res);
 }
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -82,13 +75,13 @@ class _CameraState extends State<Camera> {
             ).then((recognitions) {
               // result
               int endTime = new DateTime.now().millisecondsSinceEpoch;
-              //print("Detection took ${endTime - startTime}");
+              print("Detection took ${endTime - startTime}");
 
               widget.setRecognitions(recognitions, img.height, img.width);
               setState(() {
                 _recog = recognitions;
               });
-              //print(recognitions.toList());
+              print(recognitions.toList());
 
               isDetecting = false;
             });

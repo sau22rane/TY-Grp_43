@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 class ScoreViewer extends StatefulWidget {
   static String id = "Scoreviewer";
+  String _score;
   @override
   _ScoreViewer createState() => _ScoreViewer();
+  ScoreViewer(this._score);
 }
 
 class _ScoreViewer extends State<ScoreViewer> {
@@ -29,7 +31,7 @@ class _ScoreViewer extends State<ScoreViewer> {
                 // In topCardWidget below, imagePath changes according to the
                 // status of the SlimyCard(snapshot.data).
                 topCardWidget: topCardWidget('assets/images/success.gif'),
-                bottomCardWidget: bottomCardWidget(result),
+                bottomCardWidget: bottomCardWidget(widget._score),
               ),
             ],
           );
@@ -39,7 +41,7 @@ class _ScoreViewer extends State<ScoreViewer> {
   }
 
   // This widget will be passed as Top Card's Widget.
-  Widget topCardWidget(String imagePath ) {
+  Widget topCardWidget(String imagePath) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -79,7 +81,6 @@ class _ScoreViewer extends State<ScoreViewer> {
 
   // This widget will be passed as Bottom Card's Widget.
   Widget bottomCardWidget(String result) {
-   
     String y;
     // if (x <= 3) {
     //   y = "Fair , Let's practise more ";

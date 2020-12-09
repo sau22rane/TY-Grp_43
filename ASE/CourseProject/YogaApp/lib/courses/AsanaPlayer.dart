@@ -83,8 +83,10 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
         {
           print(result);
           // (result != null) ?
-          Navigator.pushReplacementNamed(context, ScoreViewer.id,
-              arguments: () => result);
+          String s = "9.4";
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ScoreViewer("9.4");
+          }));
           // : {};
         }
       }

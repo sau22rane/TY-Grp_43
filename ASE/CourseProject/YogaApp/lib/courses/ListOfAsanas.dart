@@ -32,7 +32,7 @@ class _ListOfAsanasState extends State<ListOfAsanas> {
   Future readData() async {
     widget._ref.once().then((DataSnapshot snapshot) {
       // print('snapshotData : ${snapshot.value}');
-      Map<dynamic, dynamic> values = snapshot.value;
+      Map<dynamic, dynamic> values = snapshot.value;Query _ref;
       values.forEach((key, values) {
         // print("values : " + values.toString());
 
