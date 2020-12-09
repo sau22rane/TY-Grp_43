@@ -111,12 +111,22 @@ class _CourseListState extends State<CourseList> {
   Query _refpass;
   String tempurl = null;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  Future<String> _getimage(BuildContext context, String str) async {
+    await FireStorageService.loadImage(context, str).then((value) {
+      print("download url   " + value.toString());
+      tempurl = value.toString();
+      return value.toString();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     print("ref creates");
     _ref = FirebaseDatabase.instance.reference().child("courses");
     _refpass = FirebaseDatabase.instance.reference();
+    _getimage(context, "Vrikshasana.mp4");
   }
 
   @override
@@ -132,7 +142,7 @@ class _CourseListState extends State<CourseList> {
           ),
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(Icons.list, color: Colors.white),
+            icon: Icon(Icons.list, color: Colors.grey),
             onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           elevation: 0,
@@ -152,7 +162,7 @@ class _CourseListState extends State<CourseList> {
               decoration: BoxDecoration(
                   color: Colors.blue,
                   image: DecorationImage(
-                      image: AssetImage("assets/images/logo.jpg"),
+                      image: AssetImage("assets/images/cloud.jpeg"),
                       fit: BoxFit.cover)),
             ),
             Container(
@@ -209,7 +219,7 @@ class _CourseListState extends State<CourseList> {
               height: size.height * 0.6,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/road.jpeg"),
+                      image: AssetImage("assets/images/green.jpeg"),
                       fit: BoxFit.cover),
                   borderRadius:
                       BorderRadius.only(bottomLeft: Radius.circular(100)),
@@ -258,7 +268,7 @@ class _CourseListState extends State<CourseList> {
               height: size.height * 0.4,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/green.jpeg"),
+                    image: AssetImage("assets/images/road.jpeg"),
                     fit: BoxFit.cover),
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(100)),
@@ -332,5 +342,12 @@ class _CourseListState extends State<CourseList> {
             ),
           ],
         ));
+  }
+}
+
+class FireStorageService extends ChangeNotifier {
+  FireStorageService();
+  static Future<dynamic> loadImage(BuildContext context, String image) async {
+    return await FirebaseStorage.instance.ref().child(image).getDownloadURL();
   }
 }

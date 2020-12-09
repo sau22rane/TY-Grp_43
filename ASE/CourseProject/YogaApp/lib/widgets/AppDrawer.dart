@@ -81,7 +81,6 @@ class AppDrawer extends StatelessWidget {
                   title: "Articles",
                   id: BlogTypeList.id,
                 ),
-                
                 DrawerListItem(
                   icon: Icons.info_outline,
                   title: "About Us",
