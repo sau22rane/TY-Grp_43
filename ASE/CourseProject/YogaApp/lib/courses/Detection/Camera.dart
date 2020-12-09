@@ -27,7 +27,7 @@ Future<String> getRequest(var recognition) async {
 
   //print("temp : " + temp.toString());
   String res = await http.read(url);
-  print("result ###############"+res);
+  print("result @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####"+res);
   return res;
 
 
@@ -82,7 +82,7 @@ class _CameraState extends State<Camera> {
             ).then((recognitions) {
               // result
               int endTime = new DateTime.now().millisecondsSinceEpoch;
-              //print("Detection took ${endTime - startTime}");
+              print("Detection took ${endTime - startTime}");
 
               widget.setRecognitions(recognitions, img.height, img.width);
               setState(() {
@@ -141,7 +141,7 @@ class _CameraState extends State<Camera> {
                 // print(await http.read('http://sau22rane2.pythonanywhere.com/?asana=&course=courseName'));
                 print(
                     "++++++++++++++++++++GET REQUEST started++++++++++++++++");
-                await print(getRequest(_recog));
+                 await print(await getRequest(_recog));
                 print("++++++++++++++++++++DONE GET REQUEST++++++++++++++++");
               },
               elevation: 10,
