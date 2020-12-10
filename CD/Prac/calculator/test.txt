@@ -1,0 +1,10 @@
+x = 0; 
+while (x < 3) { 
+    print x;
+    x = x + 1;
+}
+y=0;
+print y;
+for (y = 0; y < 7;y = y+1) {
+    print y;
+}
