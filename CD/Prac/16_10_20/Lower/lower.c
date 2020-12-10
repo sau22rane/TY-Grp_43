@@ -1,5 +1,4 @@
-// Implement LEX/FLEX code to select only lines that begin or end with the letter ‘a’ and
-// delete everything else.
+// Convert all uppercase characters to lowercase except inside comments.
 
 #include<stdio.h>
 #include<stdlib.h>
