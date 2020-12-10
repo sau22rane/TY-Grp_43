@@ -149,8 +149,8 @@ def main():
         model_cfg, model_outputs = posenet.load_model(args.model, sess)
         output_stride = model_cfg['output_stride']
 
-        cap1 = cv2.VideoCapture("./Videos/yoga_women7.avi")
-        cap2 = cv2.VideoCapture("yoga_women8.mp4")
+        cap1 = cv2.VideoCapture("./Videos/yoga_women1.avi")
+        cap2 = cv2.VideoCapture("yoga_women4.mp4")
 
         start = time.time()
         frame_count = 0
@@ -170,7 +170,7 @@ def main():
                 semaPhore = not semaPhore
                 # print(frame2[0,0,0])
 
-            frame2 = cv2.flip(frame2,1)
+            # frame2 = cv2.flip(frame2,1)
             overlay_image1 = frame1
             
             if(semaPhore):
