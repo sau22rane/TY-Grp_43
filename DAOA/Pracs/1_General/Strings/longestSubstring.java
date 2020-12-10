@@ -7,6 +7,7 @@ class longestSubstring{
         Scanner s = new Scanner(System.in);
         data = s.nextLine();
         System.out.println("Length of non repeating longest Substring: "+lengthOfLongestSubstring(data));
+        s.close();
     }
     static public int lengthOfLongestSubstring(String s) {
         int n = s.length();

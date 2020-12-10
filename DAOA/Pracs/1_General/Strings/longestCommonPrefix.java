@@ -14,6 +14,7 @@ public class longestCommonPrefix {
             data[i] = s.nextLine();
         }
         System.out.println("The Longest Common Prefix is: "+longestPrefix(data));
+        s.close();
     }
 
 
