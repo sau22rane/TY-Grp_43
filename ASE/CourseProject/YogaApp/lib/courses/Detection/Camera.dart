@@ -7,17 +7,13 @@ import 'package:YogaApp/constants.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> getRequest(var recognition) async {
-  if (recognition.length == 0) return "null";
+  if (recognition.length == 0) return "9.5";
   var temp;
   for (var d in recognition) {
     print(d["keypoints"].toString());
     temp = d["keypoints"];
   }
-  // print(temp.runtimeType);
-  // for (var i = 0; i <= 10; i = i + 1) {
-  //   print(temp[i]['x']);
-  //   print(temp[i]['y']);
-  // }
+
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
       "Virabhadrasana" +
       "&course=" +
@@ -25,12 +21,10 @@ Future<String> getRequest(var recognition) async {
       "&cords=" +
       temp.toString();
 
-  //print("temp : " + temp.toString());
+  print("temp : " + temp.toString());
   String res = await http.read(url);
-  print("result @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####"+res);
+  print("result @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####" + res);
   return res;
-
-
 }
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -88,7 +82,7 @@ class _CameraState extends State<Camera> {
               setState(() {
                 _recog = recognitions;
               });
-              //print(recognitions.toList());
+              print(recognitions.toList());
 
               isDetecting = false;
             });
@@ -141,7 +135,7 @@ class _CameraState extends State<Camera> {
                 // print(await http.read('http://sau22rane2.pythonanywhere.com/?asana=&course=courseName'));
                 print(
                     "++++++++++++++++++++GET REQUEST started++++++++++++++++");
-                 await print(await getRequest(_recog));
+                await print(await getRequest(_recog));
                 print("++++++++++++++++++++DONE GET REQUEST++++++++++++++++");
               },
               elevation: 10,

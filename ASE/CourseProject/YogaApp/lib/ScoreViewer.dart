@@ -17,6 +17,7 @@ class _ScoreViewer extends State<ScoreViewer> {
       body: StreamBuilder(
         // This streamBuilder reads the real-time status of SlimyCard.
         initialData: false,
+
         stream: slimyCard.stream, //Stream of SlimyCard
         builder: ((BuildContext context, AsyncSnapshot snapshot) {
           return ListView(

@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
 		char ch;
 
 		// Determine matrix dimensions
-		fp = fopen("A_Matrix.txt", "r");
+		fp = fopen("../Data/A_Matrix.txt", "r");
 		if (fp == NULL) {
 			MPI_Abort(MPI_COMM_WORLD, 1);
 		}
@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
 		fclose(fp);
 
 		// Read matrix B
-		fp = fopen("B_Matrix.txt", "r");
+		fp = fopen("../Data/B_Matrix.txt", "r");
 		if (fp == NULL) {
 			return 1;
 		}

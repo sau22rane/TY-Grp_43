@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         ViewBlog.id: (context) => ViewBlog(),
         HomePage.id: (context) => HomePage(),
         ScoreViewer.id: (context) => ScoreViewer("1"),
-       // ListOfAsanas.id : (context) => ListOfAsanas(null,"cgg"),
+        // ListOfAsanas.id : (context) => ListOfAsanas(null,"cgg"),
       },
       initialRoute: initialRoute,
     );

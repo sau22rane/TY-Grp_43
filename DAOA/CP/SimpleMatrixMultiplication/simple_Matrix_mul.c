@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 
     FILE *fp;
     int n;
-    fp = fopen("A_Matrix.txt", "r");
+    fp = fopen("../Data/A_Matrix.txt", "r");
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             fscanf(fp, "%d", &n);
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
     }
     fclose(fp);
 
-    fp = fopen("B_Matrix.txt", "r");
+    fp = fopen("../Data/B_Matrix.txt", "r");
     for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             fscanf(fp, "%d", &n);
