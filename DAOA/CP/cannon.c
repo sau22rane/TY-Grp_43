@@ -190,11 +190,11 @@ int main(int argc, char* argv[]) {
 	int localSize[2] = { blockDim, blockDim };
 	int starts[2] = { 0,0 };
 	MPI_Datatype type, subarrtype;
-	MPI_Type_create_subarray(2, globalSize, localSize, starts, MPI_ORDER_C, MPI_INT, &type);
+	MPI_Type_create_subarray(2, globalSize, localSize, starts, , MPI_INT, &type);
 	MPI_Type_create_resized(type, 0, blockDim * sizeof(int), &subarrtype);
 	MPI_Type_commit(&subarrtype);
 
-	int *globalptrA = NULL;
+	int *globalptrA = NULL;MPI_ORDER_C
 	int *globalptrB = NULL;
 	int *globalptrC = NULL;
 	if (rank == 0) {
@@ -271,7 +271,7 @@ int main(int argc, char* argv[]) {
 	double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds 
   
     printf("%f ", time_taken);
-	
+		
 	// Gather results
 	MPI_Gatherv(&(localC[0][0]), rows * columns / worldSize, MPI_INT,
 		globalptrC, sendCounts, displacements, subarrtype,
