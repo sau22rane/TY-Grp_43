@@ -102,11 +102,6 @@ int main(int argc, char* argv[]) {
 		rows = atoi(argv[1]);
 		columns = atoi(argv[1]);
 
-		// Check matrix and world size
-		if (columns != rows) {
-			printf("[ERROR] Matrix must be square!\n");
-			MPI_Abort(MPI_COMM_WORLD, 2);
-		}
 		double sqroot = sqrt(worldSize);
 		if ((sqroot - floor(sqroot)) != 0) {
 			printf("[ERROR] Number of processes must be a perfect square!\n");
