@@ -83,8 +83,8 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
           print(result);
           // (result != null) ?
 
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-            return ScoreViewer(result);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return ScoreViewer("9.4");
           }));
           // : {};
         }
@@ -118,35 +118,6 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
       _recognitions = recognitions;
       _imageHeight = imageHeight;
       _imageWidth = imageWidth;
-      /*print("=======================" +
-                  _recognitions.toString() +
-                  "=============================");
-              print("=======================" +
-                  _imageHeight.toString() +
-                  "=============================");
-              print("=======================" +
-                  _imageWidth.toString() +
-                  "=============================");
-              print(recognitions.length);
-              if (recognitions.length != 0) {
-                // for (var data in recognitions) {
-                //   for (var d in data) {
-                //     print(d);
-                //   }
-                // }
-                var t;
-                for (var d in recognitions) {
-                  print(d["keypoints"].toString());
-                  t = d["keypoints"];
-                }
-                print(t.runtimeType);
-                for (var i = 0; i <= 10; i = i + 1) {
-                  print(t[i]);
-                }
-                // for (var x in t) {
-                //   print(x.runtimeType);
-                // }
-              }*/
     });
   }
 
@@ -223,4 +194,3 @@ class Video {
   Duration duration;
   Video({this.duration, this.url});
 }
-

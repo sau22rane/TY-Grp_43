@@ -13,11 +13,7 @@ Future<String> getRequest(var recognition , String asana) async {
     print(d["keypoints"].toString());
     temp = d["keypoints"];
   }
-  // print(temp.runtimeType);
-  // for (var i = 0; i <= 10; i = i + 1) {
-  //   print(temp[i]['x']);
-  //   print(temp[i]['y']);
-  // }
+
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
       asana +
       "&course=" +
@@ -25,12 +21,10 @@ Future<String> getRequest(var recognition , String asana) async {
       "&cords=" +
       temp.toString();
 
-  //print("temp : " + temp.toString());
+  print("temp : " + temp.toString());
   String res = await http.read(url);
-  print("result @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####"+res);
+  print("result @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####" + res);
   return res;
-
-
 }
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -88,7 +82,7 @@ class _CameraState extends State<Camera> {
               setState(() {
                 _recog = recognitions;
               });
-              //print(recognitions.toList());
+              print(recognitions.toList());
 
               isDetecting = false;
             });
