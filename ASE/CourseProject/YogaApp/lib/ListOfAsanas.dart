@@ -1,9 +1,7 @@
 import 'package:YogaApp/courses/AsanaCard.dart';
-import 'package:YogaApp/courses/AsanaPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:camera/camera.dart';
 
 class ListOfAsanas extends StatefulWidget {
