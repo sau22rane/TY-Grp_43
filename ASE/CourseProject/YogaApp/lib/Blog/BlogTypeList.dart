@@ -68,8 +68,9 @@ class BlogTypeList extends StatelessWidget {
                           fit: BoxFit.fitWidth,
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, BlogList.id,
-                                  arguments: titles[index][0]);
+                              Navigator.push(context,MaterialPageRoute(builder: (context) {
+                                return BlogList(type : titles[index][0]);
+                                  }));
                             },
                             child: Column(
                               children: [

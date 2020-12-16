@@ -1,3 +1,8 @@
+# 1 "C:\\Users\\ASUS\\TY-Grp_43\\DAOA\\Pracs\\8_HuffmanCoding\\HuffmanCoding.java"
+# 1 "C:\\MinGW\\bin//"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "C:\\Users\\ASUS\\TY-Grp_43\\DAOA\\Pracs\\8_HuffmanCoding\\HuffmanCoding.java"
 import java.io.*;
 import java.util.*;
 import java.lang.*;
@@ -19,34 +24,19 @@ class Node{
     }
 }
 
-class MyComparare implements Comparator<Node> {
-    public int compare(Node a1, Node a2){ 
+class CustomComparator implements Comparator<Node> {
+    public int compare(Node a1, Node a2){
         return a1.freq - a2.freq;
     }
 }
 
-public class Main {
+public class HuffmanCoding {
     static PriorityQueue<Node> minHeap;
-    static HashMap<Character, String> hMap = new HashMap<Character, String>();
+    static HashMap<Character, String> Code = new HashMap<Character, String>();
     public static void main(String[] args) {
-        int n ;
-        Scanner sc=new Scanner(System.in);  
-        System.out.print("Enter the number of characters : ");  
-        n=sc.nextInt();  
-        char[]  symbolArray = new char[n];  
-        System.out.println("Enter characters: ");  
-        for(int i=0; i<n; i++)  
-        {  
-        symbolArray[i]=sc.next().charAt(0);  
-        } 
-        int[]  symbolFreq = new int[n];  
-        System.out.println("Enter the frequency of each character: ");  
-        for(int i=0; i<n; i++)  
-        {  
-        symbolFreq[i]=sc.nextInt();  
-        } 
-        
-        minHeap = new PriorityQueue<Node>(symbolArray.length, new MyComparator());
+        char[] symbolArray = {'a','b','c','d','e','f'};
+        int[] symbolFreq = {5,9,12,13,16,45 };
+        minHeap = new PriorityQueue<Node>(symbolArray.length, new CustomComparator());
 
         for(int i = 0;i<symbolArray.length; i++){
             Node temp = new Node(symbolArray[i], symbolFreq[i]);
@@ -65,19 +55,19 @@ public class Main {
             HuffmanTree = parent;
             minHeap.add(parent);
         }
-        GetCode(HuffmanTree, "");
-        System.out.println(hMap);
+        getHuffmanCodes(HuffmanTree, "");
+        System.out.println(Code);
 
     }
 
-    public static void GetCode(Node root, String str){
+    public static void getHuffmanCodes(Node root, String code){
         if(root.right == null && root.left == null && Character.isLetter(root.symbol) )
-            hMap.put(root.symbol, str);
+            Code.put(root.symbol, code);
         else{
             if(root.right!=null)
-                GetCode(root.right, str+"1");
+                getHuffmanCodes(root.right, code+"1");
             if(root.left!=null)
-                GetCode(root.left, str+"0");
+                getHuffmanCodes(root.left, code+"0");
         }
     }
 

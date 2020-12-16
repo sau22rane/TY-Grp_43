@@ -1,4 +1,4 @@
-import 'package:YogaApp/BlogTypeList.dart';
+import 'package:YogaApp/Blog/BlogTypeList.dart';
 import 'package:YogaApp/ScoreViewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class AppDrawer extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2.0),
                       child: Text(
-                        "Sakshi Oswal",
+                        "Tarun Medtiya",
                         style: TextStyle(
                             fontFamily: 'SegoeUI-Bold',
                             fontSize: 25,
@@ -51,7 +51,7 @@ class AppDrawer extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 3.0),
                       child: Text(
-                        "@sakshi_17",
+                        "@tarun_24",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 12, decoration: TextDecoration.none),

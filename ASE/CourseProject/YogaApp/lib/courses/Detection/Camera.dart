@@ -6,7 +6,7 @@ import 'dart:math' as math;
 import 'package:YogaApp/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future<String> getRequest(var recognition) async {
+Future<String> getRequest(var recognition , String asana) async {
   if (recognition.length == 0) return "null";
   var temp;
   for (var d in recognition) {
@@ -19,7 +19,7 @@ Future<String> getRequest(var recognition) async {
   //   print(temp[i]['y']);
   // }
   String url = "http://sau22rane2.pythonanywhere.com/?asana=" +
-      "Virabhadrasana" +
+      asana +
       "&course=" +
       "Course1" +
       "&cords=" +
@@ -141,7 +141,7 @@ class _CameraState extends State<Camera> {
                 // print(await http.read('http://sau22rane2.pythonanywhere.com/?asana=&course=courseName'));
                 print(
                     "++++++++++++++++++++GET REQUEST started++++++++++++++++");
-                 await print(await getRequest(_recog));
+                 //await print(await getRequest(_recog));
                 print("++++++++++++++++++++DONE GET REQUEST++++++++++++++++");
               },
               elevation: 10,
