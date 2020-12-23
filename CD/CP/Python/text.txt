@@ -1,4 +1,3 @@
-
 int gcd(int x,int y)
 {
 	if(!y)
@@ -9,7 +8,7 @@ int gcd(int x,int y)
 float main()
 {
 	int a = 2,b = 8;
+	a = gcd(a,b);
 	write(a);
-	gcd(a,b);
 	return 0;
 }
