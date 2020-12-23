@@ -337,7 +337,7 @@ static void trans_if_stmt(ast_node *n)
 	emit_tab();
 	emit("if (");
     trans_bool(n->if_stmt.cond, 1);
-    emit(":\n");
+    emit("):\n");
     ++tabn;
     trans_ast(n->if_stmt.then);
     --tabn;
