@@ -34,91 +34,6 @@ char* symname(int sym_id)
     return NULL;
 }
 
-/* variable and function scope */
-
-struct vscope *current_vscope = NULL;
-
-void begin_vscope()
-{
-    struct vscope *new_vscope = malloc(sizeof(struct vscope));
-    new_vscope->parent = current_vscope;
-    new_vscope->list = NULL;
-    current_vscope = new_vscope;
-}
-
-void vscope_addnode(struct vscope *v, int sym_id, int type_id, int offset)
-{
-    struct vscope_node *n = malloc(sizeof(struct vscope_node));
-    n->scope = v;
-    n->sym_id = sym_id;
-    n->type_id = type_id;
-    n->offset = offset;
-    n->next = v->list;
-    v->list = n;
-}
-
-void end_vscope()
-{
-    current_vscope = current_vscope->parent;
-}
-
-static struct vscope_node * find_vnode_rec(struct vscope *c_vscope, int sym_id)
-{
-    // if (!c_vscope) report_error("%s not defined", symname(sym_id));
-
-    for (struct vscope_node *p = c_vscope->list; p; p = p->next)
-        if (p->sym_id == sym_id) return p;
-
-    return find_vnode_rec(c_vscope->parent, sym_id);
-}
-
-struct vscope_node * find_vnode(int sym_id)
-{
-    return find_vnode_rec(current_vscope, sym_id);
-}
-
-/* type scope */
-
-struct tscope *current_tscope = NULL;
-
-void begin_tscope()
-{
-    struct tscope *new_tscope = malloc(sizeof(struct tscope));
-    new_tscope->parent = current_tscope;
-    new_tscope->list = NULL;
-    current_tscope = new_tscope;
-}
-
-void tscope_addnode(struct tscope *t, int sym_id, int type_id)
-{
-    struct tscope_node *n = malloc(sizeof(struct tscope_node));
-    n->sym_id = sym_id;
-    n->type_id = type_id;
-    n->next = t->list;
-    t->list = n;
-}
-
-void end_tscope()
-{
-    current_tscope = current_tscope->parent;
-}
-
-int lookup_ttype_rec(struct tscope *c_tscope, int sym_id)
-{
-    // if (!c_tscope) report_error("Type not defined");
-
-    for (struct tscope_node *p = c_tscope->list; p; p = p->next)
-        if (p->sym_id == sym_id) return p->type_id;
-
-    return lookup_ttype_rec(c_tscope->parent, sym_id);
-}
-
-int lookup_ttype(int sym_id)
-{
-    return lookup_ttype_rec(current_tscope, sym_id);
-}
-
-
 /* type table*/
 
 static int last_type_id = 1;
@@ -316,15 +231,6 @@ void list_append(ast_list *first, ast_list *second)
     }
 }
 
-/*
-ast_node *vardef_new(int var_type, ast_list *extvars)
-{
-    ast_node *n = newast(AST_VARDEF);
-    n->vardef.var_type = var_type;
-    n->vardef.extvars = extvars;
-    return n;
-}
-*/
 
 ast_node *funcdef_new(int ret_type, ast_node *funchead, ast_stmt *funcbody)
 {
