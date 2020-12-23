@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:YogaApp/ViewBlog.dart';
+import 'package:YogaApp/Blog/ViewBlog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -27,21 +27,28 @@ class _BlogList extends State<BlogList> {
       FirebaseDatabase.instance.reference().child("BlogSection");
   getPractioner() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool boolValue = prefs.getBool('Participant/Trainee');
+    try {
+       bool boolValue = prefs.getBool('Participant/Trainee');
     if (boolValue != null) {
       pract = boolValue;
       print("pract " + pract.toString());
     } else {
       pract = true;
       print("Notfound");
+      throw Exception;
     }
+
+    }catch(e) {
+      print("catched " + e);
+    }
+   
   }
 
   String get type => widget.type;
   @override
   Widget build(BuildContext context) {
-        Size size = MediaQuery.of(context).size;
-    String type = ModalRoute.of(context).settings.arguments;
+    Size size = MediaQuery.of(context).size;
+    String type = widget.type;
     //print(type);
     mainReference.once().then((DataSnapshot snap) {
       //print(snap);
@@ -56,7 +63,6 @@ class _BlogList extends State<BlogList> {
       });
     });
 
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -65,53 +71,65 @@ class _BlogList extends State<BlogList> {
       ),
       body: ModalProgressHUD(
         inAsyncCall: spinner,
-        child: Stack(              
-                  children:[ 
-                    Container(
+        child: Stack(
+          children: [
+            Container(
               decoration: BoxDecoration(color: Colors.lightBlueAccent),
             ),
             Container(
-               height: size.height * 0.18,
-
+              height: size.height * 0.18,
               decoration: BoxDecoration(
                   color: Color(0xFF5E60CE),
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(50))),
             ),
-                    ListView.builder(
-            itemCount: itemList.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: GestureDetector(
-                    onTap: () {
-                      String passData = itemList[index].link;
-                      Navigator.pushNamed(context, ViewBlog.id,
-                          arguments: passData);
-                    },
-                    child: Center(
-                      child: Container(
-                        height: 140,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          margin: EdgeInsets.all(18),
-                          elevation: 7.0,
-                          child: Center(
-                            child: Text(itemList[index].name), 
-                               
+            ListView.builder(
+              itemCount: itemList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: GestureDetector(
+                      onTap: () {
+                        String passData = itemList[index].link;
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ViewBlog(passData);
+                        }));
+                       
+                      },
+                      child: Center(
+                        child: Container(
+                          height: 140,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            margin: EdgeInsets.all(18),
+                            elevation: 7.0,
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 8),
+                                child: Text(
+                                  itemList[index].name,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ));
-            },
-          ),],
+                    ));
+              },
+            ),
+          ],
         ),
       ),
-      floatingActionButton: pract
-          ? Container()
-          : FloatingActionButton(
+      floatingActionButton: 
+      // pract
+      //     ? Container()
+      //     :
+           FloatingActionButton(
               onPressed: () {
                 showModalBottomSheet(
                     context: context,

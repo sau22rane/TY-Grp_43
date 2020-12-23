@@ -7,8 +7,7 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'Detection/Camera.dart';
 import 'package:flutter_exoplayer/audioplayer.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+
 
 class AsanaPlayer extends StatefulWidget {
   final List<CameraDescription> camera;
@@ -28,7 +27,7 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
   AudioPlayer audioPlayer = AudioPlayer();
   static String url =
       "https://firebasestorage.googleapis.com/v0/b/yogaapp-dc4e0.appspot.com/o/yoga1.mp4?alt=media&token=e9a66061-b452-47d9-9954-f56523d200fa";
-  static Duration duration = new Duration(minutes: 0, seconds: 10);
+  static Duration duration = new Duration(minutes: 0, seconds: 25);
   Video video = new Video(url: url, duration: duration);
 
   List<dynamic> _recognitions;
@@ -76,10 +75,10 @@ class _AsanaPlayerState extends State<AsanaPlayer> {
           first: false,
         );
         flag = true;
-        result = await getRequest(_recognitions);
+        result = await getRequest(_recognitions , widget._asana);
       }
       if (chewieController.videoPlayerController.value.position ==
-          chewieController.videoPlayerController.value.duration) {
+          chewieController.videoPlayerController.value.duration  ) {
         {
           print(result);
           // (result != null) ?

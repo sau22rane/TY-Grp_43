@@ -132,7 +132,7 @@ void Fox(int n, GRID_INFO_T* grid, LOCAL_MATRIX_T* local_A, LOCAL_MATRIX_T* loca
     
     n_bar = n/grid->q;
     Set_to_zero(local_C);                            
-  
+    //0 1 2 3  current =  2 ,  src = 3 dest = 1
     source = (grid->my_row + 1) % grid->q;
     dest = (grid->my_row + grid->q - 1) % grid->q;
 

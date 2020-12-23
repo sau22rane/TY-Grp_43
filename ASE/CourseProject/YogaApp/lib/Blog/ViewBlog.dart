@@ -3,6 +3,8 @@ import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 
 class ViewBlog extends StatefulWidget {
   static final String id = "ViewBlog";
+  final String data;
+  ViewBlog(this.data);
   @override
   _ViewBlogState createState() => _ViewBlogState();
 }
@@ -12,7 +14,7 @@ class _ViewBlogState extends State<ViewBlog> {
   @override
   Widget build(BuildContext context) {
     //get data from first class
-    String data = ModalRoute.of(context).settings.arguments;
+    String data = widget.data;
     viewNow() async {
       doc = await PDFDocument.fromURL(data);
       setState(() {});
