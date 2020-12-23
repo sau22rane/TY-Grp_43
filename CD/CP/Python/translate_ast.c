@@ -87,8 +87,8 @@ char *cur_struct_varname = "";
 static void trans_def(ast_node *n)
 {	
 	char *s = "";
-	emit_tab();
-	split = ", ";
+	// emit_tab();
+	split = "\n ";
 	trans_ast(n->def.decs);
     split = "";
 	// emit(";");
@@ -101,6 +101,7 @@ static void trans_dec(ast_node *n)
 	array_depth = 0;
 	if (n->dec.init) dec_init = 1;
 	else dec_init = 0;
+	emit_tab();
     trans_ast(n->dec.var);
     
     if (n->dec.init)
