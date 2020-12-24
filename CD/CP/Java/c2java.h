@@ -196,7 +196,13 @@ struct sym_node
   int sym_id;
   struct sym_node *next;
 };
-
+/*
+void print_sym_ast(struct sym_node *symbol_node)
+{
+	printf("%s",symbol_node->str);
+	printf("======id : %d ======",symbol_node->sym_id);
+	printf("");
+}*/
 extern struct sym_node *sym_table;
 
 extern int sym(char const *s);
