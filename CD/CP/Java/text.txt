@@ -1,3 +1,4 @@
+int a,b;
 
 int gcd(int x,int y)
 {
@@ -6,17 +7,10 @@ int gcd(int x,int y)
 	return gcd(y,x%y);
 }
 
-float main()
+int main()
 {
-	int a[20] , b , i;
-	char o = 'a';
-	int j [1] = {1,2,3,4};
-	for( int i = 0;i < 8; i++){
-        a[i] = 1;
-		write(i);
-	}
-	while( i< 10 ){
-		write(i);
-	}
+	read(a);
+	read(b);
+	write(gcd(a,b));
 	return 0;
 }

@@ -39,11 +39,11 @@ int main(int argc, char **argv)
 
     if (g_parse_tree)
     {
-        #ifdef DEBUG
+        #ifdef DEBUG	
         #endif
-
-        transtext_ast(g_parse_tree);
+	print_ast(g_parse_tree);
+        //transtext_ast(g_parse_tree);
     }
-
+	
     return 0;
 }
