@@ -1,6 +1,6 @@
 %option noyywrap nodefault yylineno
 %{
-#include "c2java.h"
+#include "converter_python.h"
 %}
 
 %%

@@ -3,20 +3,20 @@ SRCS=y.tab.c lex.yy.c
 
 src=$(shell find ./ -name "*.c")
 
-all : c2java
-run: c2java
+all : converter_python
+run: converter_python
 	@echo "Lanching ..........!!!"
 	@echo ""
 	@./a.out
 
 .c : $(SRCS)
 	gcc $∗.c 
-y.tab.c : c2java.y
-	@yacc c2java.y -$(YFLAGS) -v
+y.tab.c : converter_python.y
+	@yacc converter_python.y -$(YFLAGS) -v
 
-lex.yy.c : c2java.l
-	@lex c2java.l
+lex.yy.c : converter_python.l
+	@lex converter_python.l
 
-c2java : $(SRCS)
+converter_python : $(SRCS)
 	@gcc $(src)
 	@rm $(SRCS) 

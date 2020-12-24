@@ -1,4 +1,4 @@
-#include "c2java.h"
+#include "converter_python.h"
 
 
 typedef void (*ast_translator)(ast_node *n);
@@ -16,7 +16,7 @@ void emit(const char *fmt, ...)
     va_start(args, fmt);
     vsnprintf(buffer, sizeof buffer, fmt, args);
     va_end(args);
-
+    print("%s",)
     sprintf(format, "%s", buffer);
 
     fprintf(stdout, "%s", format);
