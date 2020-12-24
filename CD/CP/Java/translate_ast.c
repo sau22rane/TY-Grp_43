@@ -7,6 +7,7 @@ static ast_translator g_ast_translators[AST_WHILE_STMT];
 static const char* g_ast_names[AST_WHILE_STMT];
 
 int dec_init = 0;
+int condition = 0;
 
 void emit(const char *fmt, ...)
 {
@@ -114,7 +115,8 @@ char *cur_struct_varname = "";
 static void trans_def(ast_node *n)
 {	
 	char *s = "";
-	emit_tab();
+    if (condition == 0)
+    	emit_tab();
 	if (n->fg == 'g') {
 		emit("static ");
 	}
@@ -141,7 +143,8 @@ static void trans_def(ast_node *n)
 	emit(";");
     if (need_brac == 1) emit(" }");
     need_brac = 0;
-    emit("\n");
+    if (condition == 0)
+        emit("\n");
     
 }
 
@@ -413,8 +416,10 @@ static void trans_for_stmt(ast_node *n)
 {
 	emit_tab();
 	emit("for (");
+    condition = 1;
     trans_ast(n->for_stmt.init);
-    emit("; ");
+    // emit("; ");
+    condition = 0;
     trans_bool(n->for_stmt.cond, 1);
     emit("; ");
     trans_ast(n->for_stmt.incr);
@@ -602,8 +607,10 @@ static void init_ast_translators()
 void trans_ast(ast_node *n)
 {
     init_ast_translators();
-    if (n)
+    if (n){
+        // printf("%d", n->type);
         g_ast_translators[n->type](n);
+    }
 }
 
 
