@@ -134,7 +134,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 5 "c2java.y" /* yacc.c:1909  */
+#line 5 "converter_python.y" /* yacc.c:1909  */
 
     int i;
     struct ast_node *n;

@@ -6,7 +6,7 @@
 *****************************************************************************/
 
 #include <stdio.h>
-#include "c2java.h"
+#include "converter_python.h"
 #include "y.tab.h"
 
 

@@ -1,5 +1,5 @@
 %{
-#include "c2java.h"
+#include "converter_python.h"
 %}
 
 %union{
@@ -7,7 +7,7 @@
     struct ast_node *n;
 }
 
-%right <i> INC_OP DEC_OP
+%right <i> IN _OP DEC_OP
 %left  <i> SHL_OP SHR_OP
 %left  <i> LE_OP GE_OP
 %left  <i> EQ_OP NE_OP

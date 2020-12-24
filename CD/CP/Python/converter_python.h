@@ -6,8 +6,8 @@
 
 *****************************************************************************/
 
-#ifndef C2JAVA_H_
-#define C2JAVA_H_
+#ifndef CONVERTER_PYTHON_H_
+#define CONVERTER_PYTHON_H_
 
 #include <stdio.h>
 #include <stdarg.h>
