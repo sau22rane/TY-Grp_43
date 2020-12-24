@@ -10,7 +10,7 @@ Terminals unused in grammar
    INIT_ARGS
 
 
-State 191 conflicts: 1 shift/reduce
+State 196 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -46,279 +46,285 @@ Grammar
    19     | expr_stmt
    20     | selection_stmt
    21     | iteration_stmt
-   22     | jump_stmt
+   22     | while_stmt
+   23     | jump_stmt
 
-   23 compound_stmt: '{' defs stmts '}'
-   24              | '{' defs '}'
-   25              | '{' stmts '}'
-   26              | '{' '}'
-   27              | ';'
+   24 compound_stmt: '{' defs stmts '}'
+   25              | '{' defs '}'
+   26              | '{' stmts '}'
+   27              | '{' '}'
+   28              | ';'
 
-   28 expr_stmt: expr ';'
+   29 expr_stmt: expr ';'
 
-   29 selection_stmt: IF '(' expr ')' stmt
-   30               | IF '(' expr ')' stmt ELSE stmt
+   30 selection_stmt: IF '(' expr ')' stmt
+   31               | IF '(' expr ')' stmt ELSE stmt
 
-   31 iteration_stmt: FOR '(' expr ';' expr ';' expr ')' stmt
-   32               | FOR '(' expr ';' expr ';' ')' stmt
-   33               | FOR '(' expr ';' ';' expr ')' stmt
-   34               | FOR '(' expr ';' ';' ')' stmt
-   35               | FOR '(' ';' expr ';' expr ')' stmt
-   36               | FOR '(' ';' expr ';' ')' stmt
-   37               | FOR '(' ';' ';' expr ')' stmt
-   38               | FOR '(' ';' ';' ')' stmt
+   32 iteration_stmt: FOR '(' expr ';' expr ';' expr ')' stmt
+   33               | FOR '(' expr ';' expr ';' ')' stmt
+   34               | FOR '(' expr ';' ';' expr ')' stmt
+   35               | FOR '(' expr ';' ';' ')' stmt
+   36               | FOR '(' ';' expr ';' expr ')' stmt
+   37               | FOR '(' ';' expr ';' ')' stmt
+   38               | FOR '(' ';' ';' expr ')' stmt
+   39               | FOR '(' ';' ';' ')' stmt
 
-   39 jump_stmt: RETURN expr ';'
-   40          | CONTINUE ';'
-   41          | BREAK ';'
+   40 while_stmt: WHILE '(' expr ')' stmt
 
-   42 defs: def
-   43     | defs def
+   41 jump_stmt: RETURN expr ';'
+   42          | CONTINUE ';'
+   43          | BREAK ';'
 
-   44 def: INT decs ';'
+   44 defs: def
+   45     | defs def
 
-   45 decs: dec
-   46     | decs ',' dec
+   46 def: INT decs ';'
 
-   47 dec: var
-   48    | var '=' init
+   47 decs: dec
+   48     | decs ',' dec
 
-   49 init: expr
-   50     | '{' init_args '}'
+   49 dec: var
+   50    | var '=' init
 
-   51 expr: assignment
-   52     | READ '(' expr ')'
+   51 init: expr
+   52     | '{' init_args '}'
 
-   53 assignment: logical_or
-   54           | unary '=' assignment
-   55           | unary ADD_ASSIGN assignment
-   56           | unary SUB_ASSIGN assignment
-   57           | unary MUL_ASSIGN assignment
-   58           | unary DIV_ASSIGN assignment
-   59           | unary MOD_ASSIGN assignment
-   60           | unary AND_ASSIGN assignment
-   61           | unary XOR_ASSIGN assignment
-   62           | unary OR_ASSIGN assignment
-   63           | unary SHL_ASSIGN assignment
-   64           | unary SHR_ASSIGN assignment
+   53 expr: assignment
+   54     | READ '(' expr ')'
 
-   65 logical_or: logical_and
-   66           | logical_or OR_OP logical_and
+   55 assignment: logical_or
+   56           | unary '=' assignment
+   57           | unary ADD_ASSIGN assignment
+   58           | unary SUB_ASSIGN assignment
+   59           | unary MUL_ASSIGN assignment
+   60           | unary DIV_ASSIGN assignment
+   61           | unary MOD_ASSIGN assignment
+   62           | unary AND_ASSIGN assignment
+   63           | unary XOR_ASSIGN assignment
+   64           | unary OR_ASSIGN assignment
+   65           | unary SHL_ASSIGN assignment
+   66           | unary SHR_ASSIGN assignment
 
-   67 logical_and: bit_or
-   68            | logical_and AND_OP bit_or
+   67 logical_or: logical_and
+   68           | logical_or OR_OP logical_and
 
-   69 bit_or: bit_xor
-   70       | bit_or '|' bit_xor
+   69 logical_and: bit_or
+   70            | logical_and AND_OP bit_or
 
-   71 bit_xor: bit_and
-   72        | bit_xor '^' bit_and
+   71 bit_or: bit_xor
+   72       | bit_or '|' bit_xor
 
-   73 bit_and: equality
-   74        | bit_and '&' equality
+   73 bit_xor: bit_and
+   74        | bit_xor '^' bit_and
 
-   75 equality: relational
-   76         | equality EQ_OP relational
-   77         | equality NE_OP relational
+   75 bit_and: equality
+   76        | bit_and '&' equality
 
-   78 relational: shift
-   79           | relational '>' shift
-   80           | relational GE_OP shift
-   81           | relational '<' shift
-   82           | relational LE_OP shift
+   77 equality: relational
+   78         | equality EQ_OP relational
+   79         | equality NE_OP relational
 
-   83 shift: additive
-   84      | shift SHL_OP additive
-   85      | shift SHR_OP additive
+   80 relational: shift
+   81           | relational '>' shift
+   82           | relational GE_OP shift
+   83           | relational '<' shift
+   84           | relational LE_OP shift
 
-   86 additive: multi
-   87         | additive '+' multi
-   88         | additive '-' multi
+   85 shift: additive
+   86      | shift SHL_OP additive
+   87      | shift SHR_OP additive
 
-   89 multi: unary
-   90      | multi '*' unary
-   91      | multi '/' unary
-   92      | multi '%' unary
+   88 additive: multi
+   89         | additive '+' multi
+   90         | additive '-' multi
 
-   93 unary: postfix
-   94      | INC_OP unary
-   95      | DEC_OP unary
-   96      | '-' unary
-   97      | '!' unary
-   98      | '~' unary
+   91 multi: unary
+   92      | multi '*' unary
+   93      | multi '/' unary
+   94      | multi '%' unary
 
-   99 postfix: primary
-  100        | postfix INC_OP
-  101        | postfix DEC_OP
-  102        | postfix '[' expr ']'
-  103        | postfix '(' args ')'
-  104        | postfix '(' ')'
-  105        | postfix '.' IDENTIFIER
+   95 unary: postfix
+   96      | INC_OP unary
+   97      | DEC_OP unary
+   98      | '-' unary
+   99      | '!' unary
+  100      | '~' unary
 
-  106 primary: IDENTIFIER
-  107        | CONSTANT
-  108        | '(' expr ')'
+  101 postfix: primary
+  102        | postfix INC_OP
+  103        | postfix DEC_OP
+  104        | postfix '[' expr ']'
+  105        | postfix '(' args ')'
+  106        | postfix '(' ')'
+  107        | postfix '.' IDENTIFIER
 
-  109 args: expr
-  110     | args ',' expr
+  108 primary: IDENTIFIER
+  109        | CONSTANT
+  110        | '(' expr ')'
 
-  111 init_args: init_arg
-  112          | init_args ',' init_arg
+  111 args: expr
+  112     | args ',' expr
 
-  113 init_arg: expr
+  113 init_args: init_arg
+  114          | init_args ',' init_arg
+
+  115 init_arg: expr
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'!' (33) 97
-'%' (37) 92
-'&' (38) 74
-'(' (40) 9 10 29 30 31 32 33 34 35 36 37 38 52 103 104 108
-')' (41) 9 10 29 30 31 32 33 34 35 36 37 38 52 103 104 108
-'*' (42) 90
-'+' (43) 87
-',' (44) 12 46 110 112
-'-' (45) 88 96
-'.' (46) 105
-'/' (47) 91
-';' (59) 27 28 31 32 33 34 35 36 37 38 39 40 41 44
-'<' (60) 81
-'=' (61) 48 54
-'>' (62) 79
-'[' (91) 15 102
-']' (93) 15 102
-'^' (94) 72
-'{' (123) 23 24 25 26 50
-'|' (124) 70
-'}' (125) 23 24 25 26 50
-'~' (126) 98
+'!' (33) 99
+'%' (37) 94
+'&' (38) 76
+'(' (40) 9 10 30 31 32 33 34 35 36 37 38 39 40 54 105 106 110
+')' (41) 9 10 30 31 32 33 34 35 36 37 38 39 40 54 105 106 110
+'*' (42) 92
+'+' (43) 89
+',' (44) 12 48 112 114
+'-' (45) 90 98
+'.' (46) 107
+'/' (47) 93
+';' (59) 28 29 32 33 34 35 36 37 38 39 41 42 43 46
+'<' (60) 83
+'=' (61) 50 56
+'>' (62) 81
+'[' (91) 15 104
+']' (93) 15 104
+'^' (94) 74
+'{' (123) 24 25 26 27 52
+'|' (124) 72
+'}' (125) 24 25 26 27 52
+'~' (126) 100
 error (256)
-INC_OP (258) 94 100
-DEC_OP (259) 95 101
-SHL_OP (260) 84
-SHR_OP (261) 85
-LE_OP (262) 82
-GE_OP (263) 80
-EQ_OP (264) 76
-NE_OP (265) 77
-AND_OP (266) 68
-OR_OP (267) 66
-ADD_ASSIGN (268) 55
-SUB_ASSIGN (269) 56
-MUL_ASSIGN (270) 57
-DIV_ASSIGN (271) 58
-MOD_ASSIGN (272) 59
-AND_ASSIGN (273) 60
-XOR_ASSIGN (274) 61
-OR_ASSIGN (275) 62
-SHL_ASSIGN (276) 63
-SHR_ASSIGN (277) 64
-IDENTIFIER (278) 9 10 14 105 106
-CONSTANT (279) 15 107
-INT (280) 6 13 44
+INC_OP (258) 96 102
+DEC_OP (259) 97 103
+SHL_OP (260) 86
+SHR_OP (261) 87
+LE_OP (262) 84
+GE_OP (263) 82
+EQ_OP (264) 78
+NE_OP (265) 79
+AND_OP (266) 70
+OR_OP (267) 68
+ADD_ASSIGN (268) 57
+SUB_ASSIGN (269) 58
+MUL_ASSIGN (270) 59
+DIV_ASSIGN (271) 60
+MOD_ASSIGN (272) 61
+AND_ASSIGN (273) 62
+XOR_ASSIGN (274) 63
+OR_ASSIGN (275) 64
+SHL_ASSIGN (276) 65
+SHR_ASSIGN (277) 66
+IDENTIFIER (278) 9 10 14 107 108
+CONSTANT (279) 15 109
+INT (280) 6 13 46
 STRUCT (281)
 FLOAT (282) 7
 CHAR (283) 8
-IF (284) 29 30
-ELSE (285) 30
-FOR (286) 31 32 33 34 35 36 37 38
-CONTINUE (287) 40
-BREAK (288) 41
-RETURN (289) 39
-READ (290) 52
-EXTDEFS (291)
-PARAS (292)
-STMTS (293)
-DEFS (294)
-DECS (295)
-ARGS (296)
-INIT_ARGS (297)
+IF (284) 30 31
+ELSE (285) 31
+FOR (286) 32 33 34 35 36 37 38 39
+CONTINUE (287) 42
+BREAK (288) 43
+RETURN (289) 41
+READ (290) 54
+WHILE (291) 40
+EXTDEFS (292)
+PARAS (293)
+STMTS (294)
+DEFS (295)
+DECS (296)
+ARGS (297)
+INIT_ARGS (298)
 
 
 Nonterminals, with rules where they appear
 
-$accept (65)
+$accept (66)
     on left: 0
-program (66)
+program (67)
     on left: 1 2, on right: 0
-extdefs (67)
+extdefs (68)
     on left: 3 4, on right: 2 4
-extdef (68)
+extdef (69)
     on left: 5 6 7 8, on right: 3 4
-func (69)
+func (70)
     on left: 9 10, on right: 6 7 8
-paras (70)
+paras (71)
     on left: 11 12, on right: 9 12
-para (71)
+para (72)
     on left: 13, on right: 11 12
-var (72)
-    on left: 14 15, on right: 13 15 47 48
-stmts (73)
-    on left: 16 17, on right: 17 23 25
-stmt (74)
-    on left: 18 19 20 21 22, on right: 16 17 29 30 31 32 33 34 35 36
-    37 38
-compound_stmt (75)
-    on left: 23 24 25 26 27, on right: 6 7 8 18
-expr_stmt (76)
-    on left: 28, on right: 19
-selection_stmt (77)
-    on left: 29 30, on right: 20
-iteration_stmt (78)
-    on left: 31 32 33 34 35 36 37 38, on right: 21
-jump_stmt (79)
-    on left: 39 40 41, on right: 22
-defs (80)
-    on left: 42 43, on right: 23 24 43
-def (81)
-    on left: 44, on right: 5 42 43
-decs (82)
-    on left: 45 46, on right: 44 46
-dec (83)
-    on left: 47 48, on right: 45 46
-init (84)
-    on left: 49 50, on right: 48
-expr (85)
-    on left: 51 52, on right: 28 29 30 31 32 33 34 35 36 37 39 49 52
-    102 108 109 110 113
-assignment (86)
-    on left: 53 54 55 56 57 58 59 60 61 62 63 64, on right: 51 54 55
-    56 57 58 59 60 61 62 63 64
-logical_or (87)
-    on left: 65 66, on right: 53 66
-logical_and (88)
-    on left: 67 68, on right: 65 66 68
-bit_or (89)
+var (73)
+    on left: 14 15, on right: 13 15 49 50
+stmts (74)
+    on left: 16 17, on right: 17 24 26
+stmt (75)
+    on left: 18 19 20 21 22 23, on right: 16 17 30 31 32 33 34 35 36
+    37 38 39 40
+compound_stmt (76)
+    on left: 24 25 26 27 28, on right: 6 7 8 18
+expr_stmt (77)
+    on left: 29, on right: 19
+selection_stmt (78)
+    on left: 30 31, on right: 20
+iteration_stmt (79)
+    on left: 32 33 34 35 36 37 38 39, on right: 21
+while_stmt (80)
+    on left: 40, on right: 22
+jump_stmt (81)
+    on left: 41 42 43, on right: 23
+defs (82)
+    on left: 44 45, on right: 24 25 45
+def (83)
+    on left: 46, on right: 5 44 45
+decs (84)
+    on left: 47 48, on right: 46 48
+dec (85)
+    on left: 49 50, on right: 47 48
+init (86)
+    on left: 51 52, on right: 50
+expr (87)
+    on left: 53 54, on right: 29 30 31 32 33 34 35 36 37 38 40 41 51
+    54 104 110 111 112 115
+assignment (88)
+    on left: 55 56 57 58 59 60 61 62 63 64 65 66, on right: 53 56 57
+    58 59 60 61 62 63 64 65 66
+logical_or (89)
+    on left: 67 68, on right: 55 68
+logical_and (90)
     on left: 69 70, on right: 67 68 70
-bit_xor (90)
+bit_or (91)
     on left: 71 72, on right: 69 70 72
-bit_and (91)
+bit_xor (92)
     on left: 73 74, on right: 71 72 74
-equality (92)
-    on left: 75 76 77, on right: 73 74 76 77
-relational (93)
-    on left: 78 79 80 81 82, on right: 75 76 77 79 80 81 82
-shift (94)
-    on left: 83 84 85, on right: 78 79 80 81 82 84 85
-additive (95)
-    on left: 86 87 88, on right: 83 84 85 87 88
-multi (96)
-    on left: 89 90 91 92, on right: 86 87 88 90 91 92
-unary (97)
-    on left: 93 94 95 96 97 98, on right: 54 55 56 57 58 59 60 61 62
-    63 64 89 90 91 92 94 95 96 97 98
-postfix (98)
-    on left: 99 100 101 102 103 104 105, on right: 93 100 101 102 103
-    104 105
-primary (99)
-    on left: 106 107 108, on right: 99
-args (100)
-    on left: 109 110, on right: 103 110
-init_args (101)
-    on left: 111 112, on right: 50 112
-init_arg (102)
-    on left: 113, on right: 111 112
+bit_and (93)
+    on left: 75 76, on right: 73 74 76
+equality (94)
+    on left: 77 78 79, on right: 75 76 78 79
+relational (95)
+    on left: 80 81 82 83 84, on right: 77 78 79 81 82 83 84
+shift (96)
+    on left: 85 86 87, on right: 80 81 82 83 84 86 87
+additive (97)
+    on left: 88 89 90, on right: 85 86 87 89 90
+multi (98)
+    on left: 91 92 93 94, on right: 88 89 90 92 93 94
+unary (99)
+    on left: 95 96 97 98 99 100, on right: 56 57 58 59 60 61 62 63
+    64 65 66 91 92 93 94 96 97 98 99 100
+postfix (100)
+    on left: 101 102 103 104 105 106 107, on right: 95 102 103 104
+    105 106 107
+primary (101)
+    on left: 108 109 110, on right: 101
+args (102)
+    on left: 111 112, on right: 105 112
+init_args (103)
+    on left: 113 114, on right: 52 114
+init_arg (104)
+    on left: 115, on right: 113 114
 
 
 State 0
@@ -340,7 +346,7 @@ State 0
 State 1
 
     6 extdef: INT . func compound_stmt
-   44 def: INT . decs ';'
+   46 def: INT . decs ';'
 
     IDENTIFIER  shift, and go to state 8
 
@@ -428,19 +434,19 @@ State 9
 State 10
 
    15 var: var . '[' CONSTANT ']'
-   47 dec: var .
-   48    | var . '=' init
+   49 dec: var .
+   50    | var . '=' init
 
     '['  shift, and go to state 22
     '='  shift, and go to state 23
 
-    $default  reduce using rule 47 (dec)
+    $default  reduce using rule 49 (dec)
 
 
 State 11
 
-   44 def: INT decs . ';'
-   46 decs: decs . ',' dec
+   46 def: INT decs . ';'
+   48 decs: decs . ',' dec
 
     ','  shift, and go to state 24
     ';'  shift, and go to state 25
@@ -448,9 +454,9 @@ State 11
 
 State 12
 
-   45 decs: dec .
+   47 decs: dec .
 
-    $default  reduce using rule 45 (decs)
+    $default  reduce using rule 47 (decs)
 
 
 State 13
@@ -509,10 +515,10 @@ State 18
 
 State 19
 
-   23 compound_stmt: '{' . defs stmts '}'
-   24              | '{' . defs '}'
-   25              | '{' . stmts '}'
-   26              | '{' . '}'
+   24 compound_stmt: '{' . defs stmts '}'
+   25              | '{' . defs '}'
+   26              | '{' . stmts '}'
+   27              | '{' . '}'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
@@ -525,45 +531,47 @@ State 19
     BREAK       shift, and go to state 40
     RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
     '{'         shift, and go to state 19
-    '}'         shift, and go to state 44
+    '}'         shift, and go to state 45
     ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmts           go to state 48
-    stmt            go to state 49
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    defs            go to state 55
-    def             go to state 56
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    stmts           go to state 49
+    stmt            go to state 50
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    defs            go to state 57
+    def             go to state 58
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 20
 
-   27 compound_stmt: ';' .
+   28 compound_stmt: ';' .
 
-    $default  reduce using rule 27 (compound_stmt)
+    $default  reduce using rule 28 (compound_stmt)
 
 
 State 21
@@ -577,57 +585,57 @@ State 22
 
    15 var: var '[' . CONSTANT ']'
 
-    CONSTANT  shift, and go to state 72
+    CONSTANT  shift, and go to state 74
 
 
 State 23
 
-   48 dec: var '=' . init
+   50 dec: var '=' . init
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 73
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 75
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    init         go to state 74
-    expr         go to state 75
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    init         go to state 76
+    expr         go to state 77
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 24
 
-   46 decs: decs ',' . dec
+   48 decs: decs ',' . dec
 
-    IDENTIFIER  shift, and go to state 76
+    IDENTIFIER  shift, and go to state 78
 
     var  go to state 10
-    dec  go to state 77
+    dec  go to state 79
 
 
 State 25
 
-   44 def: INT decs ';' .
+   46 def: INT decs ';' .
 
-    $default  reduce using rule 44 (def)
+    $default  reduce using rule 46 (def)
 
 
 State 26
@@ -648,9 +656,9 @@ State 28
 
    13 para: INT . var
 
-    IDENTIFIER  shift, and go to state 76
+    IDENTIFIER  shift, and go to state 78
 
-    var  go to state 78
+    var  go to state 80
 
 
 State 29
@@ -665,8 +673,8 @@ State 30
     9 func: IDENTIFIER '(' paras . ')'
    12 paras: paras . ',' para
 
-    ')'  shift, and go to state 79
-    ','  shift, and go to state 80
+    ')'  shift, and go to state 81
+    ','  shift, and go to state 82
 
 
 State 31
@@ -678,59 +686,59 @@ State 31
 
 State 32
 
-   94 unary: INC_OP . unary
+   96 unary: INC_OP . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 81
-    postfix  go to state 70
-    primary  go to state 71
+    unary    go to state 83
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 33
 
-   95 unary: DEC_OP . unary
+   97 unary: DEC_OP . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 82
-    postfix  go to state 70
-    primary  go to state 71
+    unary    go to state 84
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 34
 
-  106 primary: IDENTIFIER .
+  108 primary: IDENTIFIER .
 
-    $default  reduce using rule 106 (primary)
+    $default  reduce using rule 108 (primary)
 
 
 State 35
 
-  107 primary: CONSTANT .
+  109 primary: CONSTANT .
 
-    $default  reduce using rule 107 (primary)
+    $default  reduce using rule 109 (primary)
 
 
 State 36
 
-   44 def: INT . decs ';'
+   46 def: INT . decs ';'
 
-    IDENTIFIER  shift, and go to state 76
+    IDENTIFIER  shift, and go to state 78
 
     var   go to state 10
     decs  go to state 11
@@ -739,174 +747,181 @@ State 36
 
 State 37
 
-   29 selection_stmt: IF . '(' expr ')' stmt
-   30               | IF . '(' expr ')' stmt ELSE stmt
+   30 selection_stmt: IF . '(' expr ')' stmt
+   31               | IF . '(' expr ')' stmt ELSE stmt
 
-    '('  shift, and go to state 83
+    '('  shift, and go to state 85
 
 
 State 38
 
-   31 iteration_stmt: FOR . '(' expr ';' expr ';' expr ')' stmt
-   32               | FOR . '(' expr ';' expr ';' ')' stmt
-   33               | FOR . '(' expr ';' ';' expr ')' stmt
-   34               | FOR . '(' expr ';' ';' ')' stmt
-   35               | FOR . '(' ';' expr ';' expr ')' stmt
-   36               | FOR . '(' ';' expr ';' ')' stmt
-   37               | FOR . '(' ';' ';' expr ')' stmt
-   38               | FOR . '(' ';' ';' ')' stmt
+   32 iteration_stmt: FOR . '(' expr ';' expr ';' expr ')' stmt
+   33               | FOR . '(' expr ';' expr ';' ')' stmt
+   34               | FOR . '(' expr ';' ';' expr ')' stmt
+   35               | FOR . '(' expr ';' ';' ')' stmt
+   36               | FOR . '(' ';' expr ';' expr ')' stmt
+   37               | FOR . '(' ';' expr ';' ')' stmt
+   38               | FOR . '(' ';' ';' expr ')' stmt
+   39               | FOR . '(' ';' ';' ')' stmt
 
-    '('  shift, and go to state 84
+    '('  shift, and go to state 86
 
 
 State 39
 
-   40 jump_stmt: CONTINUE . ';'
+   42 jump_stmt: CONTINUE . ';'
 
-    ';'  shift, and go to state 85
+    ';'  shift, and go to state 87
 
 
 State 40
 
-   41 jump_stmt: BREAK . ';'
+   43 jump_stmt: BREAK . ';'
 
-    ';'  shift, and go to state 86
+    ';'  shift, and go to state 88
 
 
 State 41
 
-   39 jump_stmt: RETURN . expr ';'
+   41 jump_stmt: RETURN . expr ';'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    expr         go to state 87
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    expr         go to state 89
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 42
 
-   52 expr: READ . '(' expr ')'
+   54 expr: READ . '(' expr ')'
 
-    '('  shift, and go to state 88
+    '('  shift, and go to state 90
 
 
 State 43
 
-  108 primary: '(' . expr ')'
+   40 while_stmt: WHILE . '(' expr ')' stmt
+
+    '('  shift, and go to state 91
+
+
+State 44
+
+  110 primary: '(' . expr ')'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    expr         go to state 89
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-
-
-State 44
-
-   26 compound_stmt: '{' '}' .
-
-    $default  reduce using rule 26 (compound_stmt)
+    expr         go to state 92
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 45
 
-   96 unary: '-' . unary
+   27 compound_stmt: '{' '}' .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    unary    go to state 90
-    postfix  go to state 70
-    primary  go to state 71
+    $default  reduce using rule 27 (compound_stmt)
 
 
 State 46
 
-   97 unary: '!' . unary
+   98 unary: '-' . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 91
-    postfix  go to state 70
-    primary  go to state 71
+    unary    go to state 93
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 47
 
-   98 unary: '~' . unary
+   99 unary: '!' . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 92
-    postfix  go to state 70
-    primary  go to state 71
+    unary    go to state 94
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 48
 
+  100 unary: '~' . unary
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    unary    go to state 95
+    postfix  go to state 72
+    primary  go to state 73
+
+
+State 49
+
    17 stmts: stmts . stmt
-   25 compound_stmt: '{' stmts . '}'
+   26 compound_stmt: '{' stmts . '}'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
@@ -918,84 +933,93 @@ State 48
     BREAK       shift, and go to state 40
     RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
     '{'         shift, and go to state 19
-    '}'         shift, and go to state 93
+    '}'         shift, and go to state 96
     ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmt            go to state 94
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    stmt            go to state 97
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
-State 49
+State 50
 
    16 stmts: stmt .
 
     $default  reduce using rule 16 (stmts)
 
 
-State 50
+State 51
 
    18 stmt: compound_stmt .
 
     $default  reduce using rule 18 (stmt)
 
 
-State 51
+State 52
 
    19 stmt: expr_stmt .
 
     $default  reduce using rule 19 (stmt)
 
 
-State 52
+State 53
 
    20 stmt: selection_stmt .
 
     $default  reduce using rule 20 (stmt)
 
 
-State 53
+State 54
 
    21 stmt: iteration_stmt .
 
     $default  reduce using rule 21 (stmt)
 
 
-State 54
+State 55
 
-   22 stmt: jump_stmt .
+   22 stmt: while_stmt .
 
     $default  reduce using rule 22 (stmt)
 
 
-State 55
+State 56
 
-   23 compound_stmt: '{' defs . stmts '}'
-   24              | '{' defs . '}'
-   43 defs: defs . def
+   23 stmt: jump_stmt .
+
+    $default  reduce using rule 23 (stmt)
+
+
+State 57
+
+   24 compound_stmt: '{' defs . stmts '}'
+   25              | '{' defs . '}'
+   45 defs: defs . def
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
@@ -1008,301 +1032,303 @@ State 55
     BREAK       shift, and go to state 40
     RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
     '{'         shift, and go to state 19
-    '}'         shift, and go to state 95
+    '}'         shift, and go to state 98
     ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmts           go to state 96
-    stmt            go to state 49
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    def             go to state 97
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
-
-
-State 56
-
-   42 defs: def .
-
-    $default  reduce using rule 42 (defs)
-
-
-State 57
-
-   28 expr_stmt: expr . ';'
-
-    ';'  shift, and go to state 98
+    stmts           go to state 99
+    stmt            go to state 50
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    def             go to state 100
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 58
 
-   51 expr: assignment .
+   44 defs: def .
 
-    $default  reduce using rule 51 (expr)
+    $default  reduce using rule 44 (defs)
 
 
 State 59
 
-   53 assignment: logical_or .
-   66 logical_or: logical_or . OR_OP logical_and
+   29 expr_stmt: expr . ';'
 
-    OR_OP  shift, and go to state 99
-
-    $default  reduce using rule 53 (assignment)
+    ';'  shift, and go to state 101
 
 
 State 60
 
-   65 logical_or: logical_and .
-   68 logical_and: logical_and . AND_OP bit_or
+   53 expr: assignment .
 
-    AND_OP  shift, and go to state 100
-
-    $default  reduce using rule 65 (logical_or)
+    $default  reduce using rule 53 (expr)
 
 
 State 61
 
-   67 logical_and: bit_or .
-   70 bit_or: bit_or . '|' bit_xor
+   55 assignment: logical_or .
+   68 logical_or: logical_or . OR_OP logical_and
 
-    '|'  shift, and go to state 101
+    OR_OP  shift, and go to state 102
 
-    $default  reduce using rule 67 (logical_and)
+    $default  reduce using rule 55 (assignment)
 
 
 State 62
 
-   69 bit_or: bit_xor .
-   72 bit_xor: bit_xor . '^' bit_and
+   67 logical_or: logical_and .
+   70 logical_and: logical_and . AND_OP bit_or
 
-    '^'  shift, and go to state 102
+    AND_OP  shift, and go to state 103
 
-    $default  reduce using rule 69 (bit_or)
+    $default  reduce using rule 67 (logical_or)
 
 
 State 63
 
-   71 bit_xor: bit_and .
-   74 bit_and: bit_and . '&' equality
+   69 logical_and: bit_or .
+   72 bit_or: bit_or . '|' bit_xor
 
-    '&'  shift, and go to state 103
+    '|'  shift, and go to state 104
 
-    $default  reduce using rule 71 (bit_xor)
+    $default  reduce using rule 69 (logical_and)
 
 
 State 64
 
-   73 bit_and: equality .
-   76 equality: equality . EQ_OP relational
-   77         | equality . NE_OP relational
+   71 bit_or: bit_xor .
+   74 bit_xor: bit_xor . '^' bit_and
 
-    EQ_OP  shift, and go to state 104
-    NE_OP  shift, and go to state 105
+    '^'  shift, and go to state 105
 
-    $default  reduce using rule 73 (bit_and)
+    $default  reduce using rule 71 (bit_or)
 
 
 State 65
 
-   75 equality: relational .
-   79 relational: relational . '>' shift
-   80           | relational . GE_OP shift
-   81           | relational . '<' shift
-   82           | relational . LE_OP shift
+   73 bit_xor: bit_and .
+   76 bit_and: bit_and . '&' equality
 
-    LE_OP  shift, and go to state 106
-    GE_OP  shift, and go to state 107
-    '>'    shift, and go to state 108
-    '<'    shift, and go to state 109
+    '&'  shift, and go to state 106
 
-    $default  reduce using rule 75 (equality)
+    $default  reduce using rule 73 (bit_xor)
 
 
 State 66
 
-   78 relational: shift .
-   84 shift: shift . SHL_OP additive
-   85      | shift . SHR_OP additive
+   75 bit_and: equality .
+   78 equality: equality . EQ_OP relational
+   79         | equality . NE_OP relational
 
-    SHL_OP  shift, and go to state 110
-    SHR_OP  shift, and go to state 111
+    EQ_OP  shift, and go to state 107
+    NE_OP  shift, and go to state 108
 
-    $default  reduce using rule 78 (relational)
+    $default  reduce using rule 75 (bit_and)
 
 
 State 67
 
-   83 shift: additive .
-   87 additive: additive . '+' multi
-   88         | additive . '-' multi
+   77 equality: relational .
+   81 relational: relational . '>' shift
+   82           | relational . GE_OP shift
+   83           | relational . '<' shift
+   84           | relational . LE_OP shift
 
-    '+'  shift, and go to state 112
-    '-'  shift, and go to state 113
+    LE_OP  shift, and go to state 109
+    GE_OP  shift, and go to state 110
+    '>'    shift, and go to state 111
+    '<'    shift, and go to state 112
 
-    $default  reduce using rule 83 (shift)
+    $default  reduce using rule 77 (equality)
 
 
 State 68
 
-   86 additive: multi .
-   90 multi: multi . '*' unary
-   91      | multi . '/' unary
-   92      | multi . '%' unary
+   80 relational: shift .
+   86 shift: shift . SHL_OP additive
+   87      | shift . SHR_OP additive
 
-    '*'  shift, and go to state 114
-    '/'  shift, and go to state 115
-    '%'  shift, and go to state 116
+    SHL_OP  shift, and go to state 113
+    SHR_OP  shift, and go to state 114
 
-    $default  reduce using rule 86 (additive)
+    $default  reduce using rule 80 (relational)
 
 
 State 69
 
-   54 assignment: unary . '=' assignment
-   55           | unary . ADD_ASSIGN assignment
-   56           | unary . SUB_ASSIGN assignment
-   57           | unary . MUL_ASSIGN assignment
-   58           | unary . DIV_ASSIGN assignment
-   59           | unary . MOD_ASSIGN assignment
-   60           | unary . AND_ASSIGN assignment
-   61           | unary . XOR_ASSIGN assignment
-   62           | unary . OR_ASSIGN assignment
-   63           | unary . SHL_ASSIGN assignment
-   64           | unary . SHR_ASSIGN assignment
-   89 multi: unary .
+   85 shift: additive .
+   89 additive: additive . '+' multi
+   90         | additive . '-' multi
 
-    ADD_ASSIGN  shift, and go to state 117
-    SUB_ASSIGN  shift, and go to state 118
-    MUL_ASSIGN  shift, and go to state 119
-    DIV_ASSIGN  shift, and go to state 120
-    MOD_ASSIGN  shift, and go to state 121
-    AND_ASSIGN  shift, and go to state 122
-    XOR_ASSIGN  shift, and go to state 123
-    OR_ASSIGN   shift, and go to state 124
-    SHL_ASSIGN  shift, and go to state 125
-    SHR_ASSIGN  shift, and go to state 126
-    '='         shift, and go to state 127
+    '+'  shift, and go to state 115
+    '-'  shift, and go to state 116
 
-    $default  reduce using rule 89 (multi)
+    $default  reduce using rule 85 (shift)
 
 
 State 70
 
-   93 unary: postfix .
-  100 postfix: postfix . INC_OP
-  101        | postfix . DEC_OP
-  102        | postfix . '[' expr ']'
-  103        | postfix . '(' args ')'
-  104        | postfix . '(' ')'
-  105        | postfix . '.' IDENTIFIER
+   88 additive: multi .
+   92 multi: multi . '*' unary
+   93      | multi . '/' unary
+   94      | multi . '%' unary
 
-    INC_OP  shift, and go to state 128
-    DEC_OP  shift, and go to state 129
-    '('     shift, and go to state 130
-    '['     shift, and go to state 131
-    '.'     shift, and go to state 132
+    '*'  shift, and go to state 117
+    '/'  shift, and go to state 118
+    '%'  shift, and go to state 119
 
-    $default  reduce using rule 93 (unary)
+    $default  reduce using rule 88 (additive)
 
 
 State 71
 
-   99 postfix: primary .
+   56 assignment: unary . '=' assignment
+   57           | unary . ADD_ASSIGN assignment
+   58           | unary . SUB_ASSIGN assignment
+   59           | unary . MUL_ASSIGN assignment
+   60           | unary . DIV_ASSIGN assignment
+   61           | unary . MOD_ASSIGN assignment
+   62           | unary . AND_ASSIGN assignment
+   63           | unary . XOR_ASSIGN assignment
+   64           | unary . OR_ASSIGN assignment
+   65           | unary . SHL_ASSIGN assignment
+   66           | unary . SHR_ASSIGN assignment
+   91 multi: unary .
 
-    $default  reduce using rule 99 (postfix)
+    ADD_ASSIGN  shift, and go to state 120
+    SUB_ASSIGN  shift, and go to state 121
+    MUL_ASSIGN  shift, and go to state 122
+    DIV_ASSIGN  shift, and go to state 123
+    MOD_ASSIGN  shift, and go to state 124
+    AND_ASSIGN  shift, and go to state 125
+    XOR_ASSIGN  shift, and go to state 126
+    OR_ASSIGN   shift, and go to state 127
+    SHL_ASSIGN  shift, and go to state 128
+    SHR_ASSIGN  shift, and go to state 129
+    '='         shift, and go to state 130
+
+    $default  reduce using rule 91 (multi)
 
 
 State 72
 
-   15 var: var '[' CONSTANT . ']'
+   95 unary: postfix .
+  102 postfix: postfix . INC_OP
+  103        | postfix . DEC_OP
+  104        | postfix . '[' expr ']'
+  105        | postfix . '(' args ')'
+  106        | postfix . '(' ')'
+  107        | postfix . '.' IDENTIFIER
 
-    ']'  shift, and go to state 133
+    INC_OP  shift, and go to state 131
+    DEC_OP  shift, and go to state 132
+    '('     shift, and go to state 133
+    '['     shift, and go to state 134
+    '.'     shift, and go to state 135
+
+    $default  reduce using rule 95 (unary)
 
 
 State 73
 
-   50 init: '{' . init_args '}'
+  101 postfix: primary .
+
+    $default  reduce using rule 101 (postfix)
+
+
+State 74
+
+   15 var: var '[' CONSTANT . ']'
+
+    ']'  shift, and go to state 136
+
+
+State 75
+
+   52 init: '{' . init_args '}'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    expr         go to state 134
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-    init_args    go to state 135
-    init_arg     go to state 136
-
-
-State 74
-
-   48 dec: var '=' init .
-
-    $default  reduce using rule 48 (dec)
-
-
-State 75
-
-   49 init: expr .
-
-    $default  reduce using rule 49 (init)
+    expr         go to state 137
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+    init_args    go to state 138
+    init_arg     go to state 139
 
 
 State 76
+
+   50 dec: var '=' init .
+
+    $default  reduce using rule 50 (dec)
+
+
+State 77
+
+   51 init: expr .
+
+    $default  reduce using rule 51 (init)
+
+
+State 78
 
    14 var: IDENTIFIER .
 
     $default  reduce using rule 14 (var)
 
 
-State 77
+State 79
 
-   46 decs: decs ',' dec .
+   48 decs: decs ',' dec .
 
-    $default  reduce using rule 46 (decs)
+    $default  reduce using rule 48 (decs)
 
 
-State 78
+State 80
 
    13 para: INT var .
    15 var: var . '[' CONSTANT ']'
@@ -1312,212 +1338,243 @@ State 78
     $default  reduce using rule 13 (para)
 
 
-State 79
+State 81
 
     9 func: IDENTIFIER '(' paras ')' .
 
     $default  reduce using rule 9 (func)
 
 
-State 80
+State 82
 
    12 paras: paras ',' . para
 
     INT  shift, and go to state 28
 
-    para  go to state 137
-
-
-State 81
-
-   94 unary: INC_OP unary .
-
-    $default  reduce using rule 94 (unary)
-
-
-State 82
-
-   95 unary: DEC_OP unary .
-
-    $default  reduce using rule 95 (unary)
+    para  go to state 140
 
 
 State 83
 
-   29 selection_stmt: IF '(' . expr ')' stmt
-   30               | IF '(' . expr ')' stmt ELSE stmt
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 138
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-
-
-State 84
-
-   31 iteration_stmt: FOR '(' . expr ';' expr ';' expr ')' stmt
-   32               | FOR '(' . expr ';' expr ';' ')' stmt
-   33               | FOR '(' . expr ';' ';' expr ')' stmt
-   34               | FOR '(' . expr ';' ';' ')' stmt
-   35               | FOR '(' . ';' expr ';' expr ')' stmt
-   36               | FOR '(' . ';' expr ';' ')' stmt
-   37               | FOR '(' . ';' ';' expr ')' stmt
-   38               | FOR '(' . ';' ';' ')' stmt
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ';'         shift, and go to state 139
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 140
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-
-
-State 85
-
-   40 jump_stmt: CONTINUE ';' .
-
-    $default  reduce using rule 40 (jump_stmt)
-
-
-State 86
-
-   41 jump_stmt: BREAK ';' .
-
-    $default  reduce using rule 41 (jump_stmt)
-
-
-State 87
-
-   39 jump_stmt: RETURN expr . ';'
-
-    ';'  shift, and go to state 141
-
-
-State 88
-
-   52 expr: READ '(' . expr ')'
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 142
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-
-
-State 89
-
-  108 primary: '(' expr . ')'
-
-    ')'  shift, and go to state 143
-
-
-State 90
-
-   96 unary: '-' unary .
+   96 unary: INC_OP unary .
 
     $default  reduce using rule 96 (unary)
 
 
-State 91
+State 84
 
-   97 unary: '!' unary .
+   97 unary: DEC_OP unary .
 
     $default  reduce using rule 97 (unary)
 
 
+State 85
+
+   30 selection_stmt: IF '(' . expr ')' stmt
+   31               | IF '(' . expr ')' stmt ELSE stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 141
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
+State 86
+
+   32 iteration_stmt: FOR '(' . expr ';' expr ';' expr ')' stmt
+   33               | FOR '(' . expr ';' expr ';' ')' stmt
+   34               | FOR '(' . expr ';' ';' expr ')' stmt
+   35               | FOR '(' . expr ';' ';' ')' stmt
+   36               | FOR '(' . ';' expr ';' expr ')' stmt
+   37               | FOR '(' . ';' expr ';' ')' stmt
+   38               | FOR '(' . ';' ';' expr ')' stmt
+   39               | FOR '(' . ';' ';' ')' stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    ';'         shift, and go to state 142
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 143
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
+State 87
+
+   42 jump_stmt: CONTINUE ';' .
+
+    $default  reduce using rule 42 (jump_stmt)
+
+
+State 88
+
+   43 jump_stmt: BREAK ';' .
+
+    $default  reduce using rule 43 (jump_stmt)
+
+
+State 89
+
+   41 jump_stmt: RETURN expr . ';'
+
+    ';'  shift, and go to state 144
+
+
+State 90
+
+   54 expr: READ '(' . expr ')'
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 145
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
+State 91
+
+   40 while_stmt: WHILE '(' . expr ')' stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 146
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
 State 92
 
-   98 unary: '~' unary .
+  110 primary: '(' expr . ')'
 
-    $default  reduce using rule 98 (unary)
+    ')'  shift, and go to state 147
 
 
 State 93
 
-   25 compound_stmt: '{' stmts '}' .
+   98 unary: '-' unary .
 
-    $default  reduce using rule 25 (compound_stmt)
+    $default  reduce using rule 98 (unary)
 
 
 State 94
+
+   99 unary: '!' unary .
+
+    $default  reduce using rule 99 (unary)
+
+
+State 95
+
+  100 unary: '~' unary .
+
+    $default  reduce using rule 100 (unary)
+
+
+State 96
+
+   26 compound_stmt: '{' stmts '}' .
+
+    $default  reduce using rule 26 (compound_stmt)
+
+
+State 97
 
    17 stmts: stmts stmt .
 
     $default  reduce using rule 17 (stmts)
 
 
-State 95
+State 98
 
-   24 compound_stmt: '{' defs '}' .
+   25 compound_stmt: '{' defs '}' .
 
-    $default  reduce using rule 24 (compound_stmt)
+    $default  reduce using rule 25 (compound_stmt)
 
 
-State 96
+State 99
 
    17 stmts: stmts . stmt
-   23 compound_stmt: '{' defs stmts . '}'
+   24 compound_stmt: '{' defs stmts . '}'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
@@ -1529,1901 +1586,1868 @@ State 96
     BREAK       shift, and go to state 40
     RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
     '{'         shift, and go to state 19
-    '}'         shift, and go to state 144
+    '}'         shift, and go to state 148
     ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmt            go to state 94
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
-
-
-State 97
-
-   43 defs: defs def .
-
-    $default  reduce using rule 43 (defs)
-
-
-State 98
-
-   28 expr_stmt: expr ';' .
-
-    $default  reduce using rule 28 (expr_stmt)
-
-
-State 99
-
-   66 logical_or: logical_or OR_OP . logical_and
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    logical_and  go to state 145
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 146
-    postfix      go to state 70
-    primary      go to state 71
+    stmt            go to state 97
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 100
 
-   68 logical_and: logical_and AND_OP . bit_or
+   45 defs: defs def .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    bit_or      go to state 147
-    bit_xor     go to state 62
-    bit_and     go to state 63
-    equality    go to state 64
-    relational  go to state 65
-    shift       go to state 66
-    additive    go to state 67
-    multi       go to state 68
-    unary       go to state 146
-    postfix     go to state 70
-    primary     go to state 71
+    $default  reduce using rule 45 (defs)
 
 
 State 101
 
-   70 bit_or: bit_or '|' . bit_xor
+   29 expr_stmt: expr ';' .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    bit_xor     go to state 148
-    bit_and     go to state 63
-    equality    go to state 64
-    relational  go to state 65
-    shift       go to state 66
-    additive    go to state 67
-    multi       go to state 68
-    unary       go to state 146
-    postfix     go to state 70
-    primary     go to state 71
+    $default  reduce using rule 29 (expr_stmt)
 
 
 State 102
 
-   72 bit_xor: bit_xor '^' . bit_and
+   68 logical_or: logical_or OR_OP . logical_and
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    bit_and     go to state 149
-    equality    go to state 64
-    relational  go to state 65
-    shift       go to state 66
-    additive    go to state 67
-    multi       go to state 68
-    unary       go to state 146
-    postfix     go to state 70
-    primary     go to state 71
+    logical_and  go to state 149
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 150
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 103
 
-   74 bit_and: bit_and '&' . equality
+   70 logical_and: logical_and AND_OP . bit_or
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    equality    go to state 150
-    relational  go to state 65
-    shift       go to state 66
-    additive    go to state 67
-    multi       go to state 68
-    unary       go to state 146
-    postfix     go to state 70
-    primary     go to state 71
+    bit_or      go to state 151
+    bit_xor     go to state 64
+    bit_and     go to state 65
+    equality    go to state 66
+    relational  go to state 67
+    shift       go to state 68
+    additive    go to state 69
+    multi       go to state 70
+    unary       go to state 150
+    postfix     go to state 72
+    primary     go to state 73
 
 
 State 104
 
-   76 equality: equality EQ_OP . relational
+   72 bit_or: bit_or '|' . bit_xor
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    relational  go to state 151
-    shift       go to state 66
-    additive    go to state 67
-    multi       go to state 68
-    unary       go to state 146
-    postfix     go to state 70
-    primary     go to state 71
+    bit_xor     go to state 152
+    bit_and     go to state 65
+    equality    go to state 66
+    relational  go to state 67
+    shift       go to state 68
+    additive    go to state 69
+    multi       go to state 70
+    unary       go to state 150
+    postfix     go to state 72
+    primary     go to state 73
 
 
 State 105
 
-   77 equality: equality NE_OP . relational
+   74 bit_xor: bit_xor '^' . bit_and
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    relational  go to state 152
-    shift       go to state 66
-    additive    go to state 67
-    multi       go to state 68
-    unary       go to state 146
-    postfix     go to state 70
-    primary     go to state 71
+    bit_and     go to state 153
+    equality    go to state 66
+    relational  go to state 67
+    shift       go to state 68
+    additive    go to state 69
+    multi       go to state 70
+    unary       go to state 150
+    postfix     go to state 72
+    primary     go to state 73
 
 
 State 106
 
-   82 relational: relational LE_OP . shift
+   76 bit_and: bit_and '&' . equality
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    shift     go to state 153
-    additive  go to state 67
-    multi     go to state 68
-    unary     go to state 146
-    postfix   go to state 70
-    primary   go to state 71
+    equality    go to state 154
+    relational  go to state 67
+    shift       go to state 68
+    additive    go to state 69
+    multi       go to state 70
+    unary       go to state 150
+    postfix     go to state 72
+    primary     go to state 73
 
 
 State 107
 
-   80 relational: relational GE_OP . shift
+   78 equality: equality EQ_OP . relational
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    shift     go to state 154
-    additive  go to state 67
-    multi     go to state 68
-    unary     go to state 146
-    postfix   go to state 70
-    primary   go to state 71
+    relational  go to state 155
+    shift       go to state 68
+    additive    go to state 69
+    multi       go to state 70
+    unary       go to state 150
+    postfix     go to state 72
+    primary     go to state 73
 
 
 State 108
 
-   79 relational: relational '>' . shift
+   79 equality: equality NE_OP . relational
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    shift     go to state 155
-    additive  go to state 67
-    multi     go to state 68
-    unary     go to state 146
-    postfix   go to state 70
-    primary   go to state 71
+    relational  go to state 156
+    shift       go to state 68
+    additive    go to state 69
+    multi       go to state 70
+    unary       go to state 150
+    postfix     go to state 72
+    primary     go to state 73
 
 
 State 109
 
-   81 relational: relational '<' . shift
+   84 relational: relational LE_OP . shift
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    shift     go to state 156
-    additive  go to state 67
-    multi     go to state 68
-    unary     go to state 146
-    postfix   go to state 70
-    primary   go to state 71
+    shift     go to state 157
+    additive  go to state 69
+    multi     go to state 70
+    unary     go to state 150
+    postfix   go to state 72
+    primary   go to state 73
 
 
 State 110
 
-   84 shift: shift SHL_OP . additive
+   82 relational: relational GE_OP . shift
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    additive  go to state 157
-    multi     go to state 68
-    unary     go to state 146
-    postfix   go to state 70
-    primary   go to state 71
+    shift     go to state 158
+    additive  go to state 69
+    multi     go to state 70
+    unary     go to state 150
+    postfix   go to state 72
+    primary   go to state 73
 
 
 State 111
 
-   85 shift: shift SHR_OP . additive
+   81 relational: relational '>' . shift
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    additive  go to state 158
-    multi     go to state 68
-    unary     go to state 146
-    postfix   go to state 70
-    primary   go to state 71
+    shift     go to state 159
+    additive  go to state 69
+    multi     go to state 70
+    unary     go to state 150
+    postfix   go to state 72
+    primary   go to state 73
 
 
 State 112
 
-   87 additive: additive '+' . multi
+   83 relational: relational '<' . shift
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    multi    go to state 159
-    unary    go to state 146
-    postfix  go to state 70
-    primary  go to state 71
+    shift     go to state 160
+    additive  go to state 69
+    multi     go to state 70
+    unary     go to state 150
+    postfix   go to state 72
+    primary   go to state 73
 
 
 State 113
 
-   88 additive: additive '-' . multi
+   86 shift: shift SHL_OP . additive
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    multi    go to state 160
-    unary    go to state 146
-    postfix  go to state 70
-    primary  go to state 71
+    additive  go to state 161
+    multi     go to state 70
+    unary     go to state 150
+    postfix   go to state 72
+    primary   go to state 73
 
 
 State 114
 
-   90 multi: multi '*' . unary
+   87 shift: shift SHR_OP . additive
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 161
-    postfix  go to state 70
-    primary  go to state 71
+    additive  go to state 162
+    multi     go to state 70
+    unary     go to state 150
+    postfix   go to state 72
+    primary   go to state 73
 
 
 State 115
 
-   91 multi: multi '/' . unary
+   89 additive: additive '+' . multi
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 162
-    postfix  go to state 70
-    primary  go to state 71
+    multi    go to state 163
+    unary    go to state 150
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 116
 
-   92 multi: multi '%' . unary
+   90 additive: additive '-' . multi
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    unary    go to state 163
-    postfix  go to state 70
-    primary  go to state 71
+    multi    go to state 164
+    unary    go to state 150
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 117
 
-   55 assignment: unary ADD_ASSIGN . assignment
+   92 multi: multi '*' . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 164
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    unary    go to state 165
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 118
 
-   56 assignment: unary SUB_ASSIGN . assignment
+   93 multi: multi '/' . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 165
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    unary    go to state 166
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 119
 
-   57 assignment: unary MUL_ASSIGN . assignment
+   94 multi: multi '%' . unary
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 166
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    unary    go to state 167
+    postfix  go to state 72
+    primary  go to state 73
 
 
 State 120
 
-   58 assignment: unary DIV_ASSIGN . assignment
+   57 assignment: unary ADD_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 167
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 168
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 121
 
-   59 assignment: unary MOD_ASSIGN . assignment
+   58 assignment: unary SUB_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 168
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 169
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 122
 
-   60 assignment: unary AND_ASSIGN . assignment
+   59 assignment: unary MUL_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 169
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 170
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 123
 
-   61 assignment: unary XOR_ASSIGN . assignment
+   60 assignment: unary DIV_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 170
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 171
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 124
 
-   62 assignment: unary OR_ASSIGN . assignment
+   61 assignment: unary MOD_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 171
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 172
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 125
 
-   63 assignment: unary SHL_ASSIGN . assignment
+   62 assignment: unary AND_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 172
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 173
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 126
 
-   64 assignment: unary SHR_ASSIGN . assignment
+   63 assignment: unary XOR_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 173
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 174
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 127
 
-   54 assignment: unary '=' . assignment
+   64 assignment: unary OR_ASSIGN . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    assignment   go to state 174
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    assignment   go to state 175
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 128
 
-  100 postfix: postfix INC_OP .
+   65 assignment: unary SHL_ASSIGN . assignment
 
-    $default  reduce using rule 100 (postfix)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    assignment   go to state 176
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 129
 
-  101 postfix: postfix DEC_OP .
+   66 assignment: unary SHR_ASSIGN . assignment
 
-    $default  reduce using rule 101 (postfix)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    assignment   go to state 177
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 130
 
-  103 postfix: postfix '(' . args ')'
-  104        | postfix '(' . ')'
+   56 assignment: unary '=' . assignment
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ')'         shift, and go to state 175
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    expr         go to state 176
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-    args         go to state 177
+    assignment   go to state 178
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 131
 
-  102 postfix: postfix '[' . expr ']'
+  102 postfix: postfix INC_OP .
+
+    $default  reduce using rule 102 (postfix)
+
+
+State 132
+
+  103 postfix: postfix DEC_OP .
+
+    $default  reduce using rule 103 (postfix)
+
+
+State 133
+
+  105 postfix: postfix '(' . args ')'
+  106        | postfix '(' . ')'
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    ')'         shift, and go to state 179
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    expr         go to state 178
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-
-
-State 132
-
-  105 postfix: postfix '.' . IDENTIFIER
-
-    IDENTIFIER  shift, and go to state 179
+    expr         go to state 180
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+    args         go to state 181
 
 
-State 133
+State 134
+
+  104 postfix: postfix '[' . expr ']'
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 182
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
+State 135
+
+  107 postfix: postfix '.' . IDENTIFIER
+
+    IDENTIFIER  shift, and go to state 183
+
+
+State 136
 
    15 var: var '[' CONSTANT ']' .
 
     $default  reduce using rule 15 (var)
 
 
-State 134
-
-  113 init_arg: expr .
-
-    $default  reduce using rule 113 (init_arg)
-
-
-State 135
-
-   50 init: '{' init_args . '}'
-  112 init_args: init_args . ',' init_arg
-
-    ','  shift, and go to state 180
-    '}'  shift, and go to state 181
-
-
-State 136
-
-  111 init_args: init_arg .
-
-    $default  reduce using rule 111 (init_args)
-
-
 State 137
+
+  115 init_arg: expr .
+
+    $default  reduce using rule 115 (init_arg)
+
+
+State 138
+
+   52 init: '{' init_args . '}'
+  114 init_args: init_args . ',' init_arg
+
+    ','  shift, and go to state 184
+    '}'  shift, and go to state 185
+
+
+State 139
+
+  113 init_args: init_arg .
+
+    $default  reduce using rule 113 (init_args)
+
+
+State 140
 
    12 paras: paras ',' para .
 
     $default  reduce using rule 12 (paras)
 
 
-State 138
-
-   29 selection_stmt: IF '(' expr . ')' stmt
-   30               | IF '(' expr . ')' stmt ELSE stmt
-
-    ')'  shift, and go to state 182
-
-
-State 139
-
-   35 iteration_stmt: FOR '(' ';' . expr ';' expr ')' stmt
-   36               | FOR '(' ';' . expr ';' ')' stmt
-   37               | FOR '(' ';' . ';' expr ')' stmt
-   38               | FOR '(' ';' . ';' ')' stmt
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ';'         shift, and go to state 183
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 184
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-
-
-State 140
-
-   31 iteration_stmt: FOR '(' expr . ';' expr ';' expr ')' stmt
-   32               | FOR '(' expr . ';' expr ';' ')' stmt
-   33               | FOR '(' expr . ';' ';' expr ')' stmt
-   34               | FOR '(' expr . ';' ';' ')' stmt
-
-    ';'  shift, and go to state 185
-
-
 State 141
 
-   39 jump_stmt: RETURN expr ';' .
-
-    $default  reduce using rule 39 (jump_stmt)
-
-
-State 142
-
-   52 expr: READ '(' expr . ')'
+   30 selection_stmt: IF '(' expr . ')' stmt
+   31               | IF '(' expr . ')' stmt ELSE stmt
 
     ')'  shift, and go to state 186
 
 
+State 142
+
+   36 iteration_stmt: FOR '(' ';' . expr ';' expr ')' stmt
+   37               | FOR '(' ';' . expr ';' ')' stmt
+   38               | FOR '(' ';' . ';' expr ')' stmt
+   39               | FOR '(' ';' . ';' ')' stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    ';'         shift, and go to state 187
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 188
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
 State 143
 
-  108 primary: '(' expr ')' .
+   32 iteration_stmt: FOR '(' expr . ';' expr ';' expr ')' stmt
+   33               | FOR '(' expr . ';' expr ';' ')' stmt
+   34               | FOR '(' expr . ';' ';' expr ')' stmt
+   35               | FOR '(' expr . ';' ';' ')' stmt
 
-    $default  reduce using rule 108 (primary)
+    ';'  shift, and go to state 189
 
 
 State 144
 
-   23 compound_stmt: '{' defs stmts '}' .
+   41 jump_stmt: RETURN expr ';' .
 
-    $default  reduce using rule 23 (compound_stmt)
+    $default  reduce using rule 41 (jump_stmt)
 
 
 State 145
 
-   66 logical_or: logical_or OR_OP logical_and .
-   68 logical_and: logical_and . AND_OP bit_or
+   54 expr: READ '(' expr . ')'
 
-    AND_OP  shift, and go to state 100
-
-    $default  reduce using rule 66 (logical_or)
+    ')'  shift, and go to state 190
 
 
 State 146
 
-   89 multi: unary .
+   40 while_stmt: WHILE '(' expr . ')' stmt
 
-    $default  reduce using rule 89 (multi)
+    ')'  shift, and go to state 191
 
 
 State 147
 
-   68 logical_and: logical_and AND_OP bit_or .
-   70 bit_or: bit_or . '|' bit_xor
+  110 primary: '(' expr ')' .
 
-    '|'  shift, and go to state 101
-
-    $default  reduce using rule 68 (logical_and)
+    $default  reduce using rule 110 (primary)
 
 
 State 148
 
-   70 bit_or: bit_or '|' bit_xor .
-   72 bit_xor: bit_xor . '^' bit_and
+   24 compound_stmt: '{' defs stmts '}' .
 
-    '^'  shift, and go to state 102
-
-    $default  reduce using rule 70 (bit_or)
+    $default  reduce using rule 24 (compound_stmt)
 
 
 State 149
 
-   72 bit_xor: bit_xor '^' bit_and .
-   74 bit_and: bit_and . '&' equality
+   68 logical_or: logical_or OR_OP logical_and .
+   70 logical_and: logical_and . AND_OP bit_or
 
-    '&'  shift, and go to state 103
+    AND_OP  shift, and go to state 103
 
-    $default  reduce using rule 72 (bit_xor)
+    $default  reduce using rule 68 (logical_or)
 
 
 State 150
 
-   74 bit_and: bit_and '&' equality .
-   76 equality: equality . EQ_OP relational
-   77         | equality . NE_OP relational
-
-    EQ_OP  shift, and go to state 104
-    NE_OP  shift, and go to state 105
-
-    $default  reduce using rule 74 (bit_and)
-
-
-State 151
-
-   76 equality: equality EQ_OP relational .
-   79 relational: relational . '>' shift
-   80           | relational . GE_OP shift
-   81           | relational . '<' shift
-   82           | relational . LE_OP shift
-
-    LE_OP  shift, and go to state 106
-    GE_OP  shift, and go to state 107
-    '>'    shift, and go to state 108
-    '<'    shift, and go to state 109
-
-    $default  reduce using rule 76 (equality)
-
-
-State 152
-
-   77 equality: equality NE_OP relational .
-   79 relational: relational . '>' shift
-   80           | relational . GE_OP shift
-   81           | relational . '<' shift
-   82           | relational . LE_OP shift
-
-    LE_OP  shift, and go to state 106
-    GE_OP  shift, and go to state 107
-    '>'    shift, and go to state 108
-    '<'    shift, and go to state 109
-
-    $default  reduce using rule 77 (equality)
-
-
-State 153
-
-   82 relational: relational LE_OP shift .
-   84 shift: shift . SHL_OP additive
-   85      | shift . SHR_OP additive
-
-    SHL_OP  shift, and go to state 110
-    SHR_OP  shift, and go to state 111
-
-    $default  reduce using rule 82 (relational)
-
-
-State 154
-
-   80 relational: relational GE_OP shift .
-   84 shift: shift . SHL_OP additive
-   85      | shift . SHR_OP additive
-
-    SHL_OP  shift, and go to state 110
-    SHR_OP  shift, and go to state 111
-
-    $default  reduce using rule 80 (relational)
-
-
-State 155
-
-   79 relational: relational '>' shift .
-   84 shift: shift . SHL_OP additive
-   85      | shift . SHR_OP additive
-
-    SHL_OP  shift, and go to state 110
-    SHR_OP  shift, and go to state 111
-
-    $default  reduce using rule 79 (relational)
-
-
-State 156
-
-   81 relational: relational '<' shift .
-   84 shift: shift . SHL_OP additive
-   85      | shift . SHR_OP additive
-
-    SHL_OP  shift, and go to state 110
-    SHR_OP  shift, and go to state 111
-
-    $default  reduce using rule 81 (relational)
-
-
-State 157
-
-   84 shift: shift SHL_OP additive .
-   87 additive: additive . '+' multi
-   88         | additive . '-' multi
-
-    '+'  shift, and go to state 112
-    '-'  shift, and go to state 113
-
-    $default  reduce using rule 84 (shift)
-
-
-State 158
-
-   85 shift: shift SHR_OP additive .
-   87 additive: additive . '+' multi
-   88         | additive . '-' multi
-
-    '+'  shift, and go to state 112
-    '-'  shift, and go to state 113
-
-    $default  reduce using rule 85 (shift)
-
-
-State 159
-
-   87 additive: additive '+' multi .
-   90 multi: multi . '*' unary
-   91      | multi . '/' unary
-   92      | multi . '%' unary
-
-    '*'  shift, and go to state 114
-    '/'  shift, and go to state 115
-    '%'  shift, and go to state 116
-
-    $default  reduce using rule 87 (additive)
-
-
-State 160
-
-   88 additive: additive '-' multi .
-   90 multi: multi . '*' unary
-   91      | multi . '/' unary
-   92      | multi . '%' unary
-
-    '*'  shift, and go to state 114
-    '/'  shift, and go to state 115
-    '%'  shift, and go to state 116
-
-    $default  reduce using rule 88 (additive)
-
-
-State 161
-
-   90 multi: multi '*' unary .
-
-    $default  reduce using rule 90 (multi)
-
-
-State 162
-
-   91 multi: multi '/' unary .
+   91 multi: unary .
 
     $default  reduce using rule 91 (multi)
 
 
+State 151
+
+   70 logical_and: logical_and AND_OP bit_or .
+   72 bit_or: bit_or . '|' bit_xor
+
+    '|'  shift, and go to state 104
+
+    $default  reduce using rule 70 (logical_and)
+
+
+State 152
+
+   72 bit_or: bit_or '|' bit_xor .
+   74 bit_xor: bit_xor . '^' bit_and
+
+    '^'  shift, and go to state 105
+
+    $default  reduce using rule 72 (bit_or)
+
+
+State 153
+
+   74 bit_xor: bit_xor '^' bit_and .
+   76 bit_and: bit_and . '&' equality
+
+    '&'  shift, and go to state 106
+
+    $default  reduce using rule 74 (bit_xor)
+
+
+State 154
+
+   76 bit_and: bit_and '&' equality .
+   78 equality: equality . EQ_OP relational
+   79         | equality . NE_OP relational
+
+    EQ_OP  shift, and go to state 107
+    NE_OP  shift, and go to state 108
+
+    $default  reduce using rule 76 (bit_and)
+
+
+State 155
+
+   78 equality: equality EQ_OP relational .
+   81 relational: relational . '>' shift
+   82           | relational . GE_OP shift
+   83           | relational . '<' shift
+   84           | relational . LE_OP shift
+
+    LE_OP  shift, and go to state 109
+    GE_OP  shift, and go to state 110
+    '>'    shift, and go to state 111
+    '<'    shift, and go to state 112
+
+    $default  reduce using rule 78 (equality)
+
+
+State 156
+
+   79 equality: equality NE_OP relational .
+   81 relational: relational . '>' shift
+   82           | relational . GE_OP shift
+   83           | relational . '<' shift
+   84           | relational . LE_OP shift
+
+    LE_OP  shift, and go to state 109
+    GE_OP  shift, and go to state 110
+    '>'    shift, and go to state 111
+    '<'    shift, and go to state 112
+
+    $default  reduce using rule 79 (equality)
+
+
+State 157
+
+   84 relational: relational LE_OP shift .
+   86 shift: shift . SHL_OP additive
+   87      | shift . SHR_OP additive
+
+    SHL_OP  shift, and go to state 113
+    SHR_OP  shift, and go to state 114
+
+    $default  reduce using rule 84 (relational)
+
+
+State 158
+
+   82 relational: relational GE_OP shift .
+   86 shift: shift . SHL_OP additive
+   87      | shift . SHR_OP additive
+
+    SHL_OP  shift, and go to state 113
+    SHR_OP  shift, and go to state 114
+
+    $default  reduce using rule 82 (relational)
+
+
+State 159
+
+   81 relational: relational '>' shift .
+   86 shift: shift . SHL_OP additive
+   87      | shift . SHR_OP additive
+
+    SHL_OP  shift, and go to state 113
+    SHR_OP  shift, and go to state 114
+
+    $default  reduce using rule 81 (relational)
+
+
+State 160
+
+   83 relational: relational '<' shift .
+   86 shift: shift . SHL_OP additive
+   87      | shift . SHR_OP additive
+
+    SHL_OP  shift, and go to state 113
+    SHR_OP  shift, and go to state 114
+
+    $default  reduce using rule 83 (relational)
+
+
+State 161
+
+   86 shift: shift SHL_OP additive .
+   89 additive: additive . '+' multi
+   90         | additive . '-' multi
+
+    '+'  shift, and go to state 115
+    '-'  shift, and go to state 116
+
+    $default  reduce using rule 86 (shift)
+
+
+State 162
+
+   87 shift: shift SHR_OP additive .
+   89 additive: additive . '+' multi
+   90         | additive . '-' multi
+
+    '+'  shift, and go to state 115
+    '-'  shift, and go to state 116
+
+    $default  reduce using rule 87 (shift)
+
+
 State 163
 
-   92 multi: multi '%' unary .
+   89 additive: additive '+' multi .
+   92 multi: multi . '*' unary
+   93      | multi . '/' unary
+   94      | multi . '%' unary
 
-    $default  reduce using rule 92 (multi)
+    '*'  shift, and go to state 117
+    '/'  shift, and go to state 118
+    '%'  shift, and go to state 119
+
+    $default  reduce using rule 89 (additive)
 
 
 State 164
 
-   55 assignment: unary ADD_ASSIGN assignment .
+   90 additive: additive '-' multi .
+   92 multi: multi . '*' unary
+   93      | multi . '/' unary
+   94      | multi . '%' unary
 
-    $default  reduce using rule 55 (assignment)
+    '*'  shift, and go to state 117
+    '/'  shift, and go to state 118
+    '%'  shift, and go to state 119
+
+    $default  reduce using rule 90 (additive)
 
 
 State 165
 
-   56 assignment: unary SUB_ASSIGN assignment .
+   92 multi: multi '*' unary .
 
-    $default  reduce using rule 56 (assignment)
+    $default  reduce using rule 92 (multi)
 
 
 State 166
 
-   57 assignment: unary MUL_ASSIGN assignment .
+   93 multi: multi '/' unary .
 
-    $default  reduce using rule 57 (assignment)
+    $default  reduce using rule 93 (multi)
 
 
 State 167
 
-   58 assignment: unary DIV_ASSIGN assignment .
+   94 multi: multi '%' unary .
 
-    $default  reduce using rule 58 (assignment)
+    $default  reduce using rule 94 (multi)
 
 
 State 168
 
-   59 assignment: unary MOD_ASSIGN assignment .
+   57 assignment: unary ADD_ASSIGN assignment .
 
-    $default  reduce using rule 59 (assignment)
+    $default  reduce using rule 57 (assignment)
 
 
 State 169
 
-   60 assignment: unary AND_ASSIGN assignment .
+   58 assignment: unary SUB_ASSIGN assignment .
 
-    $default  reduce using rule 60 (assignment)
+    $default  reduce using rule 58 (assignment)
 
 
 State 170
 
-   61 assignment: unary XOR_ASSIGN assignment .
+   59 assignment: unary MUL_ASSIGN assignment .
 
-    $default  reduce using rule 61 (assignment)
+    $default  reduce using rule 59 (assignment)
 
 
 State 171
 
-   62 assignment: unary OR_ASSIGN assignment .
+   60 assignment: unary DIV_ASSIGN assignment .
 
-    $default  reduce using rule 62 (assignment)
+    $default  reduce using rule 60 (assignment)
 
 
 State 172
 
-   63 assignment: unary SHL_ASSIGN assignment .
+   61 assignment: unary MOD_ASSIGN assignment .
 
-    $default  reduce using rule 63 (assignment)
+    $default  reduce using rule 61 (assignment)
 
 
 State 173
 
-   64 assignment: unary SHR_ASSIGN assignment .
+   62 assignment: unary AND_ASSIGN assignment .
 
-    $default  reduce using rule 64 (assignment)
+    $default  reduce using rule 62 (assignment)
 
 
 State 174
 
-   54 assignment: unary '=' assignment .
+   63 assignment: unary XOR_ASSIGN assignment .
 
-    $default  reduce using rule 54 (assignment)
+    $default  reduce using rule 63 (assignment)
 
 
 State 175
 
-  104 postfix: postfix '(' ')' .
+   64 assignment: unary OR_ASSIGN assignment .
 
-    $default  reduce using rule 104 (postfix)
+    $default  reduce using rule 64 (assignment)
 
 
 State 176
 
-  109 args: expr .
+   65 assignment: unary SHL_ASSIGN assignment .
 
-    $default  reduce using rule 109 (args)
+    $default  reduce using rule 65 (assignment)
 
 
 State 177
 
-  103 postfix: postfix '(' args . ')'
-  110 args: args . ',' expr
+   66 assignment: unary SHR_ASSIGN assignment .
 
-    ')'  shift, and go to state 187
-    ','  shift, and go to state 188
+    $default  reduce using rule 66 (assignment)
 
 
 State 178
 
-  102 postfix: postfix '[' expr . ']'
+   56 assignment: unary '=' assignment .
 
-    ']'  shift, and go to state 189
+    $default  reduce using rule 56 (assignment)
 
 
 State 179
 
-  105 postfix: postfix '.' IDENTIFIER .
+  106 postfix: postfix '(' ')' .
 
-    $default  reduce using rule 105 (postfix)
+    $default  reduce using rule 106 (postfix)
 
 
 State 180
 
-  112 init_args: init_args ',' . init_arg
+  111 args: expr .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 134
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
-    init_arg     go to state 190
+    $default  reduce using rule 111 (args)
 
 
 State 181
 
-   50 init: '{' init_args '}' .
+  105 postfix: postfix '(' args . ')'
+  112 args: args . ',' expr
 
-    $default  reduce using rule 50 (init)
+    ')'  shift, and go to state 192
+    ','  shift, and go to state 193
 
 
 State 182
 
-   29 selection_stmt: IF '(' expr ')' . stmt
-   30               | IF '(' expr ')' . stmt ELSE stmt
+  104 postfix: postfix '[' expr . ']'
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 191
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    ']'  shift, and go to state 194
 
 
 State 183
 
-   37 iteration_stmt: FOR '(' ';' ';' . expr ')' stmt
-   38               | FOR '(' ';' ';' . ')' stmt
+  107 postfix: postfix '.' IDENTIFIER .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ')'         shift, and go to state 192
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 193
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    $default  reduce using rule 107 (postfix)
 
 
 State 184
 
-   35 iteration_stmt: FOR '(' ';' expr . ';' expr ')' stmt
-   36               | FOR '(' ';' expr . ';' ')' stmt
+  114 init_args: init_args ',' . init_arg
 
-    ';'  shift, and go to state 194
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 137
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+    init_arg     go to state 195
 
 
 State 185
 
-   31 iteration_stmt: FOR '(' expr ';' . expr ';' expr ')' stmt
-   32               | FOR '(' expr ';' . expr ';' ')' stmt
-   33               | FOR '(' expr ';' . ';' expr ')' stmt
-   34               | FOR '(' expr ';' . ';' ')' stmt
+   52 init: '{' init_args '}' .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ';'         shift, and go to state 195
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 196
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    $default  reduce using rule 52 (init)
 
 
 State 186
 
-   52 expr: READ '(' expr ')' .
+   30 selection_stmt: IF '(' expr ')' . stmt
+   31               | IF '(' expr ')' . stmt ELSE stmt
 
-    $default  reduce using rule 52 (expr)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 196
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 187
 
-  103 postfix: postfix '(' args ')' .
+   38 iteration_stmt: FOR '(' ';' ';' . expr ')' stmt
+   39               | FOR '(' ';' ';' . ')' stmt
 
-    $default  reduce using rule 103 (postfix)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    ')'         shift, and go to state 197
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 198
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 188
 
-  110 args: args ',' . expr
+   36 iteration_stmt: FOR '(' ';' expr . ';' expr ')' stmt
+   37               | FOR '(' ';' expr . ';' ')' stmt
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 197
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    ';'  shift, and go to state 199
 
 
 State 189
 
-  102 postfix: postfix '[' expr ']' .
+   32 iteration_stmt: FOR '(' expr ';' . expr ';' expr ')' stmt
+   33               | FOR '(' expr ';' . expr ';' ')' stmt
+   34               | FOR '(' expr ';' . ';' expr ')' stmt
+   35               | FOR '(' expr ';' . ';' ')' stmt
 
-    $default  reduce using rule 102 (postfix)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    ';'         shift, and go to state 200
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 201
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 190
 
-  112 init_args: init_args ',' init_arg .
+   54 expr: READ '(' expr ')' .
 
-    $default  reduce using rule 112 (init_args)
+    $default  reduce using rule 54 (expr)
 
 
 State 191
 
-   29 selection_stmt: IF '(' expr ')' stmt .
-   30               | IF '(' expr ')' stmt . ELSE stmt
+   40 while_stmt: WHILE '(' expr ')' . stmt
 
-    ELSE  shift, and go to state 198
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    ELSE      [reduce using rule 29 (selection_stmt)]
-    $default  reduce using rule 29 (selection_stmt)
+    stmt            go to state 202
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 192
 
-   38 iteration_stmt: FOR '(' ';' ';' ')' . stmt
+  105 postfix: postfix '(' args ')' .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 199
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    $default  reduce using rule 105 (postfix)
 
 
 State 193
 
-   37 iteration_stmt: FOR '(' ';' ';' expr . ')' stmt
+  112 args: args ',' . expr
 
-    ')'  shift, and go to state 200
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 203
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 194
 
-   35 iteration_stmt: FOR '(' ';' expr ';' . expr ')' stmt
-   36               | FOR '(' ';' expr ';' . ')' stmt
+  104 postfix: postfix '[' expr ']' .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ')'         shift, and go to state 201
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 202
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    $default  reduce using rule 104 (postfix)
 
 
 State 195
 
-   33 iteration_stmt: FOR '(' expr ';' ';' . expr ')' stmt
-   34               | FOR '(' expr ';' ';' . ')' stmt
+  114 init_args: init_args ',' init_arg .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ')'         shift, and go to state 203
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 204
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    $default  reduce using rule 114 (init_args)
 
 
 State 196
 
-   31 iteration_stmt: FOR '(' expr ';' expr . ';' expr ')' stmt
-   32               | FOR '(' expr ';' expr . ';' ')' stmt
+   30 selection_stmt: IF '(' expr ')' stmt .
+   31               | IF '(' expr ')' stmt . ELSE stmt
 
-    ';'  shift, and go to state 205
+    ELSE  shift, and go to state 204
+
+    ELSE      [reduce using rule 30 (selection_stmt)]
+    $default  reduce using rule 30 (selection_stmt)
 
 
 State 197
 
-  110 args: args ',' expr .
+   39 iteration_stmt: FOR '(' ';' ';' ')' . stmt
 
-    $default  reduce using rule 110 (args)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 205
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 198
 
-   30 selection_stmt: IF '(' expr ')' stmt ELSE . stmt
+   38 iteration_stmt: FOR '(' ';' ';' expr . ')' stmt
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 206
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    ')'  shift, and go to state 206
 
 
 State 199
 
-   38 iteration_stmt: FOR '(' ';' ';' ')' stmt .
+   36 iteration_stmt: FOR '(' ';' expr ';' . expr ')' stmt
+   37               | FOR '(' ';' expr ';' . ')' stmt
 
-    $default  reduce using rule 38 (iteration_stmt)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    ')'         shift, and go to state 207
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 208
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 200
 
-   37 iteration_stmt: FOR '(' ';' ';' expr ')' . stmt
+   34 iteration_stmt: FOR '(' expr ';' ';' . expr ')' stmt
+   35               | FOR '(' expr ';' ';' . ')' stmt
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
     IDENTIFIER  shift, and go to state 34
     CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '('         shift, and go to state 44
+    ')'         shift, and go to state 209
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmt            go to state 207
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    expr         go to state 210
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
 
 
 State 201
 
-   36 iteration_stmt: FOR '(' ';' expr ';' ')' . stmt
+   32 iteration_stmt: FOR '(' expr ';' expr . ';' expr ')' stmt
+   33               | FOR '(' expr ';' expr . ';' ')' stmt
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 208
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    ';'  shift, and go to state 211
 
 
 State 202
 
-   35 iteration_stmt: FOR '(' ';' expr ';' expr . ')' stmt
+   40 while_stmt: WHILE '(' expr ')' stmt .
 
-    ')'  shift, and go to state 209
+    $default  reduce using rule 40 (while_stmt)
 
 
 State 203
 
-   34 iteration_stmt: FOR '(' expr ';' ';' ')' . stmt
+  112 args: args ',' expr .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 210
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    $default  reduce using rule 112 (args)
 
 
 State 204
 
-   33 iteration_stmt: FOR '(' expr ';' ';' expr . ')' stmt
+   31 selection_stmt: IF '(' expr ')' stmt ELSE . stmt
 
-    ')'  shift, and go to state 211
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 212
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 205
 
-   31 iteration_stmt: FOR '(' expr ';' expr ';' . expr ')' stmt
-   32               | FOR '(' expr ';' expr ';' . ')' stmt
+   39 iteration_stmt: FOR '(' ';' ';' ')' stmt .
 
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    ')'         shift, and go to state 212
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    expr         go to state 213
-    assignment   go to state 58
-    logical_or   go to state 59
-    logical_and  go to state 60
-    bit_or       go to state 61
-    bit_xor      go to state 62
-    bit_and      go to state 63
-    equality     go to state 64
-    relational   go to state 65
-    shift        go to state 66
-    additive     go to state 67
-    multi        go to state 68
-    unary        go to state 69
-    postfix      go to state 70
-    primary      go to state 71
+    $default  reduce using rule 39 (iteration_stmt)
 
 
 State 206
 
-   30 selection_stmt: IF '(' expr ')' stmt ELSE stmt .
+   38 iteration_stmt: FOR '(' ';' ';' expr ')' . stmt
 
-    $default  reduce using rule 30 (selection_stmt)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 213
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 207
 
-   37 iteration_stmt: FOR '(' ';' ';' expr ')' stmt .
+   37 iteration_stmt: FOR '(' ';' expr ';' ')' . stmt
 
-    $default  reduce using rule 37 (iteration_stmt)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 214
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 208
 
-   36 iteration_stmt: FOR '(' ';' expr ';' ')' stmt .
+   36 iteration_stmt: FOR '(' ';' expr ';' expr . ')' stmt
 
-    $default  reduce using rule 36 (iteration_stmt)
+    ')'  shift, and go to state 215
 
 
 State 209
 
-   35 iteration_stmt: FOR '(' ';' expr ';' expr ')' . stmt
+   35 iteration_stmt: FOR '(' expr ';' ';' ')' . stmt
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
@@ -3435,162 +3459,102 @@ State 209
     BREAK       shift, and go to state 40
     RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
     '{'         shift, and go to state 19
     ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmt            go to state 214
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    stmt            go to state 216
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 210
 
-   34 iteration_stmt: FOR '(' expr ';' ';' ')' stmt .
-
-    $default  reduce using rule 34 (iteration_stmt)
-
-
-State 211
-
-   33 iteration_stmt: FOR '(' expr ';' ';' expr ')' . stmt
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 215
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
-
-
-State 212
-
-   32 iteration_stmt: FOR '(' expr ';' expr ';' ')' . stmt
-
-    INC_OP      shift, and go to state 32
-    DEC_OP      shift, and go to state 33
-    IDENTIFIER  shift, and go to state 34
-    CONSTANT    shift, and go to state 35
-    IF          shift, and go to state 37
-    FOR         shift, and go to state 38
-    CONTINUE    shift, and go to state 39
-    BREAK       shift, and go to state 40
-    RETURN      shift, and go to state 41
-    READ        shift, and go to state 42
-    '('         shift, and go to state 43
-    '{'         shift, and go to state 19
-    ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
-
-    stmt            go to state 216
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
-
-
-State 213
-
-   31 iteration_stmt: FOR '(' expr ';' expr ';' expr . ')' stmt
+   34 iteration_stmt: FOR '(' expr ';' ';' expr . ')' stmt
 
     ')'  shift, and go to state 217
 
 
+State 211
+
+   32 iteration_stmt: FOR '(' expr ';' expr ';' . expr ')' stmt
+   33               | FOR '(' expr ';' expr ';' . ')' stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    READ        shift, and go to state 42
+    '('         shift, and go to state 44
+    ')'         shift, and go to state 218
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    expr         go to state 219
+    assignment   go to state 60
+    logical_or   go to state 61
+    logical_and  go to state 62
+    bit_or       go to state 63
+    bit_xor      go to state 64
+    bit_and      go to state 65
+    equality     go to state 66
+    relational   go to state 67
+    shift        go to state 68
+    additive     go to state 69
+    multi        go to state 70
+    unary        go to state 71
+    postfix      go to state 72
+    primary      go to state 73
+
+
+State 212
+
+   31 selection_stmt: IF '(' expr ')' stmt ELSE stmt .
+
+    $default  reduce using rule 31 (selection_stmt)
+
+
+State 213
+
+   38 iteration_stmt: FOR '(' ';' ';' expr ')' stmt .
+
+    $default  reduce using rule 38 (iteration_stmt)
+
+
 State 214
 
-   35 iteration_stmt: FOR '(' ';' expr ';' expr ')' stmt .
+   37 iteration_stmt: FOR '(' ';' expr ';' ')' stmt .
 
-    $default  reduce using rule 35 (iteration_stmt)
+    $default  reduce using rule 37 (iteration_stmt)
 
 
 State 215
 
-   33 iteration_stmt: FOR '(' expr ';' ';' expr ')' stmt .
-
-    $default  reduce using rule 33 (iteration_stmt)
-
-
-State 216
-
-   32 iteration_stmt: FOR '(' expr ';' expr ';' ')' stmt .
-
-    $default  reduce using rule 32 (iteration_stmt)
-
-
-State 217
-
-   31 iteration_stmt: FOR '(' expr ';' expr ';' expr ')' . stmt
+   36 iteration_stmt: FOR '(' ';' expr ';' expr ')' . stmt
 
     INC_OP      shift, and go to state 32
     DEC_OP      shift, and go to state 33
@@ -3602,38 +3566,213 @@ State 217
     BREAK       shift, and go to state 40
     RETURN      shift, and go to state 41
     READ        shift, and go to state 42
-    '('         shift, and go to state 43
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
     '{'         shift, and go to state 19
     ';'         shift, and go to state 20
-    '-'         shift, and go to state 45
-    '!'         shift, and go to state 46
-    '~'         shift, and go to state 47
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
 
-    stmt            go to state 218
-    compound_stmt   go to state 50
-    expr_stmt       go to state 51
-    selection_stmt  go to state 52
-    iteration_stmt  go to state 53
-    jump_stmt       go to state 54
-    expr            go to state 57
-    assignment      go to state 58
-    logical_or      go to state 59
-    logical_and     go to state 60
-    bit_or          go to state 61
-    bit_xor         go to state 62
-    bit_and         go to state 63
-    equality        go to state 64
-    relational      go to state 65
-    shift           go to state 66
-    additive        go to state 67
-    multi           go to state 68
-    unary           go to state 69
-    postfix         go to state 70
-    primary         go to state 71
+    stmt            go to state 220
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
+
+
+State 216
+
+   35 iteration_stmt: FOR '(' expr ';' ';' ')' stmt .
+
+    $default  reduce using rule 35 (iteration_stmt)
+
+
+State 217
+
+   34 iteration_stmt: FOR '(' expr ';' ';' expr ')' . stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 221
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
 
 
 State 218
 
-   31 iteration_stmt: FOR '(' expr ';' expr ';' expr ')' stmt .
+   33 iteration_stmt: FOR '(' expr ';' expr ';' ')' . stmt
 
-    $default  reduce using rule 31 (iteration_stmt)
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 222
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
+
+
+State 219
+
+   32 iteration_stmt: FOR '(' expr ';' expr ';' expr . ')' stmt
+
+    ')'  shift, and go to state 223
+
+
+State 220
+
+   36 iteration_stmt: FOR '(' ';' expr ';' expr ')' stmt .
+
+    $default  reduce using rule 36 (iteration_stmt)
+
+
+State 221
+
+   34 iteration_stmt: FOR '(' expr ';' ';' expr ')' stmt .
+
+    $default  reduce using rule 34 (iteration_stmt)
+
+
+State 222
+
+   33 iteration_stmt: FOR '(' expr ';' expr ';' ')' stmt .
+
+    $default  reduce using rule 33 (iteration_stmt)
+
+
+State 223
+
+   32 iteration_stmt: FOR '(' expr ';' expr ';' expr ')' . stmt
+
+    INC_OP      shift, and go to state 32
+    DEC_OP      shift, and go to state 33
+    IDENTIFIER  shift, and go to state 34
+    CONSTANT    shift, and go to state 35
+    IF          shift, and go to state 37
+    FOR         shift, and go to state 38
+    CONTINUE    shift, and go to state 39
+    BREAK       shift, and go to state 40
+    RETURN      shift, and go to state 41
+    READ        shift, and go to state 42
+    WHILE       shift, and go to state 43
+    '('         shift, and go to state 44
+    '{'         shift, and go to state 19
+    ';'         shift, and go to state 20
+    '-'         shift, and go to state 46
+    '!'         shift, and go to state 47
+    '~'         shift, and go to state 48
+
+    stmt            go to state 224
+    compound_stmt   go to state 51
+    expr_stmt       go to state 52
+    selection_stmt  go to state 53
+    iteration_stmt  go to state 54
+    while_stmt      go to state 55
+    jump_stmt       go to state 56
+    expr            go to state 59
+    assignment      go to state 60
+    logical_or      go to state 61
+    logical_and     go to state 62
+    bit_or          go to state 63
+    bit_xor         go to state 64
+    bit_and         go to state 65
+    equality        go to state 66
+    relational      go to state 67
+    shift           go to state 68
+    additive        go to state 69
+    multi           go to state 70
+    unary           go to state 71
+    postfix         go to state 72
+    primary         go to state 73
+
+
+State 224
+
+   32 iteration_stmt: FOR '(' expr ';' expr ';' expr ')' stmt .
+
+    $default  reduce using rule 32 (iteration_stmt)

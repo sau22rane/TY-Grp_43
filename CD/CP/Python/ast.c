@@ -313,6 +313,13 @@ ast_stmt *for_stmt_new(ast_expr *init, ast_expr *cond, ast_expr *incr, ast_stmt 
     s->for_stmt.body = body;
     return s;
 }
+ast_stmt *while_stmt_new( ast_expr *cond, ast_stmt *body)
+{
+    ast_stmt *s = newast(AST_WHILE_STMT);
+    s->for_stmt.cond = cond;
+    s->for_stmt.body = body;
+    return s;
+}
 
 ast_stmt *return_stmt_new(ast_expr *retval)
 {

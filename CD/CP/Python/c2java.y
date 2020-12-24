@@ -18,14 +18,14 @@
 %token <i> IDENTIFIER CONSTANT
 
 %token INT STRUCT FLOAT CHAR
-%token IF ELSE FOR CONTINUE BREAK RETURN READ
+%token IF ELSE FOR CONTINUE BREAK RETURN READ WHILE
 
 %token EXTDEFS PARAS STMTS DEFS DECS ARGS INIT_ARGS
 
 %type <n> extdef func para var def dec init init_arg
 %type <n> expr assignment logical_or logical_and bit_or bit_xor bit_and equality relational shift additive multi unary postfix primary
 %type <n> program extdefs paras stmts defs decs args init_args
-%type <n> stmt compound_stmt expr_stmt selection_stmt iteration_stmt jump_stmt
+%type <n> stmt compound_stmt expr_stmt selection_stmt iteration_stmt jump_stmt while_stmt
 
 %start program
 
@@ -78,6 +78,7 @@ stmt:
   | expr_stmt       { $$ = $1; }
   | selection_stmt  { $$ = $1; }
   | iteration_stmt  { $$ = $1; }
+  | while_stmt      { $$ = $1 ;}
   | jump_stmt       { $$ = $1; }
   ;
 
@@ -107,6 +108,9 @@ iteration_stmt:
   | FOR '('      ';' expr ';'      ')' stmt   { $$ = for_stmt_new(NULL, $4,   NULL, $7); }
   | FOR '('      ';'      ';' expr ')' stmt   { $$ = for_stmt_new(NULL, NULL, $5,   $7); }
   | FOR '('      ';'      ';'      ')' stmt   { $$ = for_stmt_new(NULL, NULL, NULL, $6); }
+  ;
+while_stmt:
+  WHILE '(' expr ')' stmt {$$ = while_stmt_new($3 , $5);}
   ;
 
 jump_stmt:

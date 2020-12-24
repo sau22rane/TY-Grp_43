@@ -78,13 +78,14 @@ extern int yydebug;
     BREAK = 288,
     RETURN = 289,
     READ = 290,
-    EXTDEFS = 291,
-    PARAS = 292,
-    STMTS = 293,
-    DEFS = 294,
-    DECS = 295,
-    ARGS = 296,
-    INIT_ARGS = 297
+    WHILE = 291,
+    EXTDEFS = 292,
+    PARAS = 293,
+    STMTS = 294,
+    DEFS = 295,
+    DECS = 296,
+    ARGS = 297,
+    INIT_ARGS = 298
   };
 #endif
 /* Tokens.  */
@@ -121,13 +122,14 @@ extern int yydebug;
 #define BREAK 288
 #define RETURN 289
 #define READ 290
-#define EXTDEFS 291
-#define PARAS 292
-#define STMTS 293
-#define DEFS 294
-#define DECS 295
-#define ARGS 296
-#define INIT_ARGS 297
+#define WHILE 291
+#define EXTDEFS 292
+#define PARAS 293
+#define STMTS 294
+#define DEFS 295
+#define DECS 296
+#define ARGS 297
+#define INIT_ARGS 298
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -139,7 +141,7 @@ union YYSTYPE
     int i;
     struct ast_node *n;
 
-#line 143 "y.tab.h" /* yacc.c:1909  */
+#line 145 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

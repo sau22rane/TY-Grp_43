@@ -3,8 +3,8 @@
 
 typedef void (*ast_translator)(ast_node *n);
 
-static ast_translator g_ast_translators[AST_TYPE_LIMIT];
-static const char* g_ast_names[AST_TYPE_LIMIT];
+static ast_translator g_ast_translators[AST_WHILE_STMT];
+static const char* g_ast_names[AST_WHILE_STMT];
 
 int dec_init = 0;
 
@@ -358,13 +358,25 @@ static void trans_if_stmt(ast_node *n)
 static void trans_for_stmt(ast_node *n)
 {
 	emit_tab();
-	emit("for (");
+	emit("for ");
     trans_ast(n->for_stmt.init);
-    emit(" ");
+    emit(" in range(");
     trans_bool(n->for_stmt.cond, 1);
     emit(" ");
     trans_ast(n->for_stmt.incr);
-	emit(":\n");
+	emit("):\n");
+	++tabn;
+    trans_ast(n->for_stmt.body);
+    --tabn;
+    emit_tab();
+    emit("\n");
+}
+static void trans_while_stmt(ast_node *n)
+{
+	emit_tab();
+	emit("while(");
+    trans_ast(n->for_stmt.cond);
+	emit("):\n");
 	++tabn;
     trans_ast(n->for_stmt.body);
     --tabn;
@@ -500,6 +512,7 @@ static void init_ast_translators()
     g_ast_translators[AST_MEMBER] = trans_member;
     g_ast_translators[AST_ID] = trans_id;
     g_ast_translators[AST_CONST] = trans_const;
+    g_ast_translators[AST_WHILE_STMT] = trans_while_stmt;
 
     g_ast_names[AST_LIST] = "trans_list";
     g_ast_names[AST_FUNCDEF] = "trans_funcdef";
@@ -524,6 +537,7 @@ static void init_ast_translators()
     g_ast_names[AST_MEMBER] = "trans_member";
     g_ast_names[AST_ID] = "trans_id";
     g_ast_names[AST_CONST] = "trans_const";
+    g_ast_names[AST_WHILE_STMT] = "trans_while_stmt";
 }
 
 void trans_ast(ast_node *n)

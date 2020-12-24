@@ -7,8 +7,13 @@ int gcd(int x,int y)
 
 float main()
 {
-	int a = 2,b = 8;
+	int a = 16,b = 8 , i = 0;
 	a = gcd(a,b);
+	while(i!=5)
+	{
+		write(i);
+		i = i + 1;
+	}
 	write(a);
 	return 0;
 }

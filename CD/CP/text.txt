@@ -8,6 +8,6 @@ int gcd(int x,int y)
 
 float main()
 {
-	int a[20],b;
+	int a[3] = {1,2,3};
 	return 0;
 }

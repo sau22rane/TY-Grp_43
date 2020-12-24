@@ -9,6 +9,7 @@
 "continue"  { return CONTINUE; }
 "else"      { return ELSE; }
 "for"       { return FOR; }
+"while"     {return WHILE;}
 "if"        { return IF; }
 "int"       { return INT; }
 "float"       { return FLOAT; }

@@ -4,9 +4,13 @@ def gcd (x, y) :
         return gcd(y, x % y)
 
 def main () :
-        a = 2
+        a = 16
         b = 8
+        i = 0
         a = gcd(a, b)
+        while(i != 5):
+                print(i)
+                i = i + 1
         print(a)
         return 0
 
