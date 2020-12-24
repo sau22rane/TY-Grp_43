@@ -18,7 +18,7 @@
 "struct"    { return STRUCT; }
 "read"      { return READ; }
 
-[a-zA-Z_][0-9a-zA-Z_]*   { yylval.i = sym(yytext); return IDENTIFIER; }
+[a-zA-Z_'][0-9a-zA-Z_']*   { yylval.i = sym(yytext); return IDENTIFIER; }
 
 0[xX][a-fA-F0-9]+   { yylval.i = parse_int(yytext); return CONSTANT; }
 0[0-7]+             { yylval.i = parse_int(yytext); return CONSTANT; }
