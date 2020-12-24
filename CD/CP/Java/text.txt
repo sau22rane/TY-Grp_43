@@ -1,0 +1,20 @@
+
+int gcd(int x,int y)
+{
+	if(!y)
+		return x;
+	return gcd(y,x%y);
+}
+
+float main()
+{
+	int a[20],b , i;
+	for( i = 0;i < 8; i++){
+        a[i] = 1;
+		write(i);
+	}
+	while( i< 10 ){
+		write(i);
+	}
+	return 0;
+}
