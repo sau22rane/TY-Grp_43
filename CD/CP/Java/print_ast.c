@@ -17,17 +17,7 @@ typedef void (*ast_printer)(ast_node *n);
 static int tabs = -1;
 static ast_printer g_ast_printers[AST_TYPE_LIMIT];
 
-static void print_list(ast_node *n)
-{
-    // printf("\n");
-    for (; n; n = n->list.tail)
-    {
-        printf("\n");
-        print_ast(n->list.head);
-        printf("\n");
-    }
-    // printf("\n");
-}
+
 
 
 static void print_spaces()
@@ -51,9 +41,23 @@ static void printt (const char *format, ...)
 
 
 }
-
-static void print_funcdef(ast_node *n)
+static void print_list(ast_node *n)
 {
+    // printf("\n");
+    for (; n; n = n->list.tail)
+    {
+        printf("\n");
+        printt("----------------\n");
+        print_ast(n->list.head);
+        // printt("----------------");
+        printf("\n");
+    }
+    // printf("\n");
+}
+static void print_funcdef(ast_node *n)
+{   
+    
+    printf("=======================================================");
     printt("\n");
     printt("funcdef\n");
     printt("ret_type: %d\n", n->funcdef.ret_type);
@@ -62,6 +66,7 @@ static void print_funcdef(ast_node *n)
     printt("\n");
     printt("funcbody:\n");
     print_ast(n->funcdef.funcbody);
+    // printf("----------------------------------");
     
 }
 
