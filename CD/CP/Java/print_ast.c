@@ -19,7 +19,7 @@ static ast_printer g_ast_printers[AST_TYPE_LIMIT];
 
 static void print_list(ast_node *n)
 {
-    // printf("\n");
+    
     for (; n; n = n->list.tail)
     {
         printf("\n");
@@ -48,8 +48,6 @@ static void printt (const char *format, ...)
    va_start (arg, format);
    done = vfprintf (stdout, format, arg);
    va_end (arg);
-
-
 }
 
 static void print_funcdef(ast_node *n)
