@@ -1,7 +1,19 @@
-
+int gcd(int x,int y)
+{
+	if(!y)
+		return x;
+	return gcd(y,x%y);
+}
 float main()
 {
-	int a = 2,b = 8;
-	write(a);
+	int a = 16,b = 8;
+	b = gcd(a,b);
+	write(b);
+	while(b!=2)
+	{
+	    write(b);
+		b= b - 1;
+	}
+	
 	return 0;
 }

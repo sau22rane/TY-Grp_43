@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
+#ifndef YY_YY_JAVA_Y_TAB_H_INCLUDED
+# define YY_YY_JAVA_Y_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -136,12 +136,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 5 "c2java.y" /* yacc.c:1909  */
+#line 5 "./Java/converter_java.y" /* yacc.c:1909  */
 
     int i;
     struct ast_node *n;
 
-#line 145 "y.tab.h" /* yacc.c:1909  */
+#line 145 "./Java/y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -154,4 +154,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */
+#endif /* !YY_YY_JAVA_Y_TAB_H_INCLUDED  */

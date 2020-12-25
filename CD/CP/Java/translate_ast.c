@@ -1,4 +1,4 @@
-#include "c2java.h"
+#include "converter_java.h"
 
 
 typedef void (*ast_translator)(ast_node *n);
@@ -577,38 +577,12 @@ static void init_ast_translators()
     g_ast_translators[AST_CONST] = trans_const;
     g_ast_translators[AST_WHILE_STMT] = trans_while_stmt;
 
-    g_ast_names[AST_LIST] = "trans_list";
-    g_ast_names[AST_FUNCDEF] = "trans_funcdef";
-    g_ast_names[AST_FUNCHEAD] = "trans_funchead";
-    g_ast_names[AST_PARA] = "trans_para";
-    g_ast_names[AST_STDEF] = "trans_stdef";
-    g_ast_names[AST_VAR] = "trans_var";
-    g_ast_names[AST_SUBVAR] = "trans_subvar";
-    g_ast_names[AST_COMPOUND_STMT] = "trans_compound_stmt";
-    g_ast_names[AST_EXPR_STMT] = "trans_expr_stmt";
-    g_ast_names[AST_IF_STMT] = "trans_if_stmt";
-    g_ast_names[AST_FOR_STMT] = "trans_for_stmt";
-    g_ast_names[AST_RETURN_STMT] = "trans_return_stmt";
-    g_ast_names[AST_CONTINUE_STMT] = "trans_continue_stmt";
-    g_ast_names[AST_BREAK_STMT] = "trans_break_stmt";
-    g_ast_names[AST_DEF] = "trans_def";
-    g_ast_names[AST_DEC] = "trans_dec";
-    g_ast_names[AST_BINOP] = "trans_binop";
-    g_ast_names[AST_PREFIX] = "trans_prefix";
-    g_ast_names[AST_POSTFIX] = "trans_postfix";
-    g_ast_names[AST_INDEXING] = "trans_indexing";
-    g_ast_names[AST_FUNC_CALL] = "trans_func_call";
-    g_ast_names[AST_MEMBER] = "trans_member";
-    g_ast_names[AST_ID] = "trans_id";
-    g_ast_names[AST_CONST] = "trans_const";
-    g_ast_names[AST_WHILE_STMT] = "trans_while_stmt";
 }
 
 void trans_ast(ast_node *n)
 {
     init_ast_translators();
     if (n){
-        // printf("%d", n->type);
         g_ast_translators[n->type](n);
     }
 }
@@ -617,12 +591,12 @@ void trans_ast(ast_node *n)
 
 int main_sym;
 
-void transtext_ast(ast_node *n)
+void transtext_ast(ast_node *n, char *name)
 {	
 	emit("import java.util.*;\n\n");
 	char *s = symname(3);
 	s = strtok(s, ".");
-    emit("public class %s\n{\n", s);
+    emit("public class %s\n{\n", name);
     ++tabn;
     emit_tab();
     emit("static Scanner in = new Scanner(System.in);\n");   
@@ -633,4 +607,3 @@ void transtext_ast(ast_node *n)
     emit("\t\tSystem.exit(main_(args.length, args));\n\t}\n");
     emit("}\n");
 }
-

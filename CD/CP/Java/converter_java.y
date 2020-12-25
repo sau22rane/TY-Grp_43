@@ -1,5 +1,5 @@
 %{
-#include "c2java.h"
+#include "converter_java.h"
 %}
 
 %union{
@@ -18,7 +18,7 @@
 %token <i> IDENTIFIER CONSTANT
 
 %token INT STRUCT FLOAT CHAR
-%token IF ELSE FOR CONTINUE BREAK RETURN READ
+%token IF ELSE FOR CONTINUE BREAK RETURN READ WHILE
 
 %token EXTDEFS PARAS STMTS DEFS DECS ARGS INIT_ARGS
 
@@ -61,6 +61,8 @@ paras:
 
 para:
   INT    var  { $$ = para_new(int_type(), $2); }
+  | FLOAT    var  { $$ = para_new(float_type(), $2); }
+  | CHAR    var  { $$ = para_new(char_type(), $2); }
   ;
 
 var:
@@ -99,14 +101,8 @@ selection_stmt:
   ;
 
 iteration_stmt:
-  FOR '(' expr ';' expr ';' expr ')' stmt   { $$ = for_stmt_new($3,   $5,   $7,   $9); }
-  | FOR '(' expr ';' expr ';'      ')' stmt   { $$ = for_stmt_new($3,   $5,   NULL, $8); }
-  | FOR '(' expr ';'      ';' expr ')' stmt   { $$ = for_stmt_new($3,   NULL, $6,   $8); }
-  | FOR '(' expr ';'      ';'      ')' stmt   { $$ = for_stmt_new($3,   NULL, NULL, $7); }
-  | FOR '('      ';' expr ';' expr ')' stmt   { $$ = for_stmt_new(NULL, $4,   $6,   $8); }
-  | FOR '('      ';' expr ';'      ')' stmt   { $$ = for_stmt_new(NULL, $4,   NULL, $7); }
-  | FOR '('      ';'      ';' expr ')' stmt   { $$ = for_stmt_new(NULL, NULL, $5,   $7); }
-  | FOR '('      ';'      ';'      ')' stmt   { $$ = for_stmt_new(NULL, NULL, NULL, $6); }
+  FOR '(' def  expr ';' expr ')' stmt   { $$ = for_stmt_new($3,   $4,   $6,   $8); }
+  | WHILE '(' expr ')' stmt   { $$ = while_stmt_new($3, $5); }
   ;
 
 jump_stmt:
@@ -122,6 +118,8 @@ defs:
 
 def:
   INT    decs ';'   { $$ = def_new(int_type(), $2); }
+  | FLOAT    decs ';'   { $$ = def_new(float_type(), $2); }
+  | CHAR    decs ';'   { $$ = def_new(char_type(), $2); }
   ;
 
 decs:

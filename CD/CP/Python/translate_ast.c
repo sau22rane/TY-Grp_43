@@ -3,8 +3,8 @@
 
 typedef void (*ast_translator)(ast_node *n);
 
-static ast_translator g_ast_translators[AST_TYPE_LIMIT];
-static const char* g_ast_names[AST_TYPE_LIMIT];
+static ast_translator g_ast_translators[AST_WHILE_STMT];
+static const char* g_ast_names[AST_WHILE_STMT];
 
 int dec_init = 0;
 
@@ -16,7 +16,7 @@ void emit(const char *fmt, ...)
     va_start(args, fmt);
     vsnprintf(buffer, sizeof buffer, fmt, args);
     va_end(args);
-    print("%s",)
+
     sprintf(format, "%s", buffer);
 
     fprintf(stdout, "%s", format);
@@ -317,8 +317,8 @@ static void trans_bool(ast_node *n, int mustbool) {
 	if (n->type == AST_POSTFIX) {
 		emit("(");
 	    trans_ast(n->postfix.unary);
-		if (n->prefix.op == INC_OP) emit("++");
-		else if (n->prefix.op == DEC_OP) emit("--");
+		if (n->prefix.op == INC_OP) emit("+=1");
+		else if (n->prefix.op == DEC_OP) emit("-=1");
 		emit(") != 0");	
 	}
 	if (n->type == AST_BINOP) {
@@ -372,6 +372,19 @@ static void trans_for_stmt(ast_node *n)
     emit("\n");
 }
 
+static void trans_while_stmt(ast_node *n)
+{
+	emit_tab();
+	emit("while (");
+    trans_bool(n->while_stmt.cond, 1);
+	emit(") :\n");
+	++tabn;
+    trans_ast(n->while_stmt.body);
+    --tabn;
+    emit_tab();
+    emit("\n");
+}
+
 static void trans_return_stmt(ast_node *n)
 {
 	emit_tab();
@@ -402,8 +415,8 @@ static void trans_binop(ast_node *n)
 
 static void trans_prefix(ast_node *n)
 {
-    if (n->prefix.op == INC_OP) emit("++");
-    else if (n->prefix.op == DEC_OP) emit("--");
+    if (n->prefix.op == INC_OP) emit("+=1");
+    else if (n->prefix.op == DEC_OP) emit("-=1");
 	else emit("%c", n->prefix.op);
     trans_ast(n->prefix.unary);
 }
@@ -411,8 +424,8 @@ static void trans_prefix(ast_node *n)
 static void trans_postfix(ast_node *n)
 {	
     trans_ast(n->postfix.unary);
-    if (n->prefix.op == INC_OP) emit("++");
-    else if (n->prefix.op == DEC_OP) emit("--");
+    if (n->prefix.op == INC_OP) emit("+=1");
+    else if (n->prefix.op == DEC_OP) emit("-=1");
 }
 
 static void trans_indexing(ast_node *n)
@@ -444,7 +457,8 @@ static void trans_member(ast_node *n)
 
 static void trans_id(ast_node *n) {
 	char *s = symname(n->id.sym_name);
-    if (!strcmp(s, "write")) s = "print";
+    if (!strcmp(s, "read")) s = "input";
+    else if (!strcmp(s, "write")) s = "print";
 	emit("%s", s);
 }
 
@@ -500,30 +514,7 @@ static void init_ast_translators()
     g_ast_translators[AST_MEMBER] = trans_member;
     g_ast_translators[AST_ID] = trans_id;
     g_ast_translators[AST_CONST] = trans_const;
-
-    g_ast_names[AST_LIST] = "trans_list";
-    g_ast_names[AST_FUNCDEF] = "trans_funcdef";
-    g_ast_names[AST_FUNCHEAD] = "trans_funchead";
-    g_ast_names[AST_PARA] = "trans_para";
-    g_ast_names[AST_VAR] = "trans_var";
-    g_ast_names[AST_SUBVAR] = "trans_subvar";
-    g_ast_names[AST_COMPOUND_STMT] = "trans_compound_stmt";
-    g_ast_names[AST_EXPR_STMT] = "trans_expr_stmt";
-    g_ast_names[AST_IF_STMT] = "trans_if_stmt";
-    g_ast_names[AST_FOR_STMT] = "trans_for_stmt";
-    g_ast_names[AST_RETURN_STMT] = "trans_return_stmt";
-    g_ast_names[AST_CONTINUE_STMT] = "trans_continue_stmt";
-    g_ast_names[AST_BREAK_STMT] = "trans_break_stmt";
-    g_ast_names[AST_DEF] = "trans_def";
-    g_ast_names[AST_DEC] = "trans_dec";
-    g_ast_names[AST_BINOP] = "trans_binop";
-    g_ast_names[AST_PREFIX] = "trans_prefix";
-    g_ast_names[AST_POSTFIX] = "trans_postfix";
-    g_ast_names[AST_INDEXING] = "trans_indexing";
-    g_ast_names[AST_FUNC_CALL] = "trans_func_call";
-    g_ast_names[AST_MEMBER] = "trans_member";
-    g_ast_names[AST_ID] = "trans_id";
-    g_ast_names[AST_CONST] = "trans_const";
+    g_ast_translators[AST_WHILE_STMT] = trans_while_stmt;
 }
 
 void trans_ast(ast_node *n)
@@ -546,4 +537,3 @@ void transtext_ast(ast_node *n)
     emit("if __name__ == '__main__':\n");
     emit("\tmain()\n");
 }
-
