@@ -19,4 +19,3 @@ lex.yy.c : converter_java.l
 
 converter_java : $(SRCS)
 	@gcc $(src)
-	@rm $(SRCS) 

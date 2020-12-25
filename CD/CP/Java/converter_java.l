@@ -4,7 +4,9 @@
 %}
 
 %%
-
+^\#.*       ;
+\/\/.*     ;
+\/\*(.|\n)*\*\/ ;
 "break"     { return BREAK; }
 "continue"  { return CONTINUE; }
 "else"      { return ELSE; }
