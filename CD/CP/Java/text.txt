@@ -1,3 +1,5 @@
+#include<stdio.h>
+// Comment to be excluded
 int a;
 
 int foo(int x)
