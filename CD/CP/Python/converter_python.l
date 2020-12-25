@@ -11,6 +11,7 @@
 "for"       { return FOR; }
 "if"        { return IF; }
 "int"       { return INT; }
+"while"       { return WHILE; }
 "float"       { return FLOAT; }
 "char"       { return CHAR; }
 "return"    { return RETURN; }

@@ -9,7 +9,7 @@
 
 
 #include <stdio.h>
-#include "c2java.h"
+#include "converter_java.h"
 #include <stdarg.h>
 
 

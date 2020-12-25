@@ -1,12 +1,7 @@
-/****************************************************************************
-
- main.c:
- Contains the main() function which drives the whole parsing process.
-
-*****************************************************************************/
+// main() function which drives the whole parsing process.
 
 #include <stdio.h>
-#include "c2java.h"
+#include "converter_java.h"
 #include "y.tab.h"
 
 
@@ -25,24 +20,14 @@ void set_parse_tree(ast_node *tree)
 
 int main(int argc, char **argv)
 {
-    /* reserve built-in function names */
-    sym("read");
-    sym("write");
-    
-    if (argc > 1) {
-    	freopen(argv[1], "r", stdin);
-    	sym(argv[1]);
-    }
-    if (argc > 2) freopen(argv[2], "w", stdout);
-
     yyparse();
 
     if (g_parse_tree)
     {
-        #ifdef DEBUG	
-        #endif
-	print_ast(g_parse_tree);
-        //transtext_ast(g_parse_tree);
+        if( argc>1 && !strcmp(argv[1],"p"))
+        	print_ast(g_parse_tree);
+        else
+            transtext_ast(g_parse_tree, argv[1]);
     }
 	
     return 0;

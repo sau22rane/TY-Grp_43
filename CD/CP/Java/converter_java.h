@@ -1,13 +1,13 @@
 /****************************************************************************
 
- c2java.h:
+ CONVERTER_JAVA.h:
  Declares the data structure of ast_node, type_node, scope_node, sym_node and
  other functions prototypes which are used through out the building of the compiler.
 
 *****************************************************************************/
 
-#ifndef C2JAVA_H_
-#define C2JAVA_H_
+#ifndef CONVERTER_JAVA_H_
+#define CONVERTER_JAVA_H_
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -48,6 +48,7 @@ extern int yyparse(void);
 #define AST_ID  22
 #define AST_CONST  23
 #define AST_TYPE_LIMIT  24
+#define AST_WHILE_STMT 25
 
 
 typedef struct ast_node {
@@ -111,6 +112,11 @@ typedef struct ast_node {
             struct ast_node *incr;
             struct ast_node *body;
         } for_stmt;
+
+        struct {
+            struct ast_node *cond;
+            struct ast_node *body;
+        } while_stmt;
 
         struct {
             struct ast_node *retval;
@@ -190,51 +196,18 @@ struct sym_node
   int sym_id;
   struct sym_node *next;
 };
-
+/*
+void print_sym_ast(struct sym_node *symbol_node)
+{
+	printf("%s",symbol_node->str);
+	printf("======id : %d ======",symbol_node->sym_id);
+	printf("");
+}*/
 extern struct sym_node *sym_table;
 
 extern int sym(char const *s);
 extern char * symname(int sym_id);
 extern int parse_int(char const *s);
-
-
-struct vscope
-{
-	struct vscope *parent;
-	struct vscope_node *list;
-};
-
-struct vscope_node
-{
-    struct vscope *scope;
-	int sym_id;
-	int type_id;
-	int offset;
-	struct vscope_node *next;
-};
-
-struct tscope
-{
-	struct tscope *parent;
-	struct tscope_node *list;
-};
-
-struct tscope_node
-{
-	int sym_id;
-	int type_id;
-	struct tscope_node *next;
-};
-
-extern struct vscope *current_vscope;
-extern struct tscope *current_tscope;
-
-extern void begin_vscope();
-extern void vscope_addnode(struct vscope *v, int sym_id, int type_id, int offset);
-extern void end_vscope();
-extern void begin_tscope();
-extern void tscope_addnode(struct tscope *t, int sym_id, int type_id);
-extern void end_tscope();
 
 /* Here we don't have INT in TYPE as we can give the INT a type_id 1, thus there is no need to record in TYPE */
 enum TYPE {STRUCTURE, ARRAY, FUNC};
@@ -306,6 +279,7 @@ extern ast_stmt *compound_stmt_new(ast_list *defs, ast_list *stmts);
 extern ast_stmt *expr_stmt_new(ast_expr *expr);
 extern ast_stmt *if_stmt_new(ast_expr *cond, ast_stmt *then, ast_stmt *els);
 extern ast_stmt *for_stmt_new(ast_expr *init, ast_expr *cond, ast_expr *incr, ast_stmt *body);
+extern ast_stmt *while_stmt_new(ast_expr *cond, ast_stmt *body);
 extern ast_stmt *return_stmt_new(ast_expr *retval);
 extern ast_stmt *continue_stmt_new();
 extern ast_stmt *break_stmt_new();
@@ -330,9 +304,8 @@ extern void set_parse_tree(ast_node *tree);
 extern void print_ast(ast_node *n);
 extern void report_error(const char *fmt, ...);
 extern void check_ast(ast_node *n);
-extern void check_semantics(ast_node *ast);
 extern void trans_ast(ast_node *ast);
-extern void transtext_ast(ast_node *ast);
+extern void transtext_ast(ast_node *ast, char *name);
 
 extern int binop_reuse(int op);
 

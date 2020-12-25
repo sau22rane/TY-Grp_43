@@ -48,6 +48,7 @@ extern int yyparse(void);
 #define AST_ID  22
 #define AST_CONST  23
 #define AST_TYPE_LIMIT  24
+#define AST_WHILE_STMT 25
 
 
 typedef struct ast_node {
@@ -111,6 +112,11 @@ typedef struct ast_node {
             struct ast_node *incr;
             struct ast_node *body;
         } for_stmt;
+
+        struct {
+            struct ast_node *cond;
+            struct ast_node *body;
+        } while_stmt;
 
         struct {
             struct ast_node *retval;
@@ -306,6 +312,7 @@ extern ast_stmt *compound_stmt_new(ast_list *defs, ast_list *stmts);
 extern ast_stmt *expr_stmt_new(ast_expr *expr);
 extern ast_stmt *if_stmt_new(ast_expr *cond, ast_stmt *then, ast_stmt *els);
 extern ast_stmt *for_stmt_new(ast_expr *init, ast_expr *cond, ast_expr *incr, ast_stmt *body);
+extern ast_stmt *while_stmt_new(ast_expr *cond, ast_stmt *body);
 extern ast_stmt *return_stmt_new(ast_expr *retval);
 extern ast_stmt *continue_stmt_new();
 extern ast_stmt *break_stmt_new();
